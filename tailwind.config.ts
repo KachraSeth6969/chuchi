@@ -12,6 +12,10 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+      fontFamily: {
+        'inter': ['var(--font-inter)', 'sans-serif'],
+        'playfair': ['var(--font-playfair)', 'serif'],
+      },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

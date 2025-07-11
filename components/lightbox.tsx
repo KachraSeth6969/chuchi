@@ -33,20 +33,20 @@ export function Lightbox({ image, onClose }: LightboxProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-white/95 backdrop-blur-md" onClick={onClose} />
 
       {/* Modal Content */}
       <div className="relative z-10 max-w-4xl max-h-[90vh] w-full">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute -top-8 sm:-top-12 right-0 text-white hover:text-gray-300 transition-colors duration-200 z-20 touch-manipulation p-2"
+          className="absolute -top-8 sm:-top-12 right-0 text-neutral-600 hover:text-neutral-900 transition-colors duration-200 z-20 bg-white rounded-full p-2 shadow-sm"
         >
-          <X className="w-6 h-6 sm:w-8 sm:h-8" />
+          <X className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
 
         {/* Image */}
-        <div className="relative rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
+        <div className="relative rounded-xl overflow-hidden shadow-xl bg-white">
           <Image
             src={image.src || "/placeholder.svg"}
             alt={image.alt}

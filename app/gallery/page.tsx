@@ -39,7 +39,7 @@ export default function GalleryPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-neutral-50">
       {/* Audio Player */}
       <AudioPlayer />
 
@@ -51,45 +51,43 @@ export default function GalleryPage() {
       />
 
       {/* Header */}
-      <header className="p-4 sm:p-6">
+      <header className="p-6">
         <Link href="/">
-          <button className="group flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-300 touch-manipulation">
-            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-x-1 transition-transform duration-300" />
-            <span className="text-sm sm:text-base">Back to Home</span>
+          <button className="group flex items-center gap-2 text-neutral-600 hover:text-neutral-900 transition-colors duration-200">
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
+            Back to Home
           </button>
         </Link>
       </header>
 
       {/* Gallery Content */}
-      <main className="px-3 sm:px-6 pb-12">
+      <main className="px-6 pb-12">
         <div className="max-w-6xl mx-auto">
           {/* Gallery Title */}
-          <div className="text-center mb-8 sm:mb-12">
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-3 sm:mb-4 px-2">
+          <div className="text-center mb-16">
+            <h1 className="font-playfair text-3xl md:text-5xl font-light text-neutral-900 mb-4">
               Too much chuchi💀
             </h1>
-            <p className="text-slate-300 text-base sm:text-lg px-4">
+            <p className="text-neutral-600 text-base font-light">
               Dekh ba aapne aap ko and listen to ur fav song
             </p>
           </div>
 
           {/* Gallery Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-            {galleryImages.map((image) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">{galleryImages.map((image) => (
               <div
                 key={image.id}
-                className="group cursor-pointer transform transition-all duration-300 hover:scale-105"
+                className="group cursor-pointer transition-all duration-200 hover:-translate-y-1"
                 onClick={() => setSelectedImage(image)}
               >
-                <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-slate-800 shadow-xl hover:shadow-2xl hover:shadow-purple-500/20">
+                <div className="relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-lg border border-neutral-100">
                   <Image
                     src={image.src || "/placeholder.svg"}
                     alt={image.alt}
                     width={400}
                     height={300}
-                    className="w-full h-40 sm:h-48 md:h-56 lg:h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
             ))}
