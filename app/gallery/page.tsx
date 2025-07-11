@@ -53,7 +53,7 @@ export default function GalleryPage() {
       {/* Header */}
       <header className="p-6">
         <Link href="/">
-          <button className="group flex items-center gap-2 text-neutral-600 hover:text-neutral-900 transition-colors duration-200">
+          <button className="group flex items-center gap-2 text-neutral-700 hover:text-neutral-900 transition-colors duration-200">
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
             Back to Home
           </button>
@@ -69,12 +69,14 @@ export default function GalleryPage() {
               Too much chuchi💀
             </h1>
             <p className="text-neutral-600 text-base font-light">
-              Dekh ba aapne aap ko and listen to ur fav song
+              Dekh ba aapne aap ko and listen to ur fav song (Just press play if
+              it isnt playing)
             </p>
           </div>
 
           {/* Gallery Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">{galleryImages.map((image) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {galleryImages.map((image) => (
               <div
                 key={image.id}
                 className="group cursor-pointer transition-all duration-200 hover:-translate-y-1"

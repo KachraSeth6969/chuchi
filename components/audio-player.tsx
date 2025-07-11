@@ -71,7 +71,7 @@ export function AudioPlayer() {
   };
 
   return (
-    <div className="fixed top-4 right-4 z-40 flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-sm border border-neutral-200">
+    <div className="fixed top-4 right-4 z-40 flex items-center gap-2 bg-white/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-md border border-neutral-200">
       <audio ref={audioRef} loop preload="auto">
         <source src="/music/background-music.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
@@ -79,7 +79,7 @@ export function AudioPlayer() {
 
       <button
         onClick={togglePlay}
-        className="text-neutral-600 hover:text-neutral-900 transition-colors duration-200 p-1"
+        className="text-neutral-700 hover:text-neutral-900 transition-colors duration-200 p-1"
         title={isPlaying ? "Pause music" : "Play music"}
       >
         {isPlaying ? (
@@ -91,7 +91,7 @@ export function AudioPlayer() {
 
       <button
         onClick={toggleMute}
-        className="text-neutral-600 hover:text-neutral-900 transition-colors duration-200 p-1"
+        className="text-neutral-700 hover:text-neutral-900 transition-colors duration-200 p-1"
         title={isMuted ? "Unmute" : "Mute"}
       >
         {isMuted ? (
