@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Music, X } from "lucide-react"
+import { useEffect, useState } from "react";
+import { Music, X } from "lucide-react";
 
 interface ToastProps {
-  show: boolean
-  message: string
-  onClose: () => void
+  show: boolean;
+  message: string;
+  onClose: () => void;
 }
 
 export function Toast({ show, message, onClose }: ToastProps) {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     if (show) {
-      setIsVisible(true)
+      setIsVisible(true);
     } else {
-      const timer = setTimeout(() => setIsVisible(false), 300)
-      return () => clearTimeout(timer)
+      const timer = setTimeout(() => setIsVisible(false), 300);
+      return () => clearTimeout(timer);
     }
-  }, [show])
+  }, [show]);
 
-  if (!isVisible) return null
+  if (!isVisible) return null;
 
   return (
     <div className="fixed top-6 right-6 z-50">
@@ -33,13 +33,18 @@ export function Toast({ show, message, onClose }: ToastProps) {
       `}
       >
         <div className="flex items-center gap-3">
-          <Music className="w-5 h-5 text-neutral-600" />
-          <span className="font-medium text-sm">{message}</span>
-          <button onClick={onClose} className="ml-2 hover:bg-neutral-100 rounded-full p-1 transition-colors duration-200">
-            <X className="w-4 h-4 text-neutral-500" />
+          <Music className="w-5 h-5 text-neutral-700" />
+          <span className="font-medium text-sm text-neutral-900">
+            {message}
+          </span>
+          <button
+            onClick={onClose}
+            className="ml-2 hover:bg-neutral-100 rounded-full p-1 transition-colors duration-200"
+          >
+            <X className="w-4 h-4 text-neutral-600" />
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }
