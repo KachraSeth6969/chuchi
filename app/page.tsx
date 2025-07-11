@@ -26,7 +26,7 @@ export default function HomePage() {
             discussing about all those things and i am sorry if i may have
             pushed u yesterday . I thought it was necessay, u are not an
             emotionless person , u just do things that sometimes hurt me and u
-            punish urself unjutly. Aur bahut kuch bata karni hai , sunni hai and
+            punish urself unjutly. Aur bahut kuch bata karni hai , sun ni hai and
             all . Ik i say this all the time but tu please ro mat be kal firse
             royi tu cause of me, mai hai na tu kaiko tension leti ha?.I am just confused 
             right now ki whether it is safe to expect something or no or "that" thing which u 

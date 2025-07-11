@@ -23,6 +23,9 @@ const galleryImages = [
   { id: 11, src: "/images/IMG_6160.jpeg", alt: "Treasured Memory" },
   { id: 12, src: "/images/IMG_6220.JPG", alt: "Golden Moment" },
   { id: 13, src: "/images/IMG_6279.jpg", alt: "Unforgettable Memory" },
+  { id: 14, src: "/images/1.jpeg", alt: "New Memory" },
+  { id: 15, src: "/images/2.jpeg", alt: "Fresh Moment" },
+  { id: 16, src: "/images/3.jpeg", alt: "Latest Memory" },
 ];
 
 export default function GalleryPage() {
@@ -75,7 +78,7 @@ export default function GalleryPage() {
           </div>
 
           {/* Gallery Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {galleryImages.map((image) => (
               <div
                 key={image.id}
