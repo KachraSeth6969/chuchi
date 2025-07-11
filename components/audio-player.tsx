@@ -71,7 +71,7 @@ export function AudioPlayer() {
   };
 
   return (
-    <div className="fixed top-3 right-3 sm:top-4 sm:right-4 z-40 flex items-center gap-1.5 sm:gap-2 bg-black/60 backdrop-blur-sm rounded-full px-3 py-1.5 sm:px-4 sm:py-2">
+    <div className="fixed top-4 right-4 z-40 flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-sm border border-neutral-200">
       <audio ref={audioRef} loop preload="auto">
         <source src="/music/background-music.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
@@ -79,25 +79,25 @@ export function AudioPlayer() {
 
       <button
         onClick={togglePlay}
-        className="text-white hover:text-purple-300 transition-colors duration-200 touch-manipulation p-1"
+        className="text-neutral-600 hover:text-neutral-900 transition-colors duration-200 p-1"
         title={isPlaying ? "Pause music" : "Play music"}
       >
         {isPlaying ? (
-          <Pause className="w-4 h-4 sm:w-5 sm:h-5" />
+          <Pause className="w-4 h-4" />
         ) : (
-          <Play className="w-4 h-4 sm:w-5 sm:h-5" />
+          <Play className="w-4 h-4" />
         )}
       </button>
 
       <button
         onClick={toggleMute}
-        className="text-white hover:text-purple-300 transition-colors duration-200 touch-manipulation p-1"
+        className="text-neutral-600 hover:text-neutral-900 transition-colors duration-200 p-1"
         title={isMuted ? "Unmute" : "Mute"}
       >
         {isMuted ? (
-          <VolumeX className="w-4 h-4 sm:w-5 sm:h-5" />
+          <VolumeX className="w-4 h-4" />
         ) : (
-          <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
+          <Volume2 className="w-4 h-4" />
         )}
       </button>
     </div>
