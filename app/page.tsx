@@ -28,7 +28,7 @@ export default function HomePage() {
             emotionless person , u just do things that sometimes hurt me and u
             punish urself unjutly. Aur bahut kuch bata karni hai , sunni hai and
             all . Ik i say this all the time but tu please ro mat be kal firse
-            royi tu cause of me, mai hai na tu kaiko tension leti ha?.I am just confused right now ki whether it is safe to expect something or no or "that" thing which u dont like to mention or what. I just dont wanna get hurt again idk man i sound so selfish. Dont
+            royi tu cause of me, mai hai na tu kaiko tension leti ha?.I am just confused right now ki whether it is safe to expect something or no or "that" thing which u dont like to mention or what. I just dont wanna get hurt again idk man i sound so selfish.Dont answer or anything , il see in ur actions and mend mine accordingly.  Dont
             worry just give urself a second chance, u are not doing anything
             wrong.....
           </p>
