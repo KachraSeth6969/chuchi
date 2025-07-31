@@ -66,13 +66,76 @@ const trips = [
     id: 4,
     title: "Sagar Milkshakeeee",
     location: "Supernova ke beech mai(aapke dill mai)",
-    date: "I dont remember😂",
+    date: "I dont remember the date😂",
     description: "BC mere oaas sirf itne hi kyu hai🥲",
     media: [
       // Auto-scanned files starting with 4 followed by digits (41, 42, 43, etc.)
       { id: 41, type: "video", src: "/videos/41.mp4", alt: "😍" },
       { id: 42, type: "image", src: "/images/42.jpg", alt: "Best phtotgrapher average model" },
       { id: 43, type: "video", src: "/videos/43.mp4", alt: "" },
+    ]
+  },
+  {
+    id: 5,
+    title: "Adde pe proposal",
+    location: "U guessed it, in ur heart",
+    date: "Feb mai kabhi toh    ",
+    description: "Kya toh thha re ma yo dinn, almost u had fell for me",
+    media: [
+      // Auto-scanned converted files starting with 5 followed by digits (51-59, 510-516)
+      { id: 51, type: "image", src: "/images/51.jpeg", alt: "" },
+      { id: 52, type: "image", src: "/images/52.jpeg", alt: "" },
+      { id: 53, type: "image", src: "/images/53.jpeg", alt: "" },
+      { id: 54, type: "image", src: "/images/54.jpeg", alt: "" },
+      { id: 55, type: "image", src: "/images/55.jpeg", alt: "" },
+      { id: 56, type: "image", src: "/images/56.jpeg", alt: "" },
+      { id: 57, type: "image", src: "/images/57.jpeg", alt: "" },
+      { id: 58, type: "image", src: "/images/58.jpeg", alt: "" },
+      { id: 59, type: "image", src: "/images/59.jpeg", alt: "" },
+      { id: 510, type: "image", src: "/images/510.jpeg", alt: "" },
+      { id: 511, type: "image", src: "/images/511.jpeg", alt: "" },
+      { id: 512, type: "image", src: "/images/512.jpeg", alt: "" },
+      { id: 514, type: "image", src: "/images/514.jpeg", alt: "" },
+      { id: 515, type: "image", src: "/images/515.jpeg", alt: "" },
+      { id: 516, type: "image", src: "/images/516.jpeg", alt: "🤣🤣🤣🤣" },
+      { id: 519 , type: "video", src: "/videos/519.mp4", alt: "Adde pe proposal video" }
+    ]
+  },
+  {
+    id: 6,
+    title: "Random Shite",
+    location: "Hmm tough question I think aapke dill mai🧐",
+    date: "All the best finding dates",
+    description: "Inn sab ke liye seperate banane ko kya nai mila still dalneka thha so daal diya",
+    media: [
+      // Auto-scanned files starting with 6 followed by digits
+      { id: 61, type: "video", src: "/videos/61.mp4", alt: "" },
+      { id: 62, type: "image", src: "/images/62.jpg", alt: "" },
+      { id: 63, type: "image", src: "/images/63.jpg", alt: "" },
+      { id: 64, type: "image", src: "/images/64.jpg", alt: "" },
+      { id: 65, type: "image", src: "/images/65.jpeg", alt: "" },
+      { id: 66, type: "image", src: "/images/66.jpeg", alt: "" },
+      { id: 67, type: "image", src: "/images/67.jpeg", alt: "" },
+      { id: 68, type: "image", src: "/images/68.jpeg", alt: "" },
+      { id: 69, type: "image", src: "/images/69.jpeg", alt: "" },
+      { id: 610, type: "image", src: "/images/610.jpeg", alt: "" },
+      { id: 611, type: "image", src: "/images/611.jpeg", alt: "" },
+      { id: 612, type: "image", src: "/images/612.jpeg", alt: "" },
+      { id: 613, type: "image", src: "/images/613.jpeg", alt: "" },
+      { id: 614, type: "image", src: "/images/614.jpg", alt: "" },
+      { id: 615, type: "image", src: "/images/615.jpeg", alt: "" },
+      { id: 616, type: "image", src: "/images/616.jpeg", alt: "" },
+      { id: 617, type: "image", src: "/images/617.jpeg", alt: "" },
+      { id: 618, type: "image", src: "/images/618.jpg", alt: "" },
+      { id: 619, type: "image", src: "/images/619.jpeg", alt: "" },
+      { id: 620, type: "image", src: "/images/620.jpg", alt: "" },
+      { id: 621, type: "image", src: "/images/621.jpg", alt: "" },
+      { id: 622, type: "image", src: "/images/622.jpeg", alt: "" },
+      { id: 623, type: "image", src: "/images/623.jpeg", alt: "" },
+      { id: 624, type: "image", src: "/images/624.jpg", alt: "" },
+      { id: 625, type: "image", src: "/images/625.jpg", alt: "" },
+      { id: 626, type: "video", src: "/videos/626.mp4", alt: "" },
+      { id: 627, type: "video", src: "/videos/627.mp4", alt: "" },
     ]
   }
 ];
@@ -113,11 +176,10 @@ export default function TripsPage() {
           {/* Page Title */}
           <div className="text-center mb-16">
             <h1 className="font-playfair text-3xl md:text-5xl font-light text-neutral-900 mb-4">
-              Our Adventures Together
+              Dekh baa
             </h1>
             <p className="text-neutral-600 text-base font-light max-w-2xl mx-auto">
-              Every trip we've taken has been a chapter in our story. Here are the places we've explored, 
-              the moments we've shared, and the memories we've created together. ✨
+              This is called as peak unemployment kya kaam nai jeevan mai so uk.....✨
             </p>
           </div>
 
