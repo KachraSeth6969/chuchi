@@ -97,6 +97,18 @@ export default function GalleryPage() {
               </div>
             ))}
           </div>
+
+          {/* Navigation to Trips */}
+          <div className="text-center mt-16 pt-12 border-t border-neutral-200">
+            <p className="text-neutral-600 text-lg mb-6">
+              Want to see our adventures together? 🌍
+            </p>
+            <Link href="/trips">
+              <button className="bg-white hover:bg-neutral-50 text-neutral-900 font-medium py-3 px-6 rounded-lg border border-neutral-300 hover:border-neutral-400 transition-all duration-200">
+                View Our Trips
+              </button>
+            </Link>
+          </div>
         </div>
       </main>
 

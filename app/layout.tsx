@@ -16,7 +16,7 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: "Chuchi's Gallery",
+  title: "Chuchi's World",
   description: "A curated collection of moments, memories, and melodies",
   generator: 'v0.dev'
 }

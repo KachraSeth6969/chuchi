@@ -1,0 +1,256 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft, MapPin, Calendar, Heart } from "lucide-react";
+import { Lightbox } from "../../components/lightbox";
+import { Toast } from "../../components/toast";
+
+// Trip data - you can add more trips here
+const trips = [
+  {
+    id: 1,
+    title: "Teacher bramha",
+    location: "Aapke dil mein",
+    date: "11 March",
+    description: "TGaand fat gayi bc padhane ke liye, kabhi nahi padhaega python",
+    media: [
+      { id: 1, type: "image", src: "/images/11.JPG", alt: "Best picture of chuchi till date" },
+      { id: 2, type: "image", src: "/images/12.jpg", alt: "" },
+      { id: 3, type: "image", src: "/images/13.jpg", alt: "U look so hott uff" },
+      { id: 4, type: "image", src: "/images/14.jpg", alt: "" },
+      { id: 5, type: "image", src: "/images/15.jpg", alt: "Super > Nova😤" },
+      { id: 6, type: "video", src: "/videos/16.mp4", alt: "Super > Nova😤" },
+
+      // Add videos like this: { id: 4, type: "video", src: "/videos/first-trip.mp4", alt: "First adventure video" },
+    ]
+  },
+  {
+    id: 2,
+    title: "January",
+    location: "Still aapke dill mai",
+    date: "One week of jan",
+    description: "Kya toh roz milte thhe chup chupke, bc",
+    media: [
+      // Auto-scanned files starting with 2 followed by digits (21, 22, 23, etc.)
+      { id: 21, type: "image", src: "/images/21.jpg", alt: "Tera id kho gaya and tu poora dinn bhagi thhi" },
+      { id: 25, type: "image", src: "/images/25.jpg", alt: "Mai theek se suna nahi thha" },
+      { id: 22, type: "image", src: "/images/22.jpg", alt: "" },
+      { id: 23, type: "image", src: "/images/23.jpg", alt: "Wtf is this" },
+      { id: 24, type: "image", src: "/images/24.jpg", alt: "Sister😍" },
+      { id: 26, type: "image", src: "/images/26.jpg", alt: "" },
+      
+    ]
+  },
+  {
+    id: 3,
+    title: "Recent trip to apna savagaon",
+    location: "Hehehehe still aapke dill mai",
+    date: "Juky mai",
+    description: "Kya bolti deal done karte toh anyways world already believes us to be a thing",
+    media: [
+      // Auto-scanned files starting with 3 followed by digits (31, 32, 33, etc.)
+      { id: 31, type: "image", src: "/images/31.jpg", alt: "u in that kurta(mere jacket ke andhar jo pehenni hai) " },
+      { id: 32, type: "image", src: "/images/32.jpg", alt: "is the second most" },
+      { id: 33, type: "image", src: "/images/33.jpg", alt: "Beautiful thing" },
+      { id: 35, type: "image", src: "/images/35.jpg", alt: "U know whats first😉" },
+      { id: 36, type: "image", src: "/images/36.jpg", alt: "" },
+      { id: 34, type: "image", src: "/images/34.jpg", alt: "Cringiest shit ive ever done" },
+      { id: 37, type: "video", src: "/videos/37.mp4", alt: "" },
+      { id: 38, type: "video", src: "/videos/38.mp4", alt: "" },
+      { id: 39, type: "video", src: "/videos/39.mp4", alt: "" },
+    ]
+  },
+  {
+    id: 4,
+    title: "Sagar Milkshakeeee",
+    location: "Supernova ke beech mai(aapke dill mai)",
+    date: "I dont remember😂",
+    description: "BC mere oaas sirf itne hi kyu hai🥲",
+    media: [
+      // Auto-scanned files starting with 4 followed by digits (41, 42, 43, etc.)
+      { id: 41, type: "video", src: "/videos/41.mp4", alt: "😍" },
+      { id: 42, type: "image", src: "/images/42.jpg", alt: "Best phtotgrapher average model" },
+      { id: 43, type: "video", src: "/videos/43.mp4", alt: "" },
+    ]
+  }
+];
+
+export default function TripsPage() {
+  const [selectedImage, setSelectedImage] = useState<any>(null);
+  const [selectedVideo, setSelectedVideo] = useState<any>(null);
+  const [showToast, setShowToast] = useState(false);
+
+  useEffect(() => {
+    setShowToast(true);
+    const timer = setTimeout(() => setShowToast(false), 4000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-neutral-50">
+      {/* Toast Notification */}
+      <Toast
+        show={showToast}
+        message="Reliving our beautiful journeys together 🌍"
+        onClose={() => setShowToast(false)}
+      />
+
+      {/* Header */}
+      <header className="p-6">
+        <Link href="/">
+          <button className="group flex items-center gap-2 text-neutral-700 hover:text-neutral-900 transition-colors duration-200">
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
+            Back to Home
+          </button>
+        </Link>
+      </header>
+
+      {/* Trips Content */}
+      <main className="px-6 pb-12">
+        <div className="max-w-6xl mx-auto">
+          {/* Page Title */}
+          <div className="text-center mb-16">
+            <h1 className="font-playfair text-3xl md:text-5xl font-light text-neutral-900 mb-4">
+              Our Adventures Together
+            </h1>
+            <p className="text-neutral-600 text-base font-light max-w-2xl mx-auto">
+              Every trip we've taken has been a chapter in our story. Here are the places we've explored, 
+              the moments we've shared, and the memories we've created together. ✨
+            </p>
+          </div>
+
+          {/* Trips List */}
+          <div className="space-y-20">
+            {trips.map((trip, index) => (
+              <div key={trip.id} className="relative">
+                {/* Trip Header */}
+                <div className="text-center mb-12">
+                  <div className="flex items-center justify-center gap-2 text-neutral-500 text-sm mb-3">
+                    <Calendar className="w-4 h-4" />
+                    <span>{trip.date}</span>
+                    <span className="mx-2">•</span>
+                    <MapPin className="w-4 h-4" />
+                    <span>{trip.location}</span>
+                  </div>
+                  <h2 className="font-playfair text-2xl md:text-3xl font-light text-neutral-900 mb-4">
+                    {trip.title}
+                  </h2>
+                  <p className="text-neutral-600 max-w-3xl mx-auto leading-relaxed">
+                    {trip.description}
+                  </p>
+                </div>
+
+                {/* Trip Media (Photos & Videos) */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+                  {trip.media.map((item) => (
+                    <div
+                      key={item.id}
+                      className="group cursor-pointer transition-all duration-200 hover:-translate-y-1"
+                      onClick={() => item.type === 'image' ? setSelectedImage(item) : setSelectedVideo(item)}
+                    >
+                      <div className="relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-lg border border-neutral-100">
+                        {item.type === 'image' ? (
+                          <>
+                            <Image
+                              src={item.src || "/placeholder.svg"}
+                              alt={item.alt}
+                              width={400}
+                              height={300}
+                              className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
+                              <Heart className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <video
+                              className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                              preload="metadata"
+                              muted
+                              playsInline
+                              onLoadedMetadata={(e) => {
+                                const video = e.target as HTMLVideoElement;
+                                video.currentTime = 0.1; // Load first frame
+                              }}
+                            >
+                              <source src={item.src} type="video/mp4" />
+                              Your browser does not support the video tag.
+                            </video>
+                            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                              <div className="w-12 h-12 bg-white bg-opacity-90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <div className="w-0 h-0 border-l-[6px] border-l-neutral-800 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent ml-1"></div>
+                              </div>
+                            </div>
+                            <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded">
+                              VIDEO
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      {/* Caption for both images and videos */}
+                      <p className="text-sm text-neutral-600 mt-2 text-center">{item.alt}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Divider (except for last trip) */}
+                {index < trips.length - 1 && (
+                  <div className="flex justify-center mt-16">
+                    <div className="w-48 h-px bg-neutral-300"></div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Call to action */}
+          <div className="text-center mt-20 pt-16 border-t border-neutral-200">
+            <p className="text-neutral-600 text-lg mb-6">
+              Ready to create more memories together? 🌟
+            </p>
+            <Link href="/gallery">
+              <button className="bg-neutral-900 hover:bg-neutral-800 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200">
+                View All Photos
+              </button>
+            </Link>
+          </div>
+        </div>
+      </main>
+
+      {/* Lightbox for Images */}
+      {selectedImage && (
+        <Lightbox
+          image={selectedImage}
+          onClose={() => setSelectedImage(null)}
+        />
+      )}
+
+      {/* Video Modal */}
+      {selectedVideo && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
+          <div className="relative max-w-4xl w-full">
+            <button
+              onClick={() => setSelectedVideo(null)}
+              className="absolute -top-12 right-0 text-white hover:text-neutral-300 transition-colors"
+            >
+              <span className="text-2xl">×</span>
+            </button>
+            <video
+              className="w-full h-auto max-h-[80vh] rounded-lg"
+              controls
+              autoPlay
+              preload="metadata"
+            >
+              <source src={selectedVideo.src} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <p className="text-white text-center mt-4">{selectedVideo.alt}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
