@@ -18,7 +18,12 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Chuchi's World",
   description: "A curated collection of moments, memories, and melodies",
-  generator: 'v0.dev'
+  generator: 'v0.dev',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+  }
 }
 
 export default function RootLayout({

@@ -16,7 +16,7 @@ const trips = [
     date: "11 March",
     description: "TGaand fat gayi bc padhane ke liye, kabhi nahi padhaega python",
     media: [
-      { id: 1, type: "image", src: "/images/11.JPG", alt: "Best picture of chuchi till date" },
+      { id: 1, type: "image", src: "/images/11.jpg", alt: "Best picture of chuchi till date" },
       { id: 2, type: "image", src: "/images/12.jpg", alt: "" },
       { id: 3, type: "image", src: "/images/13.jpg", alt: "U look so hott uff" },
       { id: 4, type: "image", src: "/images/14.jpg", alt: "" },
