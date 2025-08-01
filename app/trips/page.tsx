@@ -14,7 +14,7 @@ const trips = [
     title: "Teacher bramha",
     location: "Aapke dil mein",
     date: "11 March",
-    description: "TGaand fat gayi bc padhane ke liye, kabhi nahi padhaega python",
+    description: "Gaand fat gayi bc padhane ke liye, kabhi nahi padhaega python",
     media: [
       { id: 1, type: "image", src: "/images/11.jpg", alt: "Best picture of chuchi till date" },
       { id: 2, type: "image", src: "/images/12.jpg", alt: "" },
@@ -136,6 +136,16 @@ const trips = [
       { id: 625, type: "image", src: "/images/625.JPG", alt: "" },
       { id: 626, type: "video", src: "/videos/626.mp4", alt: "" },
       { id: 627, type: "video", src: "/videos/627.mp4", alt: "" },
+      { id: 71, type: "video", src: "/videos/71.mp4", alt: "" },
+      { id: 72, type: "image", src: "/images/72.jpeg", alt: "" },
+      { id: 73, type: "image", src: "/images/73.jpeg", alt: "" },
+      { id: 74, type: "image", src: "/images/74.jpeg", alt: "" },
+      { id: 75, type: "image", src: "/images/75.jpg", alt: "" },
+      { id: 76, type: "image", src: "/images/76.jpg", alt: "" },
+      { id: 77, type: "image", src: "/images/77.jpg", alt: "" },
+      { id: 78, type: "image", src: "/images/78.jpg", alt: "" },
+      { id: 79, type: "image", src: "/images/79.jpg", alt: "" },
+      { id: 710, type: "image", src: "/images/710.jpg", alt: "" },
     ]
   }
 ];
