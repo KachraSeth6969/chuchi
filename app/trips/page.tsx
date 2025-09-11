@@ -104,7 +104,7 @@ const trips = [
     {
     id: 6,
     title: "10 days",
-    location: "I seriously dont know",
+    location: "Permanently dil mai",
     date: "September is the month",
     description: "Do u have the balls to be my gf???????????????",
     media: [

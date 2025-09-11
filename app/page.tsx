@@ -26,6 +26,11 @@ export default function HomePage() {
             Nah seriously i hope to put a smile on your face whenever you visit this page.
             Yep thats all , looking forward to see u soon and add to this collection.
 
+            PS: I have been promoted from just a friend.
+            I want u to be happy always and yeah i wanna see u grow a lot.
+            I will always respect u and just wanna spend some real good time with u and make a loooot of memories.
+            I love u🫶.
+
           </p>
 
           {/* Navigation Buttons */}
