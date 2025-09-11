@@ -45,7 +45,7 @@ export default function HomePage() {
             </Link>
             
             <Link href="/trips">
-              <button className="group bg-white hover:bg-neutral-50 text-neutral-900 font-medium py-4 px-8 rounded-lg text-base transition-all duration-200 flex items-center gap-3 border border-neutral-300 hover:border-neutral-400">
+              <button className="group bg-fuchsia-200 hover:bg-fuchsia-200 text-neutral-900 font-medium py-4 px-8 rounded-lg text-base transition-all duration-200 flex items-center gap-3 border border-rose-200 hover:border-rose-300">
                 Our Adventures
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
               </button>
