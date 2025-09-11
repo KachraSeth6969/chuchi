@@ -16,7 +16,7 @@ export default function HomePage() {
           </h1>
 
           {/* Short Paragraph */}
-          <p className="text-base md:text-lg text-neutral-600 mb-12 leading-relaxed max-w-2xl mx-auto font-light">
+          <p className="text-base md:text-lg text-neutral-600 mb-2 leading-relaxed max-w-2xl mx-auto font-light">
             So this is it , a small collection of our memories, moments, and melodies.
             Damn bahut formal ho gaya 🤣🤣🤣, hmm if uk what i mean.
             Pata nai be kya hai but this is where u can and should visit whenever you feel like it.
@@ -25,13 +25,15 @@ export default function HomePage() {
             "mai hai na tension kaiko leti, zyada load mat le🤣".
             Nah seriously i hope to put a smile on your face whenever you visit this page.
             Yep thats all , looking forward to see u soon and add to this collection.
-
+            <br></br><br></br>
             PS: I have been promoted from just a friend.
             I want u to be happy always and yeah i wanna see u grow a lot.
             I will always respect u and just wanna spend some real good time with u and make a loooot of memories.
-            I love u🫶.
 
           </p>
+          <h1 className="font-playfair text-2xl md:text-3xl lg:text-4xl font-light text-neutral-900 mb-6 tracking-tight leading-tight">
+            I love you 
+          </h1>
 
           {/* Navigation Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
