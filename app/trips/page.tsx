@@ -83,6 +83,8 @@ const trips = [
     description: "Kya toh thha re ma yo dinn, almost u had fell for me",
     media: [
       // Auto-scanned converted files starting with 5 followed by digits (51-59, 510-516)
+      { id: 519 , type: "video", src: "/videos/519.mp4", alt: "Adde pe proposal video" },
+      { id: 516, type: "image", src: "/images/516.jpeg", alt: "🤣🤣🤣🤣" },
       { id: 51, type: "image", src: "/images/51.jpeg", alt: "" },
       { id: 52, type: "image", src: "/images/52.jpeg", alt: "" },
       { id: 53, type: "image", src: "/images/53.jpeg", alt: "" },
@@ -96,13 +98,42 @@ const trips = [
       { id: 511, type: "image", src: "/images/511.jpeg", alt: "" },
       { id: 512, type: "image", src: "/images/512.jpeg", alt: "" },
       { id: 514, type: "image", src: "/images/514.jpeg", alt: "" },
-      { id: 515, type: "image", src: "/images/515.jpeg", alt: "" },
-      { id: 516, type: "image", src: "/images/516.jpeg", alt: "🤣🤣🤣🤣" },
-      { id: 519 , type: "video", src: "/videos/519.mp4", alt: "Adde pe proposal video" }
+      { id: 515, type: "image", src: "/images/515.jpeg", alt: "" }
+    ]
+  },
+    {
+    id: 6,
+    title: "10 days",
+    location: "I seriously dont know",
+    date: "September is the month",
+    description: "Do u have the balls to be my gf???????????????",
+    media: [
+      { id: 80, type: "video", src: "/videos/81.mp4", alt: "Nikaala baadme" },
+      { id: 83, type: "image", src: "/images/84.jpeg", alt: "No deed performed " },
+      { id: 81, type: "image", src: "/images/82.jpeg", alt: "Manifestation manifesting" },
+      { id: 82, type: "image", src: "/images/83.jpeg", alt: "She has no clue whats gon happen" },
+      { id: 818, type: "image", src: "/images/818.jpeg", alt: "Wanna drown in these eyes forever" },
+      { id: 84, type: "image", src: "/images/85.jpeg", alt: "So happy after jiggle sesh" },
+      { id: 85, type: "image", src: "/images/86.jpeg", alt: "" },
+      { id: 86, type: "image", src: "/images/87.jpeg", alt: "" },
+      { id: 87, type: "image", src: "/images/88.jpeg", alt: "" },
+      { id: 88, type: "image", src: "/images/89.jpeg", alt: "" },
+      { id: 811, type: "image", src: "/images/811.jpeg", alt: "" },
+      { id: 812, type: "image", src: "/images/812.jpeg", alt: "" },
+      { id: 813, type: "image", src: "/images/813.jpeg", alt: "" },
+      { id: 814, type: "image", src: "/images/814.jpeg", alt: "" },
+      { id: 815, type: "image", src: "/images/815.jpeg", alt: "" },
+      { id: 816, type: "image", src: "/images/816.jpeg", alt: "" },
+      { id: 817, type: "image", src: "/images/817.jpeg", alt: "" },
+      { id: 819, type: "image", src: "/images/819.jpeg", alt: "" },
+      { id: 820, type: "image", src: "/images/820.jpeg", alt: "" },
+      { id: 821, type: "image", src: "/images/821.jpeg", alt: "" },
+      { id: 822, type: "image", src: "/images/822.jpeg", alt: "" },
+
     ]
   },
   {
-    id: 6,
+    id: 7,
     title: "Random Shite",
     location: "Hmm tough question I think aapke dill mai🧐",
     date: "All the best finding dates",
@@ -145,7 +176,7 @@ const trips = [
       { id: 77, type: "image", src: "/images/77.jpg", alt: "" },
       { id: 78, type: "image", src: "/images/78.jpg", alt: "" },
       { id: 79, type: "image", src: "/images/79.jpg", alt: "" },
-      { id: 710, type: "image", src: "/images/710.jpg", alt: "" },
+      { id: 710, type: "image", src: "/images/710.jpg", alt: "" },  
     ]
   }
 ];
