@@ -72,8 +72,7 @@ export default function GalleryPage() {
               Too much chuchi💀
             </h1>
             <p className="text-neutral-600 text-base font-light">
-              Dekh ba aapne aap ko and listen to ur fav song (Just press play if
-              it isnt playing)
+              Dekh ba aapne aap ko and listen to ur fav song.
             </p>
           </div>
 
