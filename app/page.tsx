@@ -38,13 +38,15 @@ export default function HomePage() {
           {/* Navigation Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/gallery">
-<button
-  className="group text-neutral-800 font-medium py-4 px-8 rounded-lg text-base transition-all duration-200 flex items-center gap-3 border border-neutral-300 hover:border-neutral-400"
-  style={{ backgroundColor: 'lavender' }}
->
-  View Gallery
-  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-</button>
+              <button
+              className="group text-neutral-800 font-medium py-4 px-8 rounded-lg text-base transition-all duration-200 flex items-center gap-3 border border-neutral-300 hover:border-neutral-400"
+style={{ backgroundColor: '#D8BFF8' }} // a gentle, richer lavender
+// Medium lavender
+
+              >
+                View Gallery
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+              </button>
             </Link>
             
             <Link href="/trips">
