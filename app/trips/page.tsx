@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, MapPin, Calendar, Heart } from "lucide-react";
 import { Lightbox } from "../../components/lightbox";
-import { Toast } from "../../components/toast";
 
 // Trip data - you can add more trips here
 const trips = [
@@ -184,23 +183,9 @@ const trips = [
 export default function TripsPage() {
   const [selectedImage, setSelectedImage] = useState<any>(null);
   const [selectedVideo, setSelectedVideo] = useState<any>(null);
-  const [showToast, setShowToast] = useState(false);
-
-  useEffect(() => {
-    setShowToast(true);
-    const timer = setTimeout(() => setShowToast(false), 4000);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div className="min-h-screen bg-neutral-50">
-      {/* Toast Notification */}
-      <Toast
-        show={showToast}
-        message="Reliving our beautiful journeys together 🌍"
-        onClose={() => setShowToast(false)}
-      />
-
       {/* Header */}
       <header className="p-6">
         <Link href="/">

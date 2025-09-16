@@ -1,12 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Lightbox } from "../../components/lightbox";
-import { Toast } from "../../components/toast";
-import { AudioPlayer } from "../../components/audio-player";
 
 // Your gallery images
 const galleryImages = [
@@ -32,27 +30,9 @@ export default function GalleryPage() {
   const [selectedImage, setSelectedImage] = useState<
     (typeof galleryImages)[0] | null
   >(null);
-  const [showToast, setShowToast] = useState(false);
-
-  useEffect(() => {
-    // Show toast when page loads
-    setShowToast(true);
-    const timer = setTimeout(() => setShowToast(false), 4000);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div className="min-h-screen bg-neutral-50">
-      {/* Audio Player */}
-      <AudioPlayer />
-
-      {/* Toast Notification */}
-      <Toast
-        show={showToast}
-        message="Now playing your favourite song 🎶"
-        onClose={() => setShowToast(false)}
-      />
-
       {/* Header */}
       <header className="p-6">
         <Link href="/">
@@ -72,7 +52,7 @@ export default function GalleryPage() {
               Too much chuchi💀
             </h1>
             <p className="text-neutral-600 text-base font-light">
-              Dekh ba aapne aap ko and listen to ur fav song.
+              Dekh ba aapne aap ko.
             </p>
           </div>
 
