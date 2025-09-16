@@ -37,6 +37,7 @@ interface AudioContextType {
   volume: number;
   currentTrack: number;
   currentSong: { id: number; title: string; src: string };
+  showTitle: boolean;
   togglePlay: () => void;
   nextTrack: () => void;
   previousTrack: () => void;
@@ -62,19 +63,32 @@ export function GlobalAudioProvider({ children }: AudioProviderProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolumeState] = useState(0.5);
   const [currentTrack, setCurrentTrack] = useState(0);
+  const [showTitle, setShowTitle] = useState(false);
 
   const currentSong = playlist[currentTrack];
 
   const nextTrack = () => {
     const nextIndex = (currentTrack + 1) % playlist.length;
     setCurrentTrack(nextIndex);
+    setShowTitle(true);
     console.log("Switching to track:", nextIndex, playlist[nextIndex]);
+    
+    // Hide title after 3 seconds
+    setTimeout(() => {
+      setShowTitle(false);
+    }, 3000);
   };
 
   const previousTrack = () => {
     const prevIndex = currentTrack === 0 ? playlist.length - 1 : currentTrack - 1;
     setCurrentTrack(prevIndex);
+    setShowTitle(true);
     console.log("Switching to previous track:", prevIndex, playlist[prevIndex]);
+    
+    // Hide title after 3 seconds
+    setTimeout(() => {
+      setShowTitle(false);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -96,8 +110,9 @@ export function GlobalAudioProvider({ children }: AudioProviderProps) {
       };
       const handleEnded = () => {
         console.log("Audio ended, advancing to next track");
-        // Auto advance to next track when song ends
+        // Auto advance to next track when song ends (WITHOUT showing title)
         setCurrentTrack(prev => (prev + 1) % playlist.length);
+        // Keep showTitle as false for auto-advance
       };
       const handleError = (e: any) => {
         console.error("Audio error:", e);
@@ -207,6 +222,7 @@ export function GlobalAudioProvider({ children }: AudioProviderProps) {
     volume,
     currentTrack,
     currentSong,
+    showTitle,
     togglePlay,
     nextTrack,
     previousTrack,
