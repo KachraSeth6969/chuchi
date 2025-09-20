@@ -1,0 +1,154 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.chuchi.loveapp"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="34" />
+10
+11    <!-- Internet permission for WebView -->
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:6:5-67
+12-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:6:22-64
+13    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+13-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:7:5-79
+13-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:7:22-76
+14
+15    <!-- Optional: For file downloads -->
+16    <uses-permission
+16-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:10:5-11:38
+17        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+17-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:10:22-78
+18        android:maxSdkVersion="28" />
+18-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:11:9-35
+19
+20    <permission
+20-->[androidx.core:core:1.12.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/d194422c8056954806f4726bd9ecd232/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+21        android:name="com.chuchi.loveapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+21-->[androidx.core:core:1.12.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/d194422c8056954806f4726bd9ecd232/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+22        android:protectionLevel="signature" />
+22-->[androidx.core:core:1.12.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/d194422c8056954806f4726bd9ecd232/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+23
+24    <uses-permission android:name="com.chuchi.loveapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+24-->[androidx.core:core:1.12.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/d194422c8056954806f4726bd9ecd232/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+24-->[androidx.core:core:1.12.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/d194422c8056954806f4726bd9ecd232/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+25
+26    <application
+26-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:13:5-36:19
+27        android:allowBackup="true"
+27-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:14:9-35
+28        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+28-->[androidx.core:core:1.12.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/d194422c8056954806f4726bd9ecd232/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+29        android:dataExtractionRules="@xml/data_extraction_rules"
+29-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:15:9-65
+30        android:debuggable="true"
+31        android:extractNativeLibs="false"
+32        android:fullBackupContent="@xml/backup_rules"
+32-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:16:9-54
+33        android:icon="@drawable/ic_launcher"
+33-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:17:9-45
+34        android:label="@string/app_name"
+34-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:18:9-41
+35        android:roundIcon="@drawable/ic_launcher"
+35-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:19:9-50
+36        android:supportsRtl="true"
+36-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:20:9-35
+37        android:testOnly="true"
+38        android:theme="@style/Theme.ChuchiLoveApp"
+38-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:21:9-51
+39        android:usesCleartextTraffic="true" >
+39-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:22:9-44
+40        <activity
+40-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:25:9-35:20
+41            android:name="com.chuchi.loveapp.MainActivity"
+41-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:26:13-41
+42            android:configChanges="orientation|screenSize|keyboardHidden"
+42-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:30:13-74
+43            android:exported="true"
+43-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:27:13-36
+44            android:screenOrientation="portrait"
+44-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:29:13-49
+45            android:theme="@style/Theme.ChuchiLoveApp.NoActionBar" >
+45-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:28:13-67
+46            <intent-filter>
+46-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:31:13-34:29
+47                <action android:name="android.intent.action.MAIN" />
+47-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:32:17-69
+47-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:32:25-66
+48
+49                <category android:name="android.intent.category.LAUNCHER" />
+49-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:33:17-77
+49-->/Users/bramhabajannavar/Desktop/chuchi/android-app/app/src/main/AndroidManifest.xml:33:27-74
+50            </intent-filter>
+51        </activity>
+52
+53        <provider
+53-->[androidx.emoji2:emoji2:1.2.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/ddf0084621dcf1a3bb1a2eb44a1207d6/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+54            android:name="androidx.startup.InitializationProvider"
+54-->[androidx.emoji2:emoji2:1.2.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/ddf0084621dcf1a3bb1a2eb44a1207d6/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
+55            android:authorities="com.chuchi.loveapp.androidx-startup"
+55-->[androidx.emoji2:emoji2:1.2.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/ddf0084621dcf1a3bb1a2eb44a1207d6/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
+56            android:exported="false" >
+56-->[androidx.emoji2:emoji2:1.2.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/ddf0084621dcf1a3bb1a2eb44a1207d6/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
+57            <meta-data
+57-->[androidx.emoji2:emoji2:1.2.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/ddf0084621dcf1a3bb1a2eb44a1207d6/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+58                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+58-->[androidx.emoji2:emoji2:1.2.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/ddf0084621dcf1a3bb1a2eb44a1207d6/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
+59                android:value="androidx.startup" />
+59-->[androidx.emoji2:emoji2:1.2.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/ddf0084621dcf1a3bb1a2eb44a1207d6/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
+60            <meta-data
+60-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/3dd016cf06bfd54186103aef34500a07/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
+61                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+61-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/3dd016cf06bfd54186103aef34500a07/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+62                android:value="androidx.startup" />
+62-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/3dd016cf06bfd54186103aef34500a07/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+63            <meta-data
+63-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+64                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+64-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+65                android:value="androidx.startup" />
+65-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+66        </provider>
+67
+68        <receiver
+68-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+69            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+69-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+70            android:directBootAware="false"
+70-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+71            android:enabled="true"
+71-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+72            android:exported="true"
+72-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+73            android:permission="android.permission.DUMP" >
+73-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+74            <intent-filter>
+74-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+75                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+75-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+75-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+76            </intent-filter>
+77            <intent-filter>
+77-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+78                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+78-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+78-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+79            </intent-filter>
+80            <intent-filter>
+80-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+81                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+81-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+81-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+82            </intent-filter>
+83            <intent-filter>
+83-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+84                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+84-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+84-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/cb2a65d0481c8d4d8701874a43f591c3/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+85            </intent-filter>
+86        </receiver>
+87    </application>
+88
+89</manifest>
