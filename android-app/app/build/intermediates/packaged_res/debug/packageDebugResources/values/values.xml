@@ -18,7 +18,7 @@
     <color name="neutral_800">#262626</color>
     <color name="neutral_900">#171717</color>
     <color name="white">#FFFFFFFF</color>
-    <string name="app_name">Chuchi ❤️</string>
+    <string name="app_name">Chuchi</string>
     <style name="Theme.ChuchiLoveApp" parent="Theme.Material3.DayNight">
         
         <item name="colorPrimary">@color/chuchi_pink</item>

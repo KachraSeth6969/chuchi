@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var errorText: TextView
     private lateinit var sharedPrefs: SharedPreferences
     private var isSessionAuthenticated = false  // Session-based authentication
+    private var appInBackground = false  // Track if app went to background
     
     // Your live Vercel URL
     private val websiteUrl = "https://chuchii.vercel.app"
@@ -202,11 +203,20 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         webView.onPause()
+        // Mark app as going to background
+        appInBackground = true
     }
     
     override fun onResume() {
         super.onResume()
         webView.onResume()
+        
+        // If app was in background and user is authenticated, require re-authentication
+        if (appInBackground && isSessionAuthenticated) {
+            isSessionAuthenticated = false  // Reset authentication
+            showAuthScreen()  // Show password screen again
+        }
+        appInBackground = false
     }
     
     override fun onDestroy() {
