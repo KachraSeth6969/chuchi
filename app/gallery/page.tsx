@@ -24,6 +24,14 @@ const galleryImages = [
   { id: 14, src: "/images/1.jpeg", alt: "New Memory" },
   { id: 15, src: "/images/2.jpeg", alt: "Fresh Moment" },
   { id: 16, src: "/images/3.jpeg", alt: "Latest Memory" },
+  { id: 17, src: "/images/76.jpg", alt: "Latest Memory" },
+  { id: 18, src: "/images/23.jpg", alt: "Latest Memory" },
+  { id: 19, src: "/images/916.jpeg", alt: "Latest Memory" },
+  { id: 20, src: "/images/915.jpeg", alt: "Latest Memory" },
+  { id: 21, src: "/images/914.jpeg", alt: "Latest Memory" },
+  { id: 22, src: "/images/913.jpeg", alt: "Latest Memory" },
+  { id: 23, src: "/images/912.jpeg", alt: "Latest Memory" },
+  { id: 24, src: "/images/911.jpeg", alt: "Latest Memory" },
 ];
 
 export default function GalleryPage() {

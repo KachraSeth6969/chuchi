@@ -25,8 +25,9 @@ class MainActivity : AppCompatActivity() {
     // Your live Vercel URL
     private val websiteUrl = "https://chuchii.vercel.app"
     
-    // Set your password here - change this to whatever you want
-    private val correctPassword = "Supernova"  // Change this to your preferred password
+    // Set your passwords here - both will work
+    private val correctPassword1 = "Supernova"  // First password
+    private val correctPassword2 = "supernova"  // Second password
     
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +57,8 @@ class MainActivity : AppCompatActivity() {
         submitButton.setOnClickListener {
             val enteredPassword = passwordInput.text.toString()
             
-            if (enteredPassword == correctPassword) {
+            // Check if entered password matches either of the correct passwords
+            if (enteredPassword == correctPassword1 || enteredPassword == correctPassword2) {
                 // Set session authentication (not persistent)
                 isSessionAuthenticated = true
                 showWebView()

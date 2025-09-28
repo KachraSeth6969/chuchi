@@ -131,8 +131,36 @@ const trips = [
 
     ]
   },
-  {
+      {
     id: 7,
+    title: "First bike trip",
+    location: "chipak chipak ke dil mai",
+    date: "CIE ke baad",
+    description: "Maangi hui bike leke chal pade do gareeb",
+    media: [
+      { id: 90, type: "image", src: "/images/924.jpeg", alt: "" },
+      { id: 91, type: "image", src: "/images/925.jpeg", alt: "" },
+      { id: 92, type: "image", src: "/images/926.jpeg", alt: "" },
+      { id: 93, type: "image", src: "/images/927.jpeg", alt: "" },
+      { id: 94, type: "image", src: "/images/928.jpeg", alt: "" },
+      { id: 95, type: "image", src: "/images/929.jpeg", alt: "" },
+      { id: 96, type: "image", src: "/images/930.jpeg", alt: "" },
+      { id: 97, type: "image", src: "/images/931.jpeg", alt: "" },
+      { id: 98, type: "image", src: "/images/932.jpeg", alt: "" },
+      { id: 99, type: "image", src: "/images/933.jpeg", alt: "" },
+      { id: 901, type: "image", src: "/images/934.jpeg", alt: "" },
+      { id: 902, type: "image", src: "/images/935.jpeg", alt: "" },
+      { id: 903, type: "image", src: "/images/936.jpeg", alt: "" },
+      { id: 904, type: "image", src: "/images/937.jpg", alt: "" },
+      { id: 905, type: "image", src: "/images/938.jpeg", alt: "" },
+      { id: 906, type: "image", src: "/images/939.jpeg", alt: "" },
+      { id: 907, type: "video", src: "/videos/921.mp4", alt: "" },
+      { id: 908, type: "video", src: "/videos/922.mp4", alt: "" },
+      { id: 909, type: "video", src: "/videos/923.mp4", alt: "" },
+    ]
+  },
+  {
+    id: 8,
     title: "Random Shite",
     location: "Hmm tough question I think aapke dill mai🧐",
     date: "All the best finding dates",
