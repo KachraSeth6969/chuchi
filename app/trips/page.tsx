@@ -151,12 +151,12 @@ const trips = [
       { id: 901, type: "image", src: "/images/934.jpeg", alt: "" },
       { id: 902, type: "image", src: "/images/935.jpeg", alt: "" },
       { id: 903, type: "image", src: "/images/936.jpeg", alt: "" },
-      { id: 904, type: "image", src: "/images/937.JPG", alt: "" },
+
       { id: 905, type: "image", src: "/images/938.jpeg", alt: "" },
       { id: 906, type: "image", src: "/images/939.jpeg", alt: "" },
       { id: 907, type: "video", src: "/videos/921.mp4", alt: "" },
-      { id: 908, type: "video", src: "/videos/922.mp4", alt: "" },
-      { id: 909, type: "video", src: "/videos/923.mp4", alt: "" },
+
+
     ]
   },
   {
