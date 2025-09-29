@@ -32,6 +32,16 @@ const playlist = [
   // { id: 5, title: "Thinking Out Loud", src: "/music/thinking-out-loud.mp3" },
 ];
 
+// 🎵 SHUFFLE ALGORITHM: Fisher-Yates shuffle for random order
+const shuffleArray = (array: any[]) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
 interface AudioContextType {
   isPlaying: boolean;
   volume: number;
@@ -64,14 +74,36 @@ export function GlobalAudioProvider({ children }: AudioProviderProps) {
   const [volume, setVolumeState] = useState(0.5);
   const [currentTrack, setCurrentTrack] = useState(0);
   const [showTitle, setShowTitle] = useState(false);
+  
+  // 🎵 RANDOM PLAYLIST STATE
+  const [shuffledPlaylist, setShuffledPlaylist] = useState<typeof playlist>([]);
+  const [playlistIndex, setPlaylistIndex] = useState(0);
 
-  const currentSong = playlist[currentTrack];
+  // Initialize shuffled playlist on mount
+  useEffect(() => {
+    const shuffled = shuffleArray(playlist);
+    setShuffledPlaylist(shuffled);
+    console.log("🎵 New shuffled playlist created:", shuffled.map(s => s.title));
+  }, []);
+
+  const currentSong = shuffledPlaylist.length > 0 ? shuffledPlaylist[playlistIndex] : playlist[0];
 
   const nextTrack = () => {
-    const nextIndex = (currentTrack + 1) % playlist.length;
-    setCurrentTrack(nextIndex);
+    if (shuffledPlaylist.length === 0) return;
+    
+    let nextIndex = playlistIndex + 1;
+    
+    // If we've reached the end of the shuffled playlist, create a new shuffle
+    if (nextIndex >= shuffledPlaylist.length) {
+      const newShuffled = shuffleArray(playlist);
+      setShuffledPlaylist(newShuffled);
+      nextIndex = 0;
+      console.log("🔄 Playlist completed! New shuffle:", newShuffled.map(s => s.title));
+    }
+    
+    setPlaylistIndex(nextIndex);
     setShowTitle(true);
-    console.log("Switching to track:", nextIndex, playlist[nextIndex]);
+    console.log("⏭️ Next track:", shuffledPlaylist[nextIndex]?.title || "Loading...");
     
     // Hide title after 3 seconds
     setTimeout(() => {
@@ -80,10 +112,18 @@ export function GlobalAudioProvider({ children }: AudioProviderProps) {
   };
 
   const previousTrack = () => {
-    const prevIndex = currentTrack === 0 ? playlist.length - 1 : currentTrack - 1;
-    setCurrentTrack(prevIndex);
+    if (shuffledPlaylist.length === 0) return;
+    
+    let prevIndex = playlistIndex - 1;
+    
+    // If we're at the beginning, go to the end of current shuffled playlist
+    if (prevIndex < 0) {
+      prevIndex = shuffledPlaylist.length - 1;
+    }
+    
+    setPlaylistIndex(prevIndex);
     setShowTitle(true);
-    console.log("Switching to previous track:", prevIndex, playlist[prevIndex]);
+    console.log("⏮️ Previous track:", shuffledPlaylist[prevIndex]?.title || "Loading...");
     
     // Hide title after 3 seconds
     setTimeout(() => {
@@ -109,9 +149,21 @@ export function GlobalAudioProvider({ children }: AudioProviderProps) {
         setIsPlaying(false);
       };
       const handleEnded = () => {
-        console.log("Audio ended, advancing to next track");
+        console.log("🎵 Song ended, auto-advancing to next random track");
         // Auto advance to next track when song ends (WITHOUT showing title)
-        setCurrentTrack(prev => (prev + 1) % playlist.length);
+        if (shuffledPlaylist.length > 0) {
+          let nextIndex = playlistIndex + 1;
+          
+          // If we've reached the end of the shuffled playlist, create a new shuffle
+          if (nextIndex >= shuffledPlaylist.length) {
+            const newShuffled = shuffleArray(playlist);
+            setShuffledPlaylist(newShuffled);
+            nextIndex = 0;
+            console.log("🔄 Auto-shuffle: New playlist order:", newShuffled.map(s => s.title));
+          }
+          
+          setPlaylistIndex(nextIndex);
+        }
         // Keep showTitle as false for auto-advance
       };
       const handleError = (e: any) => {
@@ -159,7 +211,7 @@ export function GlobalAudioProvider({ children }: AudioProviderProps) {
   // Update audio source when track changes
   useEffect(() => {
     if (audioRef.current && currentSong) {
-      console.log("Updating audio source to:", currentSong.src);
+      console.log("🎵 Updating audio source to:", currentSong.title, "-", currentSong.src);
       const wasPlaying = isPlaying;
       audioRef.current.src = currentSong.src;
       audioRef.current.load();
@@ -169,16 +221,16 @@ export function GlobalAudioProvider({ children }: AudioProviderProps) {
         if (playPromise !== undefined) {
           playPromise
             .then(() => {
-              console.log("Successfully switched and playing new track");
+              console.log("✅ Successfully switched and playing new track");
             })
             .catch((error) => {
-              console.log("Play was prevented by the browser:", error);
+              console.log("❌ Play was prevented by the browser:", error);
               setIsPlaying(false);
             });
         }
       }
     }
-  }, [currentTrack, currentSong.src]); // Use src instead of currentSong object
+  }, [playlistIndex, currentSong.src]); // Use playlistIndex instead of currentTrack
 
   useEffect(() => {
     if (audioRef.current) {
