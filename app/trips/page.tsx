@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, MapPin, Calendar, Heart } from "lucide-react";
 import { Lightbox } from "../../components/lightbox";
+import { getMediaUrl } from "../../lib/media-config";
 
 // Trip data - you can add more trips here
 const trips = [
@@ -270,7 +271,7 @@ export default function TripsPage() {
                         {item.type === 'image' ? (
                           <>
                             <Image
-                              src={item.src || "/placeholder.svg"}
+                              src={getMediaUrl(item.src) || "/placeholder.svg"}
                               alt={item.alt}
                               width={400}
                               height={300}
@@ -292,7 +293,7 @@ export default function TripsPage() {
                                 video.currentTime = 0.1; // Load first frame
                               }}
                             >
-                              <source src={item.src} type="video/mp4" />
+                              <source src={getMediaUrl(item.src)} type="video/mp4" />
                               Your browser does not support the video tag.
                             </video>
                             <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
@@ -360,7 +361,7 @@ export default function TripsPage() {
               autoPlay
               preload="metadata"
             >
-              <source src={selectedVideo.src} type="video/mp4" />
+              <source src={getMediaUrl(selectedVideo.src)} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
             <p className="text-white text-center mt-4">{selectedVideo.alt}</p>

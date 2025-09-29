@@ -5,33 +5,34 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Lightbox } from "../../components/lightbox";
+import { getMediaUrl } from "../../lib/media-config";
 
 // Your gallery images
 const galleryImages = [
-  { id: 1, src: "/images/20231209_134646.JPG", alt: "Beautiful Memory" },
-  { id: 2, src: "/images/IMG-20240223-WA0036.JPG", alt: "Special Moment" },
-  { id: 3, src: "/images/IMG_2916.jpeg", alt: "Cherished Memory" },
-  { id: 4, src: "/images/IMG_3185.jpeg", alt: "Precious Moment" },
-  { id: 5, src: "/images/IMG_3243.jpeg", alt: "Wonderful Memory" },
-  { id: 6, src: "/images/IMG_3669.jpeg", alt: "Amazing Moment" },
-  { id: 7, src: "/images/IMG_3984.jpeg", alt: "Sweet Memory" },
-  { id: 8, src: "/images/IMG_5717.jpeg", alt: "Beautiful Moment" },
-  { id: 9, src: "/images/IMG_5761.jpeg", alt: "Lovely Memory" },
-  { id: 10, src: "/images/IMG_6124.JPG", alt: "Perfect Moment" },
-  { id: 11, src: "/images/IMG_6160.jpeg", alt: "Treasured Memory" },
-  { id: 12, src: "/images/IMG_6220.JPG", alt: "Golden Moment" },
-  { id: 13, src: "/images/IMG_6279.jpg", alt: "Unforgettable Memory" },
-  { id: 14, src: "/images/1.jpeg", alt: "New Memory" },
-  { id: 15, src: "/images/2.jpeg", alt: "Fresh Moment" },
-  { id: 16, src: "/images/3.jpeg", alt: "Latest Memory" },
-  { id: 17, src: "/images/76.jpg", alt: "Latest Memory" },
-  { id: 18, src: "/images/23.jpg", alt: "Latest Memory" },
-  { id: 19, src: "/images/916.jpeg", alt: "Latest Memory" },
-  { id: 20, src: "/images/915.jpeg", alt: "Latest Memory" },
-  { id: 21, src: "/images/914.jpeg", alt: "Latest Memory" },
-  { id: 22, src: "/images/913.jpeg", alt: "Latest Memory" },
-  { id: 23, src: "/images/912.jpeg", alt: "Latest Memory" },
-  { id: 24, src: "/images/911.jpeg", alt: "Latest Memory" },
+  { id: 1, src: "/images/20231209_134646.JPG" },
+  { id: 2, src: "/images/IMG-20240223-WA0036.JPG" },
+  { id: 3, src: "/images/IMG_2916.jpeg" },
+  { id: 4, src: "/images/IMG_3185.jpeg" },
+  { id: 5, src: "/images/IMG_3243.jpeg" },
+  { id: 6, src: "/images/IMG_3669.jpeg" },
+  { id: 7, src: "/images/IMG_3984.jpeg" },
+  { id: 8, src: "/images/IMG_5717.jpeg" },
+  { id: 9, src: "/images/IMG_5761.jpeg" },
+  { id: 10, src: "/images/IMG_6124.JPG" },
+  { id: 11, src: "/images/IMG_6160.jpeg" },
+  { id: 12, src: "/images/IMG_6220.JPG" },
+  { id: 13, src: "/images/IMG_6279.jpg" },
+  { id: 14, src: "/images/1.jpeg" },
+  { id: 15, src: "/images/2.jpeg" },
+  { id: 16, src: "/images/3.jpeg" },
+  { id: 17, src: "/images/76.jpg" },
+  { id: 18, src: "/images/23.jpg" },
+  { id: 19, src: "/images/916.jpeg" },
+  { id: 20, src: "/images/915.jpeg" },
+  { id: 21, src: "/images/914.jpeg" },
+  { id: 22, src: "/images/913.jpeg" },
+  { id: 23, src: "/images/912.jpeg" },
+  { id: 24, src: "/images/911.jpeg" },
 ];
 
 export default function GalleryPage() {
@@ -74,8 +75,8 @@ export default function GalleryPage() {
               >
                 <div className="relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-lg border border-neutral-100">
                   <Image
-                    src={image.src || "/placeholder.svg"}
-                    alt={image.alt}
+                    src={getMediaUrl(image.src) || "/placeholder.svg"}
+                    alt="Gallery image"
                     width={400}
                     height={300}
                     className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"

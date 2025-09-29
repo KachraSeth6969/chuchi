@@ -3,12 +3,13 @@
 import { useEffect } from "react"
 import Image from "next/image"
 import { X } from "lucide-react"
+import { getMediaUrl } from "../lib/media-config"
 
 interface LightboxProps {
   image: {
     id: number
     src: string
-    alt: string
+    alt?: string
   }
   onClose: () => void
 }
@@ -48,8 +49,8 @@ export function Lightbox({ image, onClose }: LightboxProps) {
         {/* Image */}
         <div className="relative rounded-xl overflow-hidden shadow-xl bg-white">
           <Image
-            src={image.src || "/placeholder.svg"}
-            alt={image.alt}
+            src={getMediaUrl(image.src) || "/placeholder.svg"}
+            alt={image.alt || "Gallery image"}
             width={800}
             height={600}
             className="max-w-full max-h-[75vh] sm:max-h-[80vh] object-contain w-full"

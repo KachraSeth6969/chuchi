@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         authContainer.visibility = View.VISIBLE
         swipeRefreshLayout.visibility = View.GONE
         errorText.visibility = View.GONE
+        passwordInput.text.clear()  // Always clear password field
         passwordInput.requestFocus()
     }
     
@@ -216,6 +217,8 @@ class MainActivity : AppCompatActivity() {
         // If app was in background and user is authenticated, require re-authentication
         if (appInBackground && isSessionAuthenticated) {
             isSessionAuthenticated = false  // Reset authentication
+            passwordInput.text.clear()  // Clear the password field
+            errorText.visibility = View.GONE  // Hide any error messages
             showAuthScreen()  // Show password screen again
         }
         appInBackground = false
