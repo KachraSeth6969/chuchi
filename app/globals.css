@@ -8,6 +8,22 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* Improve mobile performance */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Improve image loading */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Better touch targets for mobile */
+  button, a {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
