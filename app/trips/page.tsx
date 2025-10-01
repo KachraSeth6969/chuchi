@@ -156,8 +156,16 @@ const trips = [
       { id: 905, type: "image", src: "/images/938.jpeg", alt: "" },
       { id: 906, type: "image", src: "/images/939.jpeg", alt: "" },
       { id: 907, type: "video", src: "/videos/921.mp4", alt: "" },
-
-
+      { id: 908, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759248594/116_vd8djo.jpg",alt:""},
+      { id: 909, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759248596/115_rtme6h.jpg",alt:""},
+      { id: 910, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759248857/113_qzx1if.mp4",alt:""},
+      { id: 911, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759248887/112_fycjln.mp4",alt:""},
+      { id: 912, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759248894/111_aaefef.mp4",alt:""},
+      { id: 913, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759248983/114_kcli30.mp4",alt:""},
+      { id: 914, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759318177/119_uq2b6h.jpg",alt:""},
+      { id: 915, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759318175/120_ptxwyh.jpg",alt:""},
+      { id: 916, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759318173/118_hmftcv.jpg",alt:""},
+      { id: 917, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759318111/117_gq1vkd.mp4",alt:""},
     ]
   },
   {
@@ -288,10 +296,6 @@ export default function TripsPage() {
                               preload="metadata"
                               muted
                               playsInline
-                              onLoadedMetadata={(e) => {
-                                const video = e.target as HTMLVideoElement;
-                                video.currentTime = 0.1; // Load first frame
-                              }}
                             >
                               <source src={getMediaUrl(item.src)} type="video/mp4" />
                               Your browser does not support the video tag.
