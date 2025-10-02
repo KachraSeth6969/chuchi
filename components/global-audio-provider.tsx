@@ -16,6 +16,7 @@ const playlist = [
   { id: 10, title: "Manwa Laage", src: "/music/ML.mp3" },
   { id: 11, title: "Perfect", src: "/music/Perfect.mp3" },
   { id: 12, title: "Pretty Little Baby", src: "/music/plb.mp3" },
+  { id: 13, title: "Pehli Mohabbat", src: "/music/PM.mp3" },
 
   
 
