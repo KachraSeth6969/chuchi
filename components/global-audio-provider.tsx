@@ -17,7 +17,7 @@ const playlist = [
   { id: 11, title: "Perfect", src: "/music/Perfect.mp3" },
   { id: 12, title: "Pretty Little Baby", src: "/music/plb.mp3" },
   { id: 13, title: "Pehli Mohabbat", src: "/music/PM.mp3" },
-  { id: 14, title: "Pehli Nazar", src: "/music/PN.mp3" },
+  { id: 14, title: "Pehli Nazar Mein", src: "/music/PN.mp3" },
 
   
 
