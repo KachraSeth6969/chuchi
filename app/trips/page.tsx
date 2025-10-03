@@ -145,7 +145,7 @@ const trips = [
       { id: 93, type: "image", src: "/images/927.jpeg", alt: "" },
       { id: 94, type: "image", src: "/images/928.jpeg", alt: "" },
       { id: 95, type: "image", src: "/images/929.jpeg", alt: "" },
-      { id: 96, type: "image", src: "/images/930.jpeg", alt: "" },
+      { id: 96, type: "image", src: "/images/930.jpeg", alt: "Mana kar rahi thhi" },
       { id: 97, type: "image", src: "/images/931.jpeg", alt: "" },
       { id: 98, type: "image", src: "/images/932.jpeg", alt: "" },
       { id: 99, type: "image", src: "/images/933.jpeg", alt: "" },
