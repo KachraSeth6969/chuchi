@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.webkit.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -58,6 +59,8 @@ class MainActivity : AppCompatActivity() {
             
             // Check if entered password matches (case insensitive)
             if (enteredPassword.lowercase() == correctPassword.lowercase()) {
+                // Hide keyboard first
+                hideKeyboard()
                 // Set session authentication (not persistent)
                 isSessionAuthenticated = true
                 showWebView()
@@ -103,6 +106,12 @@ class MainActivity : AppCompatActivity() {
         
         // Load your love app
         webView.loadUrl(websiteUrl)
+    }
+    
+    private fun hideKeyboard() {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        // Hide keyboard from current focused view (passwordInput)
+        inputMethodManager.hideSoftInputFromWindow(passwordInput.windowToken, 0)
     }
     
     private fun setupWebView() {
