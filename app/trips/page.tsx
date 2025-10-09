@@ -168,8 +168,48 @@ const trips = [
       { id: 917, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759318111/117_gq1vkd.mp4",alt:""},
     ]
   },
-  {
+
+    {
     id: 8,
+    title: "Stay Together",
+    location: "Special Place in Heart",
+    date: "October 2025",
+    description: "Poora hafta saath mai rahe , kutte jaisa paisa udaye",
+    media: [
+      // Images
+      { id: 1001, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942166/chuchi/images/IMG_0316.jpg", alt: "" },
+      { id: 1002, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942173/chuchi/images/IMG_0317.jpg", alt: "" },
+      { id: 1003, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942178/chuchi/images/IMG_0323.jpg", alt: "" },
+      { id: 1004, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942183/chuchi/images/IMG_0324.jpg", alt: "" },
+      { id: 1005, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942188/chuchi/images/IMG_0385.jpg", alt: "" },
+      { id: 1006, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942192/chuchi/images/IMG_0386.jpg", alt: "" },
+      { id: 1007, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942197/chuchi/images/IMG_0387.jpg", alt: "" },
+      { id: 1008, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942201/chuchi/images/IMG_0390.jpg", alt: "" },
+      { id: 1009, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942204/chuchi/images/IMG_0391.jpg", alt: "" },
+      { id: 1010, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942207/chuchi/images/IMG_0392.jpg", alt: "" },
+      { id: 1011, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942210/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.28%E2%80%AFAM%20%281%29.jpg", alt: "" },
+      { id: 1012, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942212/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.28%E2%80%AFAM.jpg", alt: "" },
+      { id: 1013, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942214/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.36%E2%80%AFAM.jpg", alt: "" },
+      { id: 1014, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942215/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.37%E2%80%AFAM.jpg", alt: "" },
+      { id: 1015, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942217/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.51%E2%80%AFAM.jpg", alt: "" },
+      { id: 1016, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942218/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.52%E2%80%AFAM%20%281%29.jpg", alt: "" },
+      { id: 1017, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942220/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.53%E2%80%AFAM%20%281%29.jpg", alt: "" },
+      { id: 1018, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942222/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.53%E2%80%AFAM.jpg", alt: "" },
+      { id: 1019, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942223/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.54%E2%80%AFAM.jpg", alt: "" },
+      { id: 1020, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942225/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.41.08%E2%80%AFAM.jpg", alt: "" },
+      // Videos
+      { id: 1021, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942242/chuchi/videos/IMG_0315.mp4", alt: "" },
+      { id: 1022, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942265/chuchi/videos/IMG_0364.mp4", alt: "" },
+      { id: 1023, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942283/chuchi/videos/IMG_0366.mp4", alt: "" },
+      { id: 1024, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942298/chuchi/videos/IMG_0367.mp4", alt: "" },
+      { id: 1025, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942360/chuchi/videos/WhatsApp%20Video%202025-10-08%20at%201.40.55%E2%80%AFAM%20%281%29.mp4", alt: "" },
+      { id: 1026, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942368/chuchi/videos/WhatsApp%20Video%202025-10-08%20at%201.40.55%E2%80%AFAM.mp4", alt: "" }
+    ]
+  },
+
+
+  {
+    id: 9,
     title: "Random Shite",
     location: "Hmm tough question I think aapke dill mai🧐",
     date: "All the best finding dates",
