@@ -33,6 +33,9 @@ const galleryImages = [
   { id: 22, src: "/images/913.jpeg" },
   { id: 23, src: "/images/912.jpeg" },
   { id: 24, src: "/images/911.jpeg" },
+  { id: 25, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695574/IMG_0492_gnhvzl.jpg" },
+  { id: 26, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695573/IMG_0479_zr9zez.jpg" },
+  { id: 27, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695570/IMG_0445_poz2nx.jpg" },
 ];
 
 export default function GalleryPage() {

@@ -206,9 +206,33 @@ const trips = [
     ]
   },
 
-
   {
     id: 9,
+    title: "First Date💋",
+    location: "Sozo bolke ekla hai kidhar toh bc",
+    date: "10 October",
+    description: "Kya toh crazy jhagda kiye thhe ek dinn pehle",
+    media: [
+      // 15 actual images from your Cloudinary collection
+      { id: 1101, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695569/IMG_0442_rws509.jpg", alt: "" },
+      { id: 1102, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695570/IMG_0445_poz2nx.jpg", alt: "" },
+      { id: 1103, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695570/IMG_0446_kr71b2.jpg", alt: "" },
+      { id: 1104, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695571/IMG_0454_taufvw.jpg", alt: "" },
+      { id: 1105, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695571/IMG_0448_regmni.jpg", alt: "" },
+      { id: 1106, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695571/IMG_0465_weybsx.jpg", alt: "" },
+      { id: 1107, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695572/IMG_0455_uhjlld.jpg", alt: "" },
+      { id: 1108, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695572/IMG_0485_przbm1.jpg", alt: "" },
+      { id: 1109, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695573/IMG_0479_zr9zez.jpg", alt: "" },
+      { id: 1110, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695573/IMG_0490_ycqbo0.jpg", alt: "" },
+      { id: 1111, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695573/IMG_0449_aimmrc.jpg", alt: "" },
+      { id: 1112, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695574/IMG_0495_bdobvf.jpg", alt: "" },
+      { id: 1113, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695574/IMG_0492_gnhvzl.jpg", alt: "" },
+      { id: 1114, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695574/IMG_0497_vil3ua.jpg", alt: "" },
+      { id: 1115, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695575/IMG_0500_sgch5a.jpg", alt: "" }
+    ]
+  },
+  {
+    id: 10,
     title: "Random Shite",
     location: "Hmm tough question I think aapke dill mai🧐",
     date: "All the best finding dates",

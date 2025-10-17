@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sharedPrefs: SharedPreferences
     private var isSessionAuthenticated = false  // Session-based authentication
     private var appInBackground = false  // Track if app went to background
+    private var userInitiatedExit = false  // Track if user explicitly chose to exit
+    private var hasInitiallyLoaded = false  // Track if we've done initial setup
     
     // Your live Vercel URL - this will handle authentication UI
     // Add timestamp to prevent caching and force fresh load
@@ -72,8 +74,11 @@ class MainActivity : AppCompatActivity() {
         // Load website - it will show password screen since user is not authenticated
         isSessionAuthenticated = false
         
-        // Clear any existing authentication state
-        clearWebViewData()
+        // Only clear data on very first load, not on navigation
+        if (!hasInitiallyLoaded) {
+            clearWebViewData()
+            hasInitiallyLoaded = true
+        }
         
         webView.loadUrl(getWebsiteUrl())
         swipeRefreshLayout.visibility = View.VISIBLE
@@ -136,61 +141,27 @@ class MainActivity : AppCompatActivity() {
                     super.onPageFinished(view, url)
                     swipeRefreshLayout.isRefreshing = false
                     
-                    // Force React authentication to reset by triggering window blur/hidden events
+                    // Simple authentication tracking - don't interfere with web navigation
                     webView.evaluateJavascript("""
                         (function() {
-                            // Clear any possible storage first
-                            if (typeof localStorage !== 'undefined') localStorage.clear();
-                            if (typeof sessionStorage !== 'undefined') sessionStorage.clear();
-                            
-                            // Force React auth component to logout by simulating tab hidden
-                            if (typeof document !== 'undefined') {
-                                // Set document.hidden to true to trigger visibility change
-                                Object.defineProperty(document, 'hidden', {
-                                    get: function() { return true; },
-                                    configurable: true
-                                });
-                                
-                                // Dispatch visibility change event
-                                document.dispatchEvent(new Event('visibilitychange'));
-                                
-                                // Also dispatch blur event on window
-                                window.dispatchEvent(new Event('blur'));
-                                
-                                // Reset document.hidden after a moment
-                                setTimeout(() => {
-                                    Object.defineProperty(document, 'hidden', {
-                                        get: function() { return false; },
-                                        configurable: true
-                                    });
-                                    document.dispatchEvent(new Event('visibilitychange'));
-                                    window.dispatchEvent(new Event('focus'));
-                                }, 100);
-                            }
-                            
-                            return 'reset_auth';
+                            // Just check if password screen is currently visible
+                            const passwordScreen = document.querySelector('[class*="password"]') || 
+                                                 document.querySelector('[placeholder*="secret"]') ||
+                                                 document.querySelector('input[type="password"]');
+                            const isPasswordVisible = passwordScreen && passwordScreen.offsetParent !== null;
+                            return isPasswordVisible ? 'password_screen' : 'authenticated_screen';
                         })();
-                    """) { _ ->
-                        // Wait a bit then check if password screen is shown
-                        webView.postDelayed({
-                            webView.evaluateJavascript("""
-                                (function() {
-                                    const passwordScreen = document.querySelector('[class*="password"]') || 
-                                                         document.querySelector('[placeholder*="secret"]') ||
-                                                         document.querySelector('input[type="password"]');
-                                    const isPasswordVisible = passwordScreen && passwordScreen.offsetParent !== null;
-                                    
-                                    // If still no password screen, reload the page
-                                    if (!isPasswordVisible) {
-                                        window.location.reload();
-                                    }
-                                    
-                                    return isPasswordVisible;
-                                })();
-                            """) { result ->
-                                isSessionAuthenticated = false
-                            }
-                        }, 1000)
+                    """) { result ->
+                        val showingPasswordScreen = result.trim('"') == "password_screen"
+                        
+                        // Update our local authentication state to match what the web shows
+                        if (showingPasswordScreen && isSessionAuthenticated) {
+                            // Web is showing password screen, update our state
+                            isSessionAuthenticated = false
+                        } else if (!showingPasswordScreen && !isSessionAuthenticated) {
+                            // Web is showing authenticated content, update our state
+                            isSessionAuthenticated = true
+                        }
                     }
                 }
                 
@@ -268,9 +239,27 @@ class MainActivity : AppCompatActivity() {
                 webView.goBack()
             }
             else -> {
-                super.onBackPressed()
+                // Instead of closing app, ask user if they want to exit
+                // This prevents accidental logout from back button
+                showExitConfirmation()
             }
         }
+    }
+    
+    private fun showExitConfirmation() {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        builder.setTitle("Exit Chuchi?")
+        builder.setMessage("Are you sure you want to close the app? You'll need to enter the password again.")
+        builder.setPositiveButton("Exit") { _, _ ->
+            // User confirmed exit - mark as user-initiated and close the app
+            userInitiatedExit = true
+            finishAffinity()
+        }
+        builder.setNegativeButton("Stay") { dialog, _ ->
+            // User wants to stay - just dismiss dialog
+            dialog.dismiss()
+        }
+        builder.show()
     }
     
     override fun onPause() {
@@ -284,14 +273,21 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         webView.onResume()
         
-        // If app was in background and user was authenticated, require re-authentication
+        // Only force logout if app was truly in background for security
+        // Let the web app handle its own navigation and authentication
         if (appInBackground && isSessionAuthenticated) {
-            isSessionAuthenticated = false  // Reset authentication
-            clearWebViewData()  // Clear all web data
-            // Reload the page to show password screen again
-            webView.loadUrl(getWebsiteUrl())
+            // Simply trigger the web app's visibility change to let it handle logout
+            webView.evaluateJavascript("""
+                // Let the web app's own visibility logic handle this
+                if (typeof document !== 'undefined') {
+                    document.dispatchEvent(new Event('visibilitychange'));
+                    window.dispatchEvent(new Event('focus'));
+                }
+            """) { _ -> }
         }
+        
         appInBackground = false
+        userInitiatedExit = false
     }
     
     override fun onDestroy() {
