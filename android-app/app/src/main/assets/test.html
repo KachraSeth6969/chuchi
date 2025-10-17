@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebView Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        .button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            background: white;
+            color: #667eea;
+        }
+        .status {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 WebView Working!</h1>
+        <p>If you can see this, the WebView is functioning properly.</p>
+        <button class="button" onclick="testNetwork()">Test Network Connection</button>
+        <button class="button" onclick="loadWebsite()">Load Chuchi Website</button>
+        <div class="status" id="status">
+            Ready to test...
+        </div>
+    </div>
+
+    <script>
+        function updateStatus(message, color = 'white') {
+            const status = document.getElementById('status');
+            status.innerHTML = message;
+            status.style.color = color;
+        }
+
+        function testNetwork() {
+            updateStatus('Testing network connection...', 'yellow');
+            
+            fetch('https://jsonplaceholder.typicode.com/posts/1')
+                .then(response => response.json())
+                .then(data => {
+                    updateStatus('✅ Network connection is working!', 'lightgreen');
+                })
+                .catch(error => {
+                    updateStatus('❌ Network connection failed: ' + error.message, 'salmon');
+                });
+        }
+
+        function loadWebsite() {
+            updateStatus('Loading Chuchi website...', 'yellow');
+            window.location.href = 'https://chuchii.vercel.app';
+        }
+
+        // Test basic functionality
+        window.onload = function() {
+            updateStatus('WebView loaded successfully! JavaScript is working.', 'lightgreen');
+        };
+    </script>
+</body>
+</html>

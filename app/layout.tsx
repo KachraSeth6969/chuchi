@@ -4,6 +4,8 @@ import { Inter, Playfair_Display } from "next/font/google"
 import "./globals.css"
 import { GlobalAudioProvider } from "../components/global-audio-provider"
 import { GlobalAudioPlayer } from "../components/global-audio-player"
+import { AuthProvider } from "../components/auth-provider"
+import AuthGuard from "../components/auth-guard"
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -50,8 +52,12 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className={inter.className}>
         <GlobalAudioProvider>
-          <GlobalAudioPlayer />
-          {children}
+          <AuthProvider>
+            <GlobalAudioPlayer />
+            <AuthGuard>
+              {children}
+            </AuthGuard>
+          </AuthProvider>
         </GlobalAudioProvider>
       </body>
     </html>

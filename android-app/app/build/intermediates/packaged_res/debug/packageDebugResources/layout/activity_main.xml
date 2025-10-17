@@ -4,103 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Password Authentication Screen -->
-    <ScrollView
-        android:id="@+id/authContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/neutral_50"
-        android:visibility="visible">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="24dp"
-            android:minHeight="600dp">
-
-            <!-- Spacer for center positioning -->
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-            <!-- Main Title matching website -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chuchi's World"
-                android:textSize="32sp"
-                android:textColor="@color/neutral_900"
-                android:fontFamily="serif"
-                android:textStyle="normal"
-                android:letterSpacing="0.02"
-                android:layout_marginBottom="16dp"/>
-
-            <!-- Single Emoji -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="✨"
-                android:textSize="32sp"
-                android:layout_marginBottom="48dp"/>
-
-            <!-- Password Input (clean, minimal) -->
-            <EditText
-                android:id="@+id/passwordInput"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:hint="Enter password"
-                android:inputType="textPassword"
-                android:background="@drawable/website_input_background"
-                android:padding="20dp"
-                android:textSize="16sp"
-                android:textColor="@color/neutral_900"
-                android:textColorHint="@color/neutral_600"
-                android:layout_marginBottom="24dp"
-                android:maxWidth="400dp"/>
-
-            <!-- Error Text -->
-            <TextView
-                android:id="@+id/errorText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Try again ✨"
-                android:textColor="#EF4444"
-                android:textSize="14sp"
-                android:visibility="gone"
-                android:layout_marginBottom="16dp"/>
-
-            <!-- Submit Button matching website buttons -->
-            <Button
-                android:id="@+id/submitButton"
-                android:layout_width="wrap_content"
-                android:layout_height="56dp"
-                android:text="Enter →"
-                android:textSize="16sp"
-                android:textColor="@color/neutral_800"
-                android:background="@drawable/website_button_background"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:minWidth="160dp"
-                android:elevation="0dp"/>
-
-            <!-- Spacer for center positioning -->
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-    </ScrollView>
-
-    <!-- WebView Container -->
+    <!-- WebView Container - authentication handled by website -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <WebView
             android:id="@+id/webView"

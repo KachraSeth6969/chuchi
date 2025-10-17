@@ -24,10 +24,6 @@ drawable password_input_background
 drawable submit_button_background
 drawable website_button_background
 drawable website_input_background
-id authContainer
-id errorText
-id passwordInput
-id submitButton
 id swipeRefreshLayout
 id webView
 layout activity_main

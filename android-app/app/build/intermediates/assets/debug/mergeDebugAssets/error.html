@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connection Error - Chuchi</title>
+    <style>
+        body {
+            font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #e8d5ff 0%, #f0e6ff 50%, #e8d5ff 100%);
+            color: #4a4a4a;
+            text-align: center;
+            padding: 40px 20px;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .heart {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: beat 2s ease-in-out infinite;
+        }
+        @keyframes beat {
+            0%, 50%, 100% { transform: scale(1); }
+            25%, 75% { transform: scale(1.1); }
+        }
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .subtitle {
+            color: #888;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        .button {
+            background: linear-gradient(135deg, #b794f6 0%, #9f7aea 100%);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 150px;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(183, 148, 246, 0.3);
+        }
+        .button:active {
+            transform: translateY(0);
+        }
+        .error-details {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #dc2626;
+            font-size: 14px;
+        }
+        .tips {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #0369a1;
+            font-size: 14px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heart">💔</div>
+        <h1>Connection Lost</h1>
+        <div class="subtitle">
+            Can't reach our memories right now.<br>
+            Let's try to reconnect...
+        </div>
+        
+        <div class="error-details" id="errorDetails" style="display: none;">
+            Error loading the website
+        </div>
+        
+        <button class="button" onclick="retryConnection()">Try Again</button>
+        <button class="button" onclick="checkConnection()">Test Internet</button>
+        
+        <div class="tips">
+            <strong>Troubleshooting tips:</strong><br>
+            • Check your internet connection<br>
+            • Make sure you can access other websites<br>
+            • Try pulling down to refresh<br>
+            • Restart the app if needed
+        </div>
+        
+        <div id="status" style="margin-top: 20px; color: #666;"></div>
+    </div>
+
+    <script>
+        function updateStatus(message, isError = false) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.style.color = isError ? '#dc2626' : '#059669';
+        }
+
+        function retryConnection() {
+            updateStatus('Connecting to Chuchi...');
+            // Load the actual website
+            window.location.href = 'https://chuchii.vercel.app';
+        }
+
+        function checkConnection() {
+            updateStatus('Testing connection...');
+            
+            fetch('https://httpbin.org/get', { 
+                method: 'GET',
+                mode: 'cors'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        updateStatus('✓ Internet connection works! Try connecting to Chuchi again.');
+                    } else {
+                        updateStatus('Internet connection has issues.', true);
+                    }
+                })
+                .catch(error => {
+                    updateStatus('No internet connection detected.', true);
+                });
+        }
+
+        // Show any error details passed from Android
+        function showError(errorMsg) {
+            const errorDiv = document.getElementById('errorDetails');
+            errorDiv.textContent = errorMsg;
+            errorDiv.style.display = 'block';
+        }
+
+        window.onload = function() {
+            updateStatus('Ready to reconnect');
+        };
+    </script>
+</body>
+</html>

@@ -54,6 +54,7 @@ interface AudioContextType {
   nextTrack: () => void;
   previousTrack: () => void;
   setVolume: (volume: number) => void;
+  startPlayback: () => void;
 }
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
@@ -271,6 +272,24 @@ export function GlobalAudioProvider({ children }: AudioProviderProps) {
     setVolumeState(newVolume);
   };
 
+  const startPlayback = () => {
+    if (audioRef.current && !isPlaying) {
+      console.log("🎵 Starting playback after authentication");
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log("Post-auth play successful");
+            setIsPlaying(true);
+          })
+          .catch((error) => {
+            console.log("Post-auth play was prevented:", error);
+            setIsPlaying(false);
+          });
+      }
+    }
+  };
+
   const contextValue: AudioContextType = {
     isPlaying,
     volume,
@@ -281,6 +300,7 @@ export function GlobalAudioProvider({ children }: AudioProviderProps) {
     nextTrack,
     previousTrack,
     setVolume,
+    startPlayback,
   };
 
   return (
