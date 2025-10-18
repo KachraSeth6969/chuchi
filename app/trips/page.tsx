@@ -3,8 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, MapPin, Calendar, Heart } from "lucide-react";
+import { ArrowLeft, MapPin, Calendar, Heart, Edit3, X, Check, Plus, Trash2, Settings, Camera } from "lucide-react";
 import { Lightbox } from "../../components/lightbox";
+import MediaQueue from "../../components/media-queue";
 import { getMediaUrl } from "../../lib/media-config";
 
 // Trip data - you can add more trips here
@@ -283,17 +284,132 @@ const trips = [
 export default function TripsPage() {
   const [selectedImage, setSelectedImage] = useState<any>(null);
   const [selectedVideo, setSelectedVideo] = useState<any>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [selectedForRemoval, setSelectedForRemoval] = useState<Set<number>>(new Set());
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showCreateTripModal, setShowCreateTripModal] = useState(false);
+  const [selectedTripForEdit, setSelectedTripForEdit] = useState<number | null>(null);
+  const [isRemoving, setIsRemoving] = useState(false);
+
+  // Toggle edit mode
+  const toggleEditMode = () => {
+    setIsEditMode(!isEditMode);
+    setSelectedForRemoval(new Set());
+    setSelectedTripForEdit(null);
+  };
+
+  // Handle photo selection for removal within a trip
+  const togglePhotoSelection = (mediaId: number, tripId: number) => {
+    if (!isEditMode) return;
+    
+    const key = `${tripId}-${mediaId}`;
+    const newSelection = new Set(selectedForRemoval);
+    if (newSelection.has(key as any)) {
+      newSelection.delete(key as any);
+    } else {
+      newSelection.add(key as any);
+    }
+    setSelectedForRemoval(newSelection as any);
+  };
+
+  // Remove selected photos from trips
+  const removeSelectedPhotos = async () => {
+    if (selectedForRemoval.size === 0) return;
+    
+    setIsRemoving(true);
+    try {
+      console.log('Removing photos from trips:', Array.from(selectedForRemoval));
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setSelectedForRemoval(new Set());
+      setIsEditMode(false);
+    } catch (error) {
+      console.error('Failed to remove photos:', error);
+    } finally {
+      setIsRemoving(false);
+    }
+  };
+
+  // Handle adding photos from queue to a trip
+  const handleAddPhotosToTrip = (queueItems: any[], tripId: number) => {
+    console.log(`Adding photos to trip ${tripId}:`, queueItems);
+    setShowAddModal(false);
+    setSelectedTripForEdit(null);
+  };
+
+  // Delete entire trip
+  const deleteTrip = async (tripId: number) => {
+    if (!confirm('Are you sure you want to delete this trip? All photos will be moved to the queue.')) {
+      return;
+    }
+    
+    try {
+      console.log('Deleting trip:', tripId);
+      // TODO: API call to delete trip and move photos to queue
+    } catch (error) {
+      console.error('Failed to delete trip:', error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-neutral-50">
       {/* Header */}
       <header className="p-6">
-        <Link href="/">
-          <button className="group flex items-center gap-2 text-neutral-700 hover:text-neutral-900 transition-colors duration-200">
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
-            Back to Home
-          </button>
-        </Link>
+        <div className="flex items-center justify-between">
+          <Link href="/">
+            <button className="group flex items-center gap-2 text-neutral-700 hover:text-neutral-900 transition-colors duration-200">
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
+              Back to Home
+            </button>
+          </Link>
+          
+          {/* Edit Mode Controls */}
+          <div className="flex items-center gap-3">
+            {isEditMode && (
+              <>
+                {selectedForRemoval.size > 0 && (
+                  <button
+                    onClick={removeSelectedPhotos}
+                    disabled={isRemoving}
+                    className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    {isRemoving ? 'Removing...' : `Remove ${selectedForRemoval.size}`}
+                  </button>
+                )}
+                
+                <button
+                  onClick={() => setShowCreateTripModal(true)}
+                  className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                >
+                  <Plus className="w-4 h-4" />
+                  New Trip
+                </button>
+              </>
+            )}
+            
+            <button
+              onClick={toggleEditMode}
+              className={`flex items-center gap-2 font-medium py-2 px-4 rounded-lg transition-colors ${
+                isEditMode
+                  ? 'bg-neutral-200 hover:bg-neutral-300 text-neutral-900'
+                  : 'text-neutral-800 border border-neutral-300 hover:border-neutral-400'
+              }`}
+              style={!isEditMode ? { backgroundColor: '#D8BFF8' } : undefined}
+            >
+              {isEditMode ? (
+                <>
+                  <X className="w-4 h-4" />
+                  Cancel
+                </>
+              ) : (
+                <>
+                  <Edit3 className="w-4 h-4" />
+                  Edit
+                </>
+              )}
+            </button>
+          </div>
+        </div>
       </header>
 
       {/* Trips Content */}
@@ -322,9 +438,45 @@ export default function TripsPage() {
                     <MapPin className="w-4 h-4" />
                     <span>{trip.location}</span>
                   </div>
-                  <h2 className="font-playfair text-2xl md:text-3xl font-light text-neutral-900 mb-4">
-                    {trip.title}
-                  </h2>
+                  
+                  <div className="flex items-center justify-center gap-4 mb-4">
+                    <h2 className="font-playfair text-2xl md:text-3xl font-light text-neutral-900">
+                      {trip.title}
+                    </h2>
+                    
+                    {/* Trip Edit Controls */}
+                    {isEditMode && (
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => {
+                            setSelectedTripForEdit(trip.id);
+                            setShowAddModal(true);
+                          }}
+                          className="p-2 bg-fuchsia-200 hover:bg-fuchsia-300 text-neutral-900 rounded-lg border border-rose-200 hover:border-rose-300 transition-colors"
+                          title="Add photos to this trip"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </button>
+                        
+                        <button
+                          onClick={() => console.log('Edit trip:', trip.id)}
+                          className="p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+                          title="Edit trip details"
+                        >
+                          <Settings className="w-4 h-4" />
+                        </button>
+                        
+                        <button
+                          onClick={() => deleteTrip(trip.id)}
+                          className="p-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+                          title="Delete trip"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  
                   <p className="text-neutral-600 max-w-3xl mx-auto leading-relaxed">
                     {trip.description}
                   </p>
@@ -332,52 +484,91 @@ export default function TripsPage() {
 
                 {/* Trip Media (Photos & Videos) */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
-                  {trip.media.map((item) => (
-                    <div
-                      key={item.id}
-                      className="group cursor-pointer transition-all duration-200 hover:-translate-y-1"
-                      onClick={() => item.type === 'image' ? setSelectedImage(item) : setSelectedVideo(item)}
-                    >
-                      <div className="relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-lg border border-neutral-100">
-                        {item.type === 'image' ? (
-                          <>
-                            <Image
-                              src={getMediaUrl(item.src) || "/placeholder.svg"}
-                              alt={item.alt}
-                              width={400}
-                              height={300}
-                              className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
-                              <Heart className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <video
-                              className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-                              preload="metadata"
-                              muted
-                              playsInline
-                            >
-                              <source src={getMediaUrl(item.src)} type="video/mp4" />
-                              Your browser does not support the video tag.
-                            </video>
-                            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                              <div className="w-12 h-12 bg-white bg-opacity-90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <div className="w-0 h-0 border-l-[6px] border-l-neutral-800 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent ml-1"></div>
+                  {trip.media.map((item) => {
+                    const selectionKey = `${trip.id}-${item.id}`;
+                    const isSelected = selectedForRemoval.has(selectionKey as any);
+                    
+                    return (
+                      <div
+                        key={item.id}
+                        className={`group cursor-pointer transition-all duration-200 ${
+                          !isEditMode ? 'hover:-translate-y-1' : ''
+                        } ${isSelected ? 'ring-4 ring-red-400' : ''}`}
+                        onClick={() => 
+                          isEditMode 
+                            ? togglePhotoSelection(item.id, trip.id)
+                            : item.type === 'image' 
+                              ? setSelectedImage(item) 
+                              : setSelectedVideo(item)
+                        }
+                      >
+                        <div className={`relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-lg border border-neutral-100 ${
+                          isSelected ? 'opacity-75' : ''
+                        }`}>
+                          {item.type === 'image' ? (
+                            <>
+                              <Image
+                                src={getMediaUrl(item.src) || "/placeholder.svg"}
+                                alt={item.alt}
+                                width={400}
+                                height={300}
+                                className={`w-full h-48 object-cover transition-transform duration-300 ${
+                                  !isEditMode ? 'group-hover:scale-105' : ''
+                                }`}
+                              />
+                              {!isEditMode && (
+                                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
+                                  <Heart className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                </div>
+                              )}
+                            </>
+                          ) : (
+                            <>
+                              <video
+                                className={`w-full h-48 object-cover transition-transform duration-300 ${
+                                  !isEditMode ? 'group-hover:scale-105' : ''
+                                }`}
+                                preload="metadata"
+                                muted
+                                playsInline
+                              >
+                                <source src={getMediaUrl(item.src)} type="video/mp4" />
+                                Your browser does not support the video tag.
+                              </video>
+                              {!isEditMode && (
+                                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                                  <div className="w-12 h-12 bg-white bg-opacity-90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div className="w-0 h-0 border-l-[6px] border-l-neutral-800 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent ml-1"></div>
+                                  </div>
+                                </div>
+                              )}
+                              <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded">
+                                VIDEO
+                              </div>
+                            </>
+                          )}
+                          
+                          {/* Edit Mode Overlay */}
+                          {isEditMode && (
+                            <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                              <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${
+                                isSelected 
+                                  ? 'bg-red-500 border-red-500' 
+                                  : 'bg-white bg-opacity-80 border-neutral-300 hover:border-neutral-400'
+                              }`}>
+                                {isSelected && <Check className="w-5 h-5 text-white" />}
                               </div>
                             </div>
-                            <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded">
-                              VIDEO
-                            </div>
-                          </>
+                          )}
+                        </div>
+                        
+                        {/* Caption for both images and videos */}
+                        {!isEditMode && (
+                          <p className="text-sm text-neutral-600 mt-2 text-center">{item.alt}</p>
                         )}
                       </div>
-                      {/* Caption for both images and videos */}
-                      <p className="text-sm text-neutral-600 mt-2 text-center">{item.alt}</p>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 {/* Divider (except for last trip) */}
@@ -405,7 +596,7 @@ export default function TripsPage() {
       </main>
 
       {/* Lightbox for Images */}
-      {selectedImage && (
+      {selectedImage && !isEditMode && (
         <Lightbox
           image={selectedImage}
           onClose={() => setSelectedImage(null)}
@@ -413,7 +604,7 @@ export default function TripsPage() {
       )}
 
       {/* Video Modal */}
-      {selectedVideo && (
+      {selectedVideo && !isEditMode && (
         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
           <div className="relative max-w-4xl w-full">
             <button
@@ -432,6 +623,144 @@ export default function TripsPage() {
               Your browser does not support the video tag.
             </video>
             <p className="text-white text-center mt-4">{selectedVideo.alt}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Add Photos Modal */}
+      {showAddModal && selectedTripForEdit && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[80vh] overflow-hidden">
+            <div className="p-6 border-b border-neutral-200">
+              <div className="flex items-center justify-between">
+                <h3 className="font-playfair text-xl text-neutral-900">
+                  Add Photos to {trips.find(t => t.id === selectedTripForEdit)?.title}
+                </h3>
+                <button
+                  onClick={() => {
+                    setShowAddModal(false);
+                    setSelectedTripForEdit(null);
+                  }}
+                  className="text-neutral-500 hover:text-neutral-700"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+            </div>
+            
+            <div className="overflow-y-auto max-h-[calc(80vh-80px)]">
+              <MediaQueue
+                selectionMode={true}
+                onSelectMedia={(items) => handleAddPhotosToTrip(items, selectedTripForEdit)}
+                maxSelection={20}
+                className="border-0"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Create Trip Modal */}
+      {showCreateTripModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-lg w-full">
+            <div className="p-6 border-b border-neutral-200">
+              <div className="flex items-center justify-between">
+                <h3 className="font-playfair text-xl text-neutral-900">Create New Trip</h3>
+                <button
+                  onClick={() => setShowCreateTripModal(false)}
+                  className="text-neutral-500 hover:text-neutral-700"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+            </div>
+            
+            <div className="p-6">
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                console.log('Creating new trip...');
+                setShowCreateTripModal(false);
+              }}>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-neutral-700 mb-1">
+                      Trip Title
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:border-fuchsia-500"
+                      placeholder="Enter trip title..."
+                      required
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-neutral-700 mb-1">
+                      Location
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:border-fuchsia-500"
+                      placeholder="Where did you go?"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-neutral-700 mb-1">
+                      Date
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:border-fuchsia-500"
+                      placeholder="When was this trip?"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-neutral-700 mb-1">
+                      Description
+                    </label>
+                    <textarea
+                      rows={3}
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:border-fuchsia-500"
+                      placeholder="Tell us about this adventure..."
+                    />
+                  </div>
+                </div>
+                
+                <div className="flex gap-3 mt-6">
+                  <button
+                    type="button"
+                    onClick={() => setShowCreateTripModal(false)}
+                    className="flex-1 py-2 px-4 border border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 py-2 px-4 bg-fuchsia-200 hover:bg-fuchsia-300 text-neutral-900 rounded-lg border border-rose-200 hover:border-rose-300 transition-colors"
+                  >
+                    Create Trip
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Mode Instructions */}
+      {isEditMode && (
+        <div className="fixed bottom-6 left-6 right-6 bg-white rounded-lg border border-neutral-200 shadow-lg p-4 z-40">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-neutral-900 font-medium mb-2">Trip Edit Mode Active</p>
+            <p className="text-neutral-600 text-sm">
+              {selectedForRemoval.size === 0 
+                ? 'Use the controls next to trip titles to manage trips, or tap photos to select them for removal.'
+                : `${selectedForRemoval.size} photo${selectedForRemoval.size !== 1 ? 's' : ''} selected for removal across trips.`
+              }
+            </p>
           </div>
         </div>
       )}
