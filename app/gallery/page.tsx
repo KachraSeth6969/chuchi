@@ -3,9 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Edit3, X, Check, Plus, Trash2 } from "lucide-react";
+import { ArrowLeft, Edit3, X, Check, Plus, Trash2, Info } from "lucide-react";
 import { Lightbox } from "../../components/lightbox";
 import MediaQueue from "../../components/media-queue";
+import PhotoDetailsModal from "../../components/photo-details-modal";
 import { getMediaUrl } from "../../lib/media-config";
 
 // Your gallery images
@@ -47,6 +48,8 @@ export default function GalleryPage() {
   const [selectedForRemoval, setSelectedForRemoval] = useState<Set<number>>(new Set());
   const [showAddModal, setShowAddModal] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
+  const [showPhotoDetails, setShowPhotoDetails] = useState(false);
+  const [selectedPhotoForDetails, setSelectedPhotoForDetails] = useState<any>(null);
 
   // Toggle edit mode
   const toggleEditMode = () => {
@@ -130,6 +133,69 @@ export default function GalleryPage() {
     } catch (error) {
       console.error('Failed to add photos:', error);
       alert('Failed to add photos. Please try again.');
+    }
+  };
+
+  // Handle photo details operations
+  const handleUpdateDescription = async (itemId: string | number, description: string) => {
+    try {
+      const response = await fetch('/api/media', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mediaId: itemId,
+          description: description,
+          context: 'gallery'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update description');
+      }
+
+      console.log('Description updated:', { itemId, description });
+      // TODO: Update local state or refresh data
+    } catch (error) {
+      console.error('Failed to update description:', error);
+      throw error;
+    }
+  };
+
+  const handleUpdateOrder = async (itemId: string | number, direction: 'up' | 'down') => {
+    // Gallery doesn't have ordering, so this is a no-op
+    console.log('Gallery photos do not have ordering');
+  };
+
+  const handleRemoveFromDetails = async (itemId: string | number) => {
+    try {
+      const response = await fetch('/api/media', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mediaIds: [itemId],
+          source: 'gallery',
+          action: 'soft-delete'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to remove photo');
+      }
+
+      console.log('Photo removed from gallery:', itemId);
+      // TODO: Refresh gallery data
+    } catch (error) {
+      console.error('Failed to remove photo:', error);
+      throw error;
+    }
+  };
+
+  // Handle right-click or long press for photo details
+  const handlePhotoContextMenu = (e: React.MouseEvent, image: any) => {
+    e.preventDefault();
+    if (!isEditMode) {
+      setSelectedPhotoForDetails(image);
+      setShowPhotoDetails(true);
     }
   };
 
@@ -224,6 +290,7 @@ export default function GalleryPage() {
                       ? togglePhotoSelection(image.id)
                       : setSelectedImage(image)
                   }
+                  onContextMenu={(e) => handlePhotoContextMenu(e, image)}
                 >
                   <div className={`relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-lg border border-neutral-100 ${
                     isSelected ? 'opacity-75' : ''
@@ -256,6 +323,21 @@ export default function GalleryPage() {
                       <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
                         {Array.from(selectedForRemoval).indexOf(image.id) + 1}
                       </div>
+                    )}
+                    
+                    {/* Info Button */}
+                    {!isEditMode && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedPhotoForDetails(image);
+                          setShowPhotoDetails(true);
+                        }}
+                        className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-80"
+                        title="Photo details"
+                      >
+                        <Info className="w-4 h-4" />
+                      </button>
                     )}
                   </div>
                 </div>
@@ -312,6 +394,25 @@ export default function GalleryPage() {
           </div>
         </div>
       )}
+
+      {/* Photo Details Modal */}
+      <PhotoDetailsModal
+        isOpen={showPhotoDetails}
+        onClose={() => {
+          setShowPhotoDetails(false);
+          setSelectedPhotoForDetails(null);
+        }}
+        mediaItem={selectedPhotoForDetails ? {
+          id: selectedPhotoForDetails.id,
+          src: getMediaUrl(selectedPhotoForDetails.src) || '',
+          alt: selectedPhotoForDetails.alt,
+          type: 'image'
+        } : null}
+        onUpdateDescription={handleUpdateDescription}
+        onUpdateOrder={handleUpdateOrder}
+        onRemove={handleRemoveFromDetails}
+        context="gallery"
+      />
 
       {/* Edit Mode Instructions */}
       {isEditMode && (

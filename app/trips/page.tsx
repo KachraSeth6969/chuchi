@@ -3,10 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, MapPin, Calendar, Heart, Edit3, X, Check, Plus, Trash2, Settings, Camera } from "lucide-react";
+import { ArrowLeft, MapPin, Calendar, Heart, Edit3, X, Check, Plus, Trash2, Settings, Camera, Info } from "lucide-react";
 import { Lightbox } from "../../components/lightbox";
 import MediaQueue from "../../components/media-queue";
 import TripForm from "../../components/trip-form";
+import PhotoDetailsModal from "../../components/photo-details-modal";
 import { getMediaUrl } from "../../lib/media-config";
 
 // Trip data - you can add more trips here
@@ -291,6 +292,9 @@ export default function TripsPage() {
   const [showCreateTripModal, setShowCreateTripModal] = useState(false);
   const [selectedTripForEdit, setSelectedTripForEdit] = useState<number | null>(null);
   const [isRemoving, setIsRemoving] = useState(false);
+  const [showPhotoDetails, setShowPhotoDetails] = useState(false);
+  const [selectedPhotoForDetails, setSelectedPhotoForDetails] = useState<any>(null);
+  const [selectedPhotoTripId, setSelectedPhotoTripId] = useState<number | null>(null);
 
   // Toggle edit mode
   const toggleEditMode = () => {
@@ -432,6 +436,86 @@ export default function TripsPage() {
     } catch (error) {
       console.error('Failed to create trip:', error);
       throw error; // Re-throw to let form handle the error
+    }
+  };
+
+  // Handle photo details operations in trips
+  const handleUpdateDescriptionInTrip = async (itemId: string | number, description: string) => {
+    try {
+      const response = await fetch('/api/media', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mediaId: itemId,
+          description: description,
+          context: 'trip',
+          tripId: selectedPhotoTripId
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update description');
+      }
+
+      console.log('Description updated in trip:', { itemId, description, tripId: selectedPhotoTripId });
+    } catch (error) {
+      console.error('Failed to update description:', error);
+      throw error;
+    }
+  };
+
+  const handleUpdateOrderInTrip = async (itemId: string | number, direction: 'up' | 'down') => {
+    try {
+      const response = await fetch('/api/media/order', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mediaId: itemId,
+          tripId: selectedPhotoTripId,
+          direction: direction
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update order');
+      }
+
+      console.log('Order updated in trip:', { itemId, direction, tripId: selectedPhotoTripId });
+    } catch (error) {
+      console.error('Failed to update order:', error);
+      throw error;
+    }
+  };
+
+  const handleRemoveFromTripDetails = async (itemId: string | number) => {
+    try {
+      const response = await fetch('/api/media', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          assignments: [{ tripId: selectedPhotoTripId, mediaId: itemId }],
+          action: 'remove-from-trip'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to remove photo from trip');
+      }
+
+      console.log('Photo removed from trip:', { itemId, tripId: selectedPhotoTripId });
+    } catch (error) {
+      console.error('Failed to remove photo:', error);
+      throw error;
+    }
+  };
+
+  // Handle right-click or long press for photo details in trips
+  const handlePhotoContextMenuInTrip = (e: React.MouseEvent, item: any, tripId: number) => {
+    e.preventDefault();
+    if (!isEditMode) {
+      setSelectedPhotoForDetails(item);
+      setSelectedPhotoTripId(tripId);
+      setShowPhotoDetails(true);
     }
   };
 
@@ -586,6 +670,7 @@ export default function TripsPage() {
                               ? setSelectedImage(item) 
                               : setSelectedVideo(item)
                         }
+                        onContextMenu={(e) => handlePhotoContextMenuInTrip(e, item, trip.id)}
                       >
                         <div className={`relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-lg border border-neutral-100 ${
                           isSelected ? 'opacity-75' : ''
@@ -644,6 +729,22 @@ export default function TripsPage() {
                                 {isSelected && <Check className="w-5 h-5 text-white" />}
                               </div>
                             </div>
+                          )}
+                          
+                          {/* Info Button */}
+                          {!isEditMode && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedPhotoForDetails(item);
+                                setSelectedPhotoTripId(trip.id);
+                                setShowPhotoDetails(true);
+                              }}
+                              className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-80"
+                              title="Photo details"
+                            >
+                              <Info className="w-4 h-4" />
+                            </button>
                           )}
                         </div>
                         
@@ -751,6 +852,28 @@ export default function TripsPage() {
         onClose={() => setShowCreateTripModal(false)}
         onSubmit={handleCreateTrip}
         mode="create"
+      />
+
+      {/* Photo Details Modal */}
+      <PhotoDetailsModal
+        isOpen={showPhotoDetails}
+        onClose={() => {
+          setShowPhotoDetails(false);
+          setSelectedPhotoForDetails(null);
+          setSelectedPhotoTripId(null);
+        }}
+        mediaItem={selectedPhotoForDetails ? {
+          id: selectedPhotoForDetails.id,
+          src: getMediaUrl(selectedPhotoForDetails.src) || '',
+          alt: selectedPhotoForDetails.alt,
+          type: selectedPhotoForDetails.type,
+          description: selectedPhotoForDetails.alt
+        } : null}
+        onUpdateDescription={handleUpdateDescriptionInTrip}
+        onUpdateOrder={handleUpdateOrderInTrip}
+        onRemove={handleRemoveFromTripDetails}
+        context="trip"
+        contextName={selectedPhotoTripId ? trips.find(t => t.id === selectedPhotoTripId)?.title : undefined}
       />
 
       {/* Edit Mode Instructions */}
