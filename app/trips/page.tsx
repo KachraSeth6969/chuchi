@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowLeft, MapPin, Calendar, Heart, Edit3, X, Check, Plus, Trash2, Settings, Camera } from "lucide-react";
 import { Lightbox } from "../../components/lightbox";
 import MediaQueue from "../../components/media-queue";
+import TripForm from "../../components/trip-form";
 import { getMediaUrl } from "../../lib/media-config";
 
 // Trip data - you can add more trips here
@@ -318,22 +319,68 @@ export default function TripsPage() {
     
     setIsRemoving(true);
     try {
-      console.log('Removing photos from trips:', Array.from(selectedForRemoval));
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Parse selection keys to get trip and media IDs
+      const removalData = Array.from(selectedForRemoval).map(key => {
+        const [tripId, mediaId] = String(key).split('-');
+        return { tripId: parseInt(tripId), mediaId: parseInt(mediaId) };
+      });
+
+      // Call API to remove photos from trips (move to queue)
+      const response = await fetch('/api/media', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          assignments: removalData,
+          action: 'remove-from-trip'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to remove photos from trips');
+      }
+
+      const result = await response.json();
+      console.log('Photos removed from trips:', result);
+      
       setSelectedForRemoval(new Set());
       setIsEditMode(false);
+      // TODO: Refresh trips data from database
     } catch (error) {
       console.error('Failed to remove photos:', error);
+      alert('Failed to remove photos. Please try again.');
     } finally {
       setIsRemoving(false);
     }
   };
 
   // Handle adding photos from queue to a trip
-  const handleAddPhotosToTrip = (queueItems: any[], tripId: number) => {
-    console.log(`Adding photos to trip ${tripId}:`, queueItems);
-    setShowAddModal(false);
-    setSelectedTripForEdit(null);
+  const handleAddPhotosToTrip = async (queueItems: any[], tripId: number) => {
+    try {
+      // Call API to assign queue items to specific trip
+      const response = await fetch('/api/media', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          queueItemIds: queueItems.map(item => item.id),
+          assignTo: 'trip',
+          tripId: tripId
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add photos to trip');
+      }
+
+      const result = await response.json();
+      console.log(`Photos added to trip ${tripId}:`, result);
+      
+      setShowAddModal(false);
+      setSelectedTripForEdit(null);
+      // TODO: Refresh trips data from database
+    } catch (error) {
+      console.error('Failed to add photos:', error);
+      alert('Failed to add photos. Please try again.');
+    }
   };
 
   // Delete entire trip
@@ -343,10 +390,48 @@ export default function TripsPage() {
     }
     
     try {
-      console.log('Deleting trip:', tripId);
-      // TODO: API call to delete trip and move photos to queue
+      // Call API to delete trip (soft delete - moves all photos to queue)
+      const response = await fetch(`/api/trips/${tripId}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'soft-delete' })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete trip');
+      }
+
+      const result = await response.json();
+      console.log('Trip deleted:', result);
+      
+      // TODO: Refresh trips data from database
+      // This would remove the trip from the UI and show photos moved to queue
     } catch (error) {
       console.error('Failed to delete trip:', error);
+      alert('Failed to delete trip. Please try again.');
+    }
+  };
+
+  // Create new trip
+  const handleCreateTrip = async (tripData: any) => {
+    try {
+      const response = await fetch('/api/trips', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(tripData)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create trip');
+      }
+
+      const result = await response.json();
+      console.log('Trip created:', result);
+      
+      // TODO: Refresh trips data from database
+    } catch (error) {
+      console.error('Failed to create trip:', error);
+      throw error; // Re-throw to let form handle the error
     }
   };
 
@@ -661,94 +746,12 @@ export default function TripsPage() {
       )}
 
       {/* Create Trip Modal */}
-      {showCreateTripModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-lg w-full">
-            <div className="p-6 border-b border-neutral-200">
-              <div className="flex items-center justify-between">
-                <h3 className="font-playfair text-xl text-neutral-900">Create New Trip</h3>
-                <button
-                  onClick={() => setShowCreateTripModal(false)}
-                  className="text-neutral-500 hover:text-neutral-700"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-            </div>
-            
-            <div className="p-6">
-              <form onSubmit={(e) => {
-                e.preventDefault();
-                console.log('Creating new trip...');
-                setShowCreateTripModal(false);
-              }}>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-1">
-                      Trip Title
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:border-fuchsia-500"
-                      placeholder="Enter trip title..."
-                      required
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-1">
-                      Location
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:border-fuchsia-500"
-                      placeholder="Where did you go?"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-1">
-                      Date
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:border-fuchsia-500"
-                      placeholder="When was this trip?"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-neutral-700 mb-1">
-                      Description
-                    </label>
-                    <textarea
-                      rows={3}
-                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:border-fuchsia-500"
-                      placeholder="Tell us about this adventure..."
-                    />
-                  </div>
-                </div>
-                
-                <div className="flex gap-3 mt-6">
-                  <button
-                    type="button"
-                    onClick={() => setShowCreateTripModal(false)}
-                    className="flex-1 py-2 px-4 border border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-1 py-2 px-4 bg-fuchsia-200 hover:bg-fuchsia-300 text-neutral-900 rounded-lg border border-rose-200 hover:border-rose-300 transition-colors"
-                  >
-                    Create Trip
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
+      <TripForm
+        isOpen={showCreateTripModal}
+        onClose={() => setShowCreateTripModal(false)}
+        onSubmit={handleCreateTrip}
+        mode="create"
+      />
 
       {/* Edit Mode Instructions */}
       {isEditMode && (

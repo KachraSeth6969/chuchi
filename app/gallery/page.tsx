@@ -73,30 +73,64 @@ export default function GalleryPage() {
     
     setIsRemoving(true);
     try {
-      // Here you would call your API to move photos to queue
-      // For now, we'll simulate the API call
-      console.log('Removing photos:', Array.from(selectedForRemoval));
-      
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Call API to move photos to queue (soft delete)
+      const response = await fetch('/api/media', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mediaIds: Array.from(selectedForRemoval),
+          source: 'gallery',
+          action: 'soft-delete'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to remove photos');
+      }
+
+      const result = await response.json();
+      console.log('Photos moved to queue:', result);
       
       // Reset selection and exit edit mode
       setSelectedForRemoval(new Set());
       setIsEditMode(false);
       
       // TODO: Refresh gallery data from database
+      // This would trigger a re-fetch of gallery images
     } catch (error) {
       console.error('Failed to remove photos:', error);
+      alert('Failed to remove photos. Please try again.');
     } finally {
       setIsRemoving(false);
     }
   };
 
   // Handle adding photos from queue
-  const handleAddPhotos = (queueItems: any[]) => {
-    console.log('Adding photos from queue:', queueItems);
-    // TODO: API call to assign queue items to gallery
-    setShowAddModal(false);
+  const handleAddPhotos = async (queueItems: any[]) => {
+    try {
+      // Call API to assign queue items to gallery
+      const response = await fetch('/api/media', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          queueItemIds: queueItems.map(item => item.id),
+          assignTo: 'gallery'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add photos to gallery');
+      }
+
+      const result = await response.json();
+      console.log('Photos added to gallery:', result);
+      
+      setShowAddModal(false);
+      // TODO: Refresh gallery data from database
+    } catch (error) {
+      console.error('Failed to add photos:', error);
+      alert('Failed to add photos. Please try again.');
+    }
   };
 
   return (

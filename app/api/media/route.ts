@@ -25,10 +25,38 @@ export async function GET() {
   }
 }
 
-// POST - Assign media to context
+// POST - Assign media to context (batch operations)
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    
+    // Handle batch assignment from queue
+    if (body.queueItemIds && body.assignTo) {
+      const { queueItemIds, assignTo, tripId } = body;
+      
+      const results = [];
+      for (const queueItemId of queueItemIds) {
+        try {
+          if (assignTo === 'gallery') {
+            await assignMediaToGallery(queueItemId);
+          } else if (assignTo === 'trip' && tripId) {
+            await assignMediaToTrip(queueItemId, tripId);
+          }
+          results.push({ queueItemId, success: true });
+        } catch (error) {
+          console.error(`Failed to assign queue item ${queueItemId}:`, error);
+          results.push({ queueItemId, success: false, error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      }
+      
+      return NextResponse.json({
+        success: true,
+        message: `Assigned ${results.filter(r => r.success).length} items to ${assignTo}`,
+        results
+      });
+    }
+
+    // Handle single media assignment (legacy)
     const { action, mediaId, contextType, contextId, description } = body;
 
     if (!action || !mediaId || !contextType) {
@@ -80,6 +108,68 @@ export async function POST(request: NextRequest) {
     console.error('Media POST error:', error);
     return NextResponse.json(
       { error: 'Media operation failed' },
+      { status: 500 }
+    );
+  }
+}
+
+// DELETE - Remove media (soft delete to queue)
+export async function DELETE(request: NextRequest) {
+  try {
+    const body = await request.json();
+    
+    // Handle batch removal from gallery
+    if (body.mediaIds && body.source === 'gallery' && body.action === 'soft-delete') {
+      const { mediaIds } = body;
+      
+      const results = [];
+      for (const mediaId of mediaIds) {
+        try {
+          await removeMediaFromContext(mediaId, 'gallery', undefined);
+          results.push({ mediaId, success: true });
+        } catch (error) {
+          console.error(`Failed to remove media ${mediaId}:`, error);
+          results.push({ mediaId, success: false, error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      }
+      
+      return NextResponse.json({
+        success: true,
+        message: `Moved ${results.filter(r => r.success).length} photos to queue`,
+        results
+      });
+    }
+    
+    // Handle removal from trips
+    if (body.assignments && body.action === 'remove-from-trip') {
+      const { assignments } = body;
+      
+      const results = [];
+      for (const assignment of assignments) {
+        try {
+          await removeMediaFromContext(assignment.mediaId, 'trip', assignment.tripId);
+          results.push({ ...assignment, success: true });
+        } catch (error) {
+          console.error(`Failed to remove media ${assignment.mediaId} from trip ${assignment.tripId}:`, error);
+          results.push({ ...assignment, success: false, error: error instanceof Error ? error.message : 'Unknown error' });
+        }
+      }
+      
+      return NextResponse.json({
+        success: true,
+        message: `Removed ${results.filter(r => r.success).length} photos from trips`,
+        results
+      });
+    }
+    
+    return NextResponse.json(
+      { error: 'Invalid delete operation' },
+      { status: 400 }
+    );
+  } catch (error) {
+    console.error('Media DELETE error:', error);
+    return NextResponse.json(
+      { error: 'Delete operation failed' },
       { status: 500 }
     );
   }
