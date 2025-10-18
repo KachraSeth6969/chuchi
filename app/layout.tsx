@@ -6,6 +6,7 @@ import { GlobalAudioProvider } from "../components/global-audio-provider"
 import { GlobalAudioPlayer } from "../components/global-audio-player"
 import { AuthProvider } from "../components/auth-provider"
 import AuthGuard from "../components/auth-guard"
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -59,6 +60,7 @@ export default function RootLayout({
             </AuthGuard>
           </AuthProvider>
         </GlobalAudioProvider>
+        <Analytics />
       </body>
     </html>
   )
