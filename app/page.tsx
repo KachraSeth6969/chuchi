@@ -55,6 +55,21 @@ style={{ backgroundColor: '#D8BFF8' }} // a gentle, richer lavender
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
               </button>
             </Link>
+            
+            <Link href="/upload">
+              <button className="group text-neutral-800 font-medium py-4 px-8 rounded-lg text-base transition-all duration-200 flex items-center gap-3 border border-neutral-300 hover:border-neutral-400"
+style={{ backgroundColor: '#D8BFF8' }}>
+                Upload Photos
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+              </button>
+            </Link>
+            
+            <Link href="/queue">
+              <button className="group bg-neutral-200 hover:bg-neutral-300 text-neutral-900 font-medium py-4 px-8 rounded-lg text-base transition-all duration-200 flex items-center gap-3 border border-neutral-300 hover:border-neutral-400">
+                Media Queue
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+              </button>
+            </Link>
           </div>
         </div>
       </main>
