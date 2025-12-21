@@ -275,7 +275,10 @@ const trips = [
       { id: 77, type: "image", src: "/images/77.jpg", alt: "" },
       { id: 78, type: "image", src: "/images/78.jpg", alt: "" },
       { id: 79, type: "image", src: "/images/79.jpg", alt: "" },
-      { id: 710, type: "image", src: "/images/710.jpg", alt: "" },  
+      { id: 710, type: "image", src: "/images/710.jpg", alt: "" },
+      { id: 711, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1766322146/IMG_0922_gwqt1j.mp4", alt: "" },
+      { id: 712, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1766322360/IMG_0923_beyqxf.mp4", alt: "" },
+      { id: 713, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1766322385/IMG_0708_z9yale.mp4", alt: "" },
     ]
   }
 ];

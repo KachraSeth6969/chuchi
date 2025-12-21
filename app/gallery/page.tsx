@@ -36,6 +36,14 @@ const galleryImages = [
   { id: 25, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695574/IMG_0492_gnhvzl.jpg" },
   { id: 26, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695573/IMG_0479_zr9zez.jpg" },
   { id: 27, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695570/IMG_0445_poz2nx.jpg" },
+  { id: 28, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322073/IMG_1309_kb4mb3.jpg" },
+  { id: 29, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322074/IMG_1145_nb14ax.jpg" },
+  { id: 30, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322076/IMG_1389_qzqslm.jpg" },
+  { id: 31, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322077/IMG_1228_kblsy4.jpg" },
+  { id: 32, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322078/IMG_1262_g6fbiz.jpg" },
+  { id: 33, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322079/IMG_1308_noh0tp.jpg" },
+  { id: 34, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322081/IMG_1261_igalue.jpg" },
+  { id: 35, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322083/IMG_1375_tffgre.jpg" },
 ];
 
 export default function GalleryPage() {
