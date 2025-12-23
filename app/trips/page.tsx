@@ -202,7 +202,12 @@ const trips = [
       { id: 1023, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942283/chuchi/videos/IMG_0366.mp4", alt: "" },
       { id: 1024, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942298/chuchi/videos/IMG_0367.mp4", alt: "" },
       { id: 1025, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942360/chuchi/videos/WhatsApp%20Video%202025-10-08%20at%201.40.55%E2%80%AFAM%20%281%29.mp4", alt: "" },
-      { id: 1026, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942368/chuchi/videos/WhatsApp%20Video%202025-10-08%20at%201.40.55%E2%80%AFAM.mp4", alt: "" }
+      { id: 1026, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942368/chuchi/videos/WhatsApp%20Video%202025-10-08%20at%201.40.55%E2%80%AFAM.mp4", alt: "" },
+      { id: 1027, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766484132/IMG_1631_bmcnax.jpg", alt: "" },
+      { id: 1028, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766484132/IMG_1633_wvmafc.jpg", alt: "" },
+      { id: 1029, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766484132/IMG_1632_eruvzj.jpg", alt: "" },
+      { id: 1030, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766484132/IMG_1630_rnnfwc.jpg", alt: "" },
+      { id: 1031, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1766484203/Snapchat-639150470_gu61ir.mp4", alt: "" }
     ]
   },
 
