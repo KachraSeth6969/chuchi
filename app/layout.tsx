@@ -4,8 +4,10 @@ import { Inter, Playfair_Display } from "next/font/google"
 import "./globals.css"
 import { GlobalAudioProvider } from "../components/global-audio-provider"
 import { GlobalAudioPlayer } from "../components/global-audio-player"
-import { AuthProvider } from "../components/auth-provider"
+import { AuthProvider } from "../lib/auth-context"
 import AuthGuard from "../components/auth-guard"
+import ErrorBoundary from "../components/error-boundary"
+import GlobalErrorHandler from "../components/global-error-handler"
 import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({ 
@@ -52,14 +54,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className={inter.className}>
-        <GlobalAudioProvider>
-          <AuthProvider>
-            <GlobalAudioPlayer />
-            <AuthGuard>
-              {children}
-            </AuthGuard>
-          </AuthProvider>
-        </GlobalAudioProvider>
+        <ErrorBoundary>
+          <GlobalErrorHandler />
+          <GlobalAudioProvider>
+            <AuthProvider>
+              <GlobalAudioPlayer />
+              <AuthGuard>
+                {children}
+              </AuthGuard>
+            </AuthProvider>
+          </GlobalAudioProvider>
+        </ErrorBoundary>
         <Analytics />
       </body>
     </html>

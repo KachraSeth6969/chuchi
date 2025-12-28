@@ -37,14 +37,14 @@ export default function PhotoDetailsModal({
   const [isSaving, setIsSaving] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
 
-  if (!isOpen || !mediaItem) return null;
-
   // Initialize description when modal opens
   useEffect(() => {
     if (mediaItem) {
       setDescription(mediaItem.description || mediaItem.alt || '');
     }
   }, [mediaItem]);
+
+  if (!isOpen || !mediaItem) return null;
 
   // Handle description save
   const handleSaveDescription = async () => {

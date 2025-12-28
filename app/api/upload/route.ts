@@ -33,6 +33,8 @@ async function uploadToCloudinary(file: File, type: 'image' | 'video') {
         resource_type: type,
         format: type === 'image' ? 'jpg' : 'mp4',
         quality: 'auto',
+        // Set folder based on file type
+        folder: type === 'image' ? 'chuchi/images' : 'chuchi/videos',
       };
 
       // For images, add transformation for standardization

@@ -1,7 +1,27 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ArrowRight, Upload, List } from "lucide-react";
+import FloatingActionButton from "../components/floating-action-button";
 
 export default function HomePage() {
+  const router = useRouter();
+
+  const fabOptions = [
+    {
+      icon: <Upload className="w-5 h-5" />,
+      label: "Upload Photos",
+      onClick: () => router.push("/upload"),
+      color: "text-blue-600"
+    },
+    {
+      icon: <List className="w-5 h-5" />,
+      label: "Media Queue",
+      onClick: () => router.push("/queue"),
+      color: "text-orange-600"
+    }
+  ];
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col">
       {/* Main Content */}
@@ -44,29 +64,14 @@ style={{ backgroundColor: '#D8BFF8' }} // a gentle, richer lavender
 // Medium lavender
 
               >
-                View Gallery
+                Open Gallery
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
               </button>
             </Link>
             
             <Link href="/trips">
               <button className="group bg-fuchsia-200 hover:bg-fuchsia-200 text-neutral-900 font-medium py-4 px-8 rounded-lg text-base transition-all duration-200 flex items-center gap-3 border border-rose-200 hover:border-rose-300">
-                Our Adventures
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-              </button>
-            </Link>
-            
-            <Link href="/upload">
-              <button className="group text-neutral-800 font-medium py-4 px-8 rounded-lg text-base transition-all duration-200 flex items-center gap-3 border border-neutral-300 hover:border-neutral-400"
-style={{ backgroundColor: '#D8BFF8' }}>
-                Upload Photos
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-              </button>
-            </Link>
-            
-            <Link href="/queue">
-              <button className="group bg-neutral-200 hover:bg-neutral-300 text-neutral-900 font-medium py-4 px-8 rounded-lg text-base transition-all duration-200 flex items-center gap-3 border border-neutral-300 hover:border-neutral-400">
-                Media Queue
+                Our Moments
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
               </button>
             </Link>
@@ -79,6 +84,9 @@ style={{ backgroundColor: '#D8BFF8' }}>
         <p className="text-neutral-600 text-sm">Explore the memories ✨</p>
         <p className="text-neutral-500 text-xs mt-2">And Take Care</p>
       </footer>
+
+      {/* Floating Action Button */}
+      <FloatingActionButton options={fabOptions} />
     </div>
   );
 }

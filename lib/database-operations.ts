@@ -252,3 +252,18 @@ export async function getMediaWithAssignments(mediaId: number) {
     .leftJoin(mediaAssignments, eq(mediaItems.id, mediaAssignments.mediaId))
     .where(eq(mediaItems.id, mediaId));
 }
+
+// Helper function to get mediaId from queueItemId
+export async function getMediaIdFromQueueItem(queueItemId: number): Promise<number> {
+  const result = await db
+    .select({ mediaId: queueItems.mediaId })
+    .from(queueItems)
+    .where(eq(queueItems.id, queueItemId))
+    .limit(1);
+  
+  if (result.length === 0) {
+    throw new Error(`Queue item ${queueItemId} not found`);
+  }
+  
+  return result[0].mediaId;
+}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
+import { useAuth } from '../lib/auth-context';
 
 interface PasswordScreenProps {
   onAuthenticated: () => void;
@@ -12,59 +13,57 @@ export default function PasswordScreen({ onAuthenticated }: PasswordScreenProps)
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  
-  const correctPassword = 'supernova'; // Same as Android app
+  const { login } = useAuth();
 
   useEffect(() => {
-    // Focus input when component mounts
     inputRef.current?.focus();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError('');
     
-    if (password.toLowerCase() === correctPassword.toLowerCase()) {
-      // Clear any errors
-      setError('');
+    try {
+      const result = await login(password);
       
-      // Ensure audio context is unlocked by this user interaction
-      try {
-        const audioElements = document.querySelectorAll('audio');
-        audioElements.forEach(audio => {
-          if (audio.paused) {
-            // This user interaction should unlock audio for the entire session
-            const playPromise = audio.play();
-            if (playPromise) {
-              playPromise.catch(() => {
-                // Ignore errors here, we're just trying to unlock audio
-              });
+      if (result.success) {
+        // Ensure audio context is unlocked by this user interaction
+        try {
+          const audioElements = document.querySelectorAll('audio');
+          audioElements.forEach(audio => {
+            if (audio.paused) {
+              const playPromise = audio.play();
+              if (playPromise) {
+                playPromise.catch(() => {});
+              }
             }
-          }
-        });
-      } catch (e) {
-        // Ignore errors
+          });
+        } catch (e) {}
+        
+        onAuthenticated();
+      } else {
+        setError(result.error || 'Try again ✨');
+        setPassword('');
+        setIsShaking(true);
+        setTimeout(() => setIsShaking(false), 300);
+        inputRef.current?.focus();
       }
-      
-      // Authenticate user
-      onAuthenticated();
-    } else {
-      // Show error and clear input
+    } catch (err) {
       setError('Try again ✨');
       setPassword('');
-      
-      // Shake animation
       setIsShaking(true);
       setTimeout(() => setIsShaking(false), 300);
-      
-      // Refocus input
       inputRef.current?.focus();
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-    // Clear error when user starts typing
     if (error) {
       setError('');
     }
@@ -72,15 +71,12 @@ export default function PasswordScreen({ onAuthenticated }: PasswordScreenProps)
 
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col">
-      {/* Main Content */}
       <main className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="text-center max-w-3xl mx-auto">
-          {/* Subtitle */}
           <p className="text-base md:text-lg text-neutral-600 mb-12 leading-relaxed max-w-2xl mx-auto font-light">
             Enter the secret to unlock our memories
           </p>
 
-          {/* Password Form */}
           <div className="max-w-md mx-auto">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="relative">
@@ -111,26 +107,30 @@ export default function PasswordScreen({ onAuthenticated }: PasswordScreenProps)
                 </button>
               </div>
 
-              {/* Error Message */}
               {error && (
                 <div className="text-red-500 text-sm text-center animate-fadeIn font-light">
                   {error}
                 </div>
               )}
 
-              {/* Submit Button */}
               <button
                 type="submit"
-                disabled={!password.trim()}
+                disabled={!password.trim() || isLoading}
                 className="w-full text-neutral-800 font-medium py-4 px-8 rounded-lg text-base transition-all duration-200 border border-neutral-300 hover:border-neutral-400 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]"
                 style={{ backgroundColor: '#D8BFF8' }}
               >
-                Unlock Memories
+                {isLoading ? 'Unlocking...' : 'Unlock Memories'}
               </button>
             </form>
           </div>
         </div>
       </main>
+
+      <footer className="text-center pb-8 px-6">
+        <p className="text-neutral-500 text-sm font-light">
+          Our little universe of moments ✨
+        </p>
+      </footer>
     </div>
   );
 }

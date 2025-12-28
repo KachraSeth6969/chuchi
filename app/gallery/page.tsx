@@ -1,203 +1,307 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Edit3, X, Check, Plus, Trash2, Info } from "lucide-react";
+import { ArrowLeft, Edit3, X, Check, Plus, Trash2, Camera, Upload } from "lucide-react";
 import { Lightbox } from "../../components/lightbox";
 import MediaQueue from "../../components/media-queue";
 import PhotoDetailsModal from "../../components/photo-details-modal";
+import AuthModal from "../../components/auth-modal";
+import FloatingActionButton from "../../components/floating-action-button";
 import { getMediaUrl } from "../../lib/media-config";
-
-// Your gallery images
-const galleryImages = [
-  { id: 1, src: "/images/20231209_134646.JPG" },
-  { id: 2, src: "/images/IMG-20240223-WA0036.JPG" },
-  { id: 3, src: "/images/IMG_2916.jpeg" },
-  { id: 4, src: "/images/IMG_3185.jpeg" },
-  { id: 5, src: "/images/IMG_3243.jpeg" },
-  { id: 6, src: "/images/IMG_3669.jpeg" },
-  { id: 7, src: "/images/IMG_3984.jpeg" },
-  { id: 8, src: "/images/IMG_5717.jpeg" },
-  { id: 9, src: "/images/IMG_5761.jpeg" },
-  { id: 10, src: "/images/IMG_6124.JPG" },
-  { id: 11, src: "/images/IMG_6160.jpeg" },
-  { id: 12, src: "/images/IMG_6220.JPG" },
-  { id: 13, src: "/images/IMG_6279.jpg" },
-  { id: 14, src: "/images/1.jpeg" },
-  { id: 15, src: "/images/2.jpeg" },
-  { id: 16, src: "/images/3.jpeg" },
-  { id: 17, src: "/images/76.jpg" },
-  { id: 18, src: "/images/23.jpg" },
-  { id: 19, src: "/images/916.jpeg" },
-  { id: 20, src: "/images/915.jpeg" },
-  { id: 21, src: "/images/914.jpeg" },
-  { id: 22, src: "/images/913.jpeg" },
-  { id: 23, src: "/images/912.jpeg" },
-  { id: 24, src: "/images/911.jpeg" },
-  { id: 25, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695574/IMG_0492_gnhvzl.jpg" },
-  { id: 26, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695573/IMG_0479_zr9zez.jpg" },
-  { id: 27, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695570/IMG_0445_poz2nx.jpg" },
-];
+import { getGalleryImages, type MediaItem } from "../../lib/data-fetchers";
+import { useAuth } from "../../lib/auth-context";
 
 export default function GalleryPage() {
-  const [selectedImage, setSelectedImage] = useState<
-    (typeof galleryImages)[0] | null
-  >(null);
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [selectedForRemoval, setSelectedForRemoval] = useState<Set<number>>(new Set());
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [isRemoving, setIsRemoving] = useState(false);
-  const [showPhotoDetails, setShowPhotoDetails] = useState(false);
-  const [selectedPhotoForDetails, setSelectedPhotoForDetails] = useState<any>(null);
+  // Authentication
+  const { isAuthenticated } = useAuth();
+  
+  // Dynamic data state
+  const [galleryImages, setGalleryImages] = useState<MediaItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Toggle edit mode
-  const toggleEditMode = () => {
-    setIsEditMode(!isEditMode);
+  // Original functionality state
+  const [selectedImage, setSelectedImage] = useState<any>(null);
+
+  // Edit mode state
+  const [editMode, setEditMode] = useState(false);
+  const [showQueue, setShowQueue] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [selectedPhotoForDetails, setSelectedPhotoForDetails] = useState<{
+    media: MediaItem;
+    context: 'gallery';
+  } | null>(null);
+  const [selectedForRemoval, setSelectedForRemoval] = useState<Set<number>>(new Set());
+  const [isRemoving, setIsRemoving] = useState(false);
+  const [selectedQueueItems, setSelectedQueueItems] = useState<any[]>([]);
+  const [isAddingToGallery, setIsAddingToGallery] = useState(false);
+
+  // Load gallery data on component mount
+  useEffect(() => {
+    const loadGallery = async () => {
+      try {
+        // Use the API endpoint instead of direct database function
+        const response = await fetch('/api/media');
+        const data = await response.json();
+        
+        if (data.success) {
+          // Transform API response to match component expectations
+          const galleryData = data.media.map((item: any) => ({
+            id: item.id,
+            type: item.type,
+            src: item.cloudinaryUrl,
+            alt: item.filename,
+            description: item.description,
+            order: item.sortOrder
+          }));
+          console.log('Loaded gallery data:', galleryData);
+          console.log('Gallery count:', galleryData.length);
+          console.log('Loaded gallery data:', galleryData);
+          console.log('Gallery count:', galleryData.length);
+          setGalleryImages(galleryData);
+        } else {
+          throw new Error('Failed to load gallery data');
+        }
+      } catch (error) {
+        console.error('Error loading gallery:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadGallery();
+  }, []);
+
+  // Handle image click for original lightbox functionality
+  const handleImageClick = (image: any) => {
+    if (editMode) {
+      // In edit mode, handle selection for removal
+      const newSelected = new Set(selectedForRemoval);
+      if (newSelected.has(image.id)) {
+        newSelected.delete(image.id);
+      } else {
+        newSelected.add(image.id);
+      }
+      setSelectedForRemoval(newSelected);
+    } else {
+      // Normal mode - open lightbox
+      setSelectedImage(image);
+    }
+  };
+
+  // Edit mode handlers
+  const handleEditClick = () => {
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+      return;
+    }
+    setEditMode(!editMode);
     setSelectedForRemoval(new Set());
   };
 
-  // Handle photo selection for removal
-  const togglePhotoSelection = (imageId: number) => {
-    if (!isEditMode) return;
-    
-    const newSelection = new Set(selectedForRemoval);
-    if (newSelection.has(imageId)) {
-      newSelection.delete(imageId);
-    } else {
-      newSelection.add(imageId);
-    }
-    setSelectedForRemoval(newSelection);
-  };
-
-  // Remove selected photos (move to queue)
-  const removeSelectedPhotos = async () => {
+  const handleConfirmRemoval = async () => {
     if (selectedForRemoval.size === 0) return;
-    
+
     setIsRemoving(true);
     try {
-      // Call API to move photos to queue (soft delete)
+      // Convert to the format expected by the DELETE API
+      const mediaIds = Array.from(selectedForRemoval);
+
       const response = await fetch('/api/media', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          mediaIds: Array.from(selectedForRemoval),
+        body: JSON.stringify({ 
+          mediaIds,
           source: 'gallery',
           action: 'soft-delete'
         })
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to remove photos');
+      if (response.ok) {
+        // Reload gallery to reflect changes using API endpoint
+        const galleryResponse = await fetch('/api/media');
+        const galleryData = await galleryResponse.json();
+        
+        if (galleryData.success) {
+          const transformedData = galleryData.media.map((item: any) => ({
+            id: item.id,
+            type: item.type,
+            src: item.cloudinaryUrl,
+            alt: item.filename,
+            description: item.description,
+            order: item.sortOrder
+          }));
+          setGalleryImages(transformedData);
+        }
+        
+        setSelectedForRemoval(new Set());
+        setEditMode(false);
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to remove photos');
       }
-
-      const result = await response.json();
-      console.log('Photos moved to queue:', result);
-      
-      // Reset selection and exit edit mode
-      setSelectedForRemoval(new Set());
-      setIsEditMode(false);
-      
-      // TODO: Refresh gallery data from database
-      // This would trigger a re-fetch of gallery images
     } catch (error) {
-      console.error('Failed to remove photos:', error);
-      alert('Failed to remove photos. Please try again.');
+      console.error('Error removing photos:', error);
     } finally {
       setIsRemoving(false);
     }
   };
 
-  // Handle adding photos from queue
-  const handleAddPhotos = async (queueItems: any[]) => {
+  const handleCancelRemoval = () => {
+    setSelectedForRemoval(new Set());
+  };
+
+  const handlePhotoRightClick = (e: React.MouseEvent, media: MediaItem) => {
+    e.preventDefault();
+    setSelectedPhotoForDetails({
+      media,
+      context: 'gallery'
+    });
+  };
+
+  const handleUpdateDescriptionInGallery = async (itemId: string | number, description: string) => {
+    const mediaId = typeof itemId === 'string' ? parseInt(itemId) : itemId;
     try {
-      // Call API to assign queue items to gallery
+      const response = await fetch(`/api/media/${mediaId}/description`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ description })
+      });
+
+      if (response.ok) {
+        // Reload gallery
+        const galleryData = await getGalleryImages();
+        setGalleryImages(galleryData);
+      }
+    } catch (error) {
+      console.error('Error updating description:', error);
+    }
+  };
+
+  const handleUpdateOrderInGallery = async (itemId: string | number, direction: 'up' | 'down') => {
+    const mediaId = typeof itemId === 'string' ? parseInt(itemId) : itemId;
+    try {
+      const response = await fetch(`/api/media/${mediaId}/order`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ direction })
+      });
+
+      if (response.ok) {
+        // Reload gallery
+        const galleryData = await getGalleryImages();
+        setGalleryImages(galleryData);
+      }
+    } catch (error) {
+      console.error('Error updating order:', error);
+    }
+  };
+
+  const handleRemoveFromGalleryDetails = async (itemId: string | number) => {
+    const mediaId = typeof itemId === 'string' ? parseInt(itemId) : itemId;
+    try {
+      const updates = [{
+        mediaId,
+        action: 'remove',
+        source: 'gallery',
+        sourceDescription: 'Removed from gallery'
+      }];
+
+      const response = await fetch('/api/media', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ updates })
+      });
+
+      if (response.ok) {
+        // Reload gallery
+        const galleryData = await getGalleryImages();
+        setGalleryImages(galleryData);
+        setSelectedPhotoForDetails(null);
+      }
+    } catch (error) {
+      console.error('Error removing from gallery:', error);
+    }
+  };
+
+  // Handle adding selected queue items to gallery
+  const handleAddToGallery = async () => {
+    if (selectedQueueItems.length === 0) return;
+
+    setIsAddingToGallery(true);
+    try {
+      // Send queue item IDs - the API will handle getting the mediaIds
+      const queueItemIds = selectedQueueItems.map(item => parseInt(item.id));
+
       const response = await fetch('/api/media', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          queueItemIds: queueItems.map(item => item.id),
+        body: JSON.stringify({ 
+          queueItemIds,
           assignTo: 'gallery'
         })
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to add photos to gallery');
+      const apiResult = await response.json();
+
+      if (response.ok) {
+        // Reload gallery to show new items using API endpoint
+        const galleryResponse = await fetch('/api/media');
+        const galleryData = await galleryResponse.json();
+        
+        if (galleryData.success) {
+          const transformedData = galleryData.media.map((item: any) => ({
+            id: item.id,
+            type: item.type,
+            src: item.cloudinaryUrl,
+            alt: item.filename,
+            description: item.description,
+            order: item.sortOrder
+          }));
+          setGalleryImages(transformedData);
+        }
+        
+        // Close modal and reset selections
+        setShowQueue(false);
+        setSelectedQueueItems([]);
+      } else {
+        throw new Error(apiResult.error || 'Failed to add items to gallery');
       }
-
-      const result = await response.json();
-      console.log('Photos added to gallery:', result);
-      
-      setShowAddModal(false);
-      // TODO: Refresh gallery data from database
     } catch (error) {
-      console.error('Failed to add photos:', error);
-      alert('Failed to add photos. Please try again.');
+      console.error('Error adding to gallery:', error);
+      alert('Failed to add photos to gallery. Please try again.');
+    } finally {
+      setIsAddingToGallery(false);
     }
   };
 
-  // Handle photo details operations
-  const handleUpdateDescription = async (itemId: string | number, description: string) => {
-    try {
-      const response = await fetch('/api/media', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          mediaId: itemId,
-          description: description,
-          context: 'gallery'
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to update description');
-      }
-
-      console.log('Description updated:', { itemId, description });
-      // TODO: Update local state or refresh data
-    } catch (error) {
-      console.error('Failed to update description:', error);
-      throw error;
+  // FAB options for gallery
+  const fabOptions = [
+    {
+      icon: <Plus className="w-5 h-5" />,
+      label: "Add Photos",
+      onClick: () => isAuthenticated ? setShowQueue(true) : setShowAuthModal(true),
+      color: "text-blue-600"
+    },
+    {
+      icon: <Edit3 className="w-5 h-5" />,
+      label: editMode ? "Exit Edit" : "Edit",
+      onClick: handleEditClick,
+      color: editMode ? "text-red-600" : "text-green-600"
     }
-  };
+  ];
 
-  const handleUpdateOrder = async (itemId: string | number, direction: 'up' | 'down') => {
-    // Gallery doesn't have ordering, so this is a no-op
-    console.log('Gallery photos do not have ordering');
-  };
-
-  const handleRemoveFromDetails = async (itemId: string | number) => {
-    try {
-      const response = await fetch('/api/media', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          mediaIds: [itemId],
-          source: 'gallery',
-          action: 'soft-delete'
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to remove photo');
-      }
-
-      console.log('Photo removed from gallery:', itemId);
-      // TODO: Refresh gallery data
-    } catch (error) {
-      console.error('Failed to remove photo:', error);
-      throw error;
-    }
-  };
-
-  // Handle right-click or long press for photo details
-  const handlePhotoContextMenu = (e: React.MouseEvent, image: any) => {
-    e.preventDefault();
-    if (!isEditMode) {
-      setSelectedPhotoForDetails(image);
-      setShowPhotoDetails(true);
-    }
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-neutral-900 mx-auto mb-4"></div>
+          <p className="text-neutral-600">Loading gallery...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -211,53 +315,35 @@ export default function GalleryPage() {
             </button>
           </Link>
           
-          {/* Edit Mode Controls */}
-          <div className="flex items-center gap-3">
-            {isEditMode && (
-              <>
-                {selectedForRemoval.size > 0 && (
-                  <button
-                    onClick={removeSelectedPhotos}
-                    disabled={isRemoving}
-                    className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                    {isRemoving ? 'Removing...' : `Remove ${selectedForRemoval.size}`}
-                  </button>
-                )}
-                
+          {/* Edit Mode Actions - only show during edit mode */}
+          {editMode && (
+            <div className="flex items-center gap-2">
+              {selectedForRemoval.size > 0 && (
                 <button
-                  onClick={() => setShowAddModal(true)}
-                  className="flex items-center gap-2 bg-fuchsia-200 hover:bg-fuchsia-300 text-neutral-900 font-medium py-2 px-4 rounded-lg border border-rose-200 hover:border-rose-300 transition-colors"
+                  onClick={handleConfirmRemoval}
+                  disabled={isRemoving}
+                  className="flex items-center gap-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50"
                 >
-                  <Plus className="w-4 h-4" />
-                  Add Photos
+                  <Trash2 className="w-4 h-4" />
+                  {isRemoving ? 'Removing...' : `Remove (${selectedForRemoval.size})`}
                 </button>
-              </>
-            )}
-            
-            <button
-              onClick={toggleEditMode}
-              className={`flex items-center gap-2 font-medium py-2 px-4 rounded-lg transition-colors ${
-                isEditMode
-                  ? 'bg-neutral-200 hover:bg-neutral-300 text-neutral-900'
-                  : 'text-neutral-800 border border-neutral-300 hover:border-neutral-400'
-              }`}
-              style={!isEditMode ? { backgroundColor: '#D8BFF8' } : undefined}
-            >
-              {isEditMode ? (
-                <>
-                  <X className="w-4 h-4" />
-                  Cancel
-                </>
-              ) : (
-                <>
-                  <Edit3 className="w-4 h-4" />
-                  Edit
-                </>
               )}
-            </button>
-          </div>
+              <button
+                onClick={handleCancelRemoval}
+                className="flex items-center gap-2 px-3 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+              >
+                <X className="w-4 h-4" />
+                Cancel
+              </button>
+              <button
+                onClick={handleEditClick}
+                className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+              >
+                <Check className="w-4 h-4" />
+                Done
+              </button>
+            </div>
+          )}
         </div>
       </header>
 
@@ -275,75 +361,60 @@ export default function GalleryPage() {
           </div>
 
           {/* Gallery Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {galleryImages.map((image) => {
-              const isSelected = selectedForRemoval.has(image.id);
-              
-              return (
+          {galleryImages.length === 0 ? (
+            <div className="text-center py-16">
+              <div className="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Camera className="w-8 h-8 text-neutral-600" />
+              </div>
+              <p className="text-neutral-600 mb-4">No photos in gallery yet</p>
+              <button
+                onClick={() => setShowQueue(true)}
+                className="px-6 py-3 bg-neutral-900 text-white rounded-lg hover:bg-neutral-800"
+              >
+                Add First Photo
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {galleryImages.map((image) => (
                 <div
                   key={image.id}
-                  className={`group cursor-pointer transition-all duration-200 ${
-                    !isEditMode ? 'hover:-translate-y-1' : ''
-                  } ${isSelected ? 'ring-4 ring-red-400' : ''}`}
-                  onClick={() => 
-                    isEditMode 
-                      ? togglePhotoSelection(image.id)
-                      : setSelectedImage(image)
-                  }
-                  onContextMenu={(e) => handlePhotoContextMenu(e, image)}
+                  className={`group cursor-pointer transition-all duration-200 hover:-translate-y-1 relative ${
+                    editMode && selectedForRemoval.has(image.id) ? 'ring-4 ring-red-500' : ''
+                  }`}
+                  onClick={() => handleImageClick(image)}
+                  onContextMenu={(e) => !editMode && handlePhotoRightClick(e, image)}
                 >
-                  <div className={`relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-lg border border-neutral-100 ${
-                    isSelected ? 'opacity-75' : ''
-                  }`}>
+                  <div className="relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-lg border border-neutral-100">
                     <Image
                       src={getMediaUrl(image.src) || "/placeholder.svg"}
-                      alt="Gallery image"
+                      alt={image.alt || "Gallery image"}
                       width={400}
                       height={300}
-                      className={`w-full h-64 object-cover transition-transform duration-300 ${
-                        !isEditMode ? 'group-hover:scale-105' : ''
-                      }`}
+                      className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
                     />
-                    
-                    {/* Edit Mode Overlay */}
-                    {isEditMode && (
-                      <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
-                        <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${
-                          isSelected 
-                            ? 'bg-red-500 border-red-500' 
-                            : 'bg-white bg-opacity-80 border-neutral-300 hover:border-neutral-400'
-                        }`}>
-                          {isSelected && <Check className="w-5 h-5 text-white" />}
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* Selection Counter */}
-                    {isEditMode && isSelected && (
-                      <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
-                        {Array.from(selectedForRemoval).indexOf(image.id) + 1}
-                      </div>
-                    )}
-                    
-                    {/* Info Button */}
-                    {!isEditMode && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedPhotoForDetails(image);
-                          setShowPhotoDetails(true);
-                        }}
-                        className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-80"
-                        title="Photo details"
-                      >
-                        <Info className="w-4 h-4" />
-                      </button>
-                    )}
                   </div>
+
+                  {/* Selection overlay for edit mode */}
+                  {editMode && (
+                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                      <div
+                        className={`w-8 h-8 rounded-full border-4 ${
+                          selectedForRemoval.has(image.id)
+                            ? 'bg-red-500 border-white'
+                            : 'border-white/60'
+                        }`}
+                      >
+                        {selectedForRemoval.has(image.id) && (
+                          <Check className="w-4 h-4 text-white m-0.5" />
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          )}
 
           {/* Navigation to Trips */}
           <div className="text-center mt-16 pt-12 border-t border-neutral-200">
@@ -352,44 +423,60 @@ export default function GalleryPage() {
             </p>
             <Link href="/trips">
               <button className="bg-white hover:bg-neutral-50 text-neutral-900 font-medium py-3 px-6 rounded-lg border border-neutral-300 hover:border-neutral-400 transition-all duration-200">
-                View Our Trips
+                View Our Moments
               </button>
             </Link>
           </div>
         </div>
       </main>
 
-      {/* Lightbox Modal */}
-      {selectedImage && !isEditMode && (
-        <Lightbox
-          image={selectedImage}
-          onClose={() => setSelectedImage(null)}
-        />
-      )}
-
       {/* Add Photos Modal */}
-      {showAddModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[80vh] overflow-hidden">
-            <div className="p-6 border-b border-neutral-200">
-              <div className="flex items-center justify-between">
-                <h3 className="font-playfair text-xl text-neutral-900">Add Photos from Queue</h3>
+      {showQueue && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <h2 className="text-xl font-bold">Add Photos to Gallery</h2>
+              <button
+                onClick={() => {
+                  setShowQueue(false);
+                  setSelectedQueueItems([]);
+                }}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="overflow-y-auto max-h-[calc(90vh-180px)]">
+              <MediaQueue 
+                selectionMode={true}
+                onSelectMedia={setSelectedQueueItems}
+              />
+            </div>
+            <div className="flex items-center justify-between p-6 border-t border-gray-200 bg-gray-50">
+              <div className="text-sm text-gray-600">
+                {selectedQueueItems.length > 0 
+                  ? `${selectedQueueItems.length} photo${selectedQueueItems.length !== 1 ? 's' : ''} selected`
+                  : 'Select photos to add to gallery'
+                }
+              </div>
+              <div className="flex gap-3">
                 <button
-                  onClick={() => setShowAddModal(false)}
-                  className="text-neutral-500 hover:text-neutral-700"
+                  onClick={() => {
+                    setShowQueue(false);
+                    setSelectedQueueItems([]);
+                  }}
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
                 >
-                  <X className="w-6 h-6" />
+                  Cancel
+                </button>
+                <button
+                  onClick={handleAddToGallery}
+                  disabled={selectedQueueItems.length === 0 || isAddingToGallery}
+                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  {isAddingToGallery ? 'Adding...' : `Add ${selectedQueueItems.length > 0 ? selectedQueueItems.length : ''} Photo${selectedQueueItems.length !== 1 ? 's' : ''}`}
                 </button>
               </div>
-            </div>
-            
-            <div className="overflow-y-auto max-h-[calc(80vh-80px)]">
-              <MediaQueue
-                selectionMode={true}
-                onSelectMedia={handleAddPhotos}
-                maxSelection={10}
-                className="border-0"
-              />
             </div>
           </div>
         </div>
@@ -397,37 +484,61 @@ export default function GalleryPage() {
 
       {/* Photo Details Modal */}
       <PhotoDetailsModal
-        isOpen={showPhotoDetails}
-        onClose={() => {
-          setShowPhotoDetails(false);
-          setSelectedPhotoForDetails(null);
-        }}
+        isOpen={!!selectedPhotoForDetails}
+        onClose={() => setSelectedPhotoForDetails(null)}
         mediaItem={selectedPhotoForDetails ? {
-          id: selectedPhotoForDetails.id,
-          src: getMediaUrl(selectedPhotoForDetails.src) || '',
-          alt: selectedPhotoForDetails.alt,
-          type: 'image'
+          id: selectedPhotoForDetails.media.id,
+          src: getMediaUrl(selectedPhotoForDetails.media.src) || '',
+          alt: selectedPhotoForDetails.media.alt,
+          type: selectedPhotoForDetails.media.type,
+          description: selectedPhotoForDetails.media.description || selectedPhotoForDetails.media.alt
         } : null}
-        onUpdateDescription={handleUpdateDescription}
-        onUpdateOrder={handleUpdateOrder}
-        onRemove={handleRemoveFromDetails}
+        onUpdateDescription={handleUpdateDescriptionInGallery}
+        onUpdateOrder={handleUpdateOrderInGallery}
+        onRemove={handleRemoveFromGalleryDetails}
         context="gallery"
+        contextName="Gallery"
       />
 
+      {/* Lightbox Modal */}
+      {selectedImage && (
+        <Lightbox
+          image={{
+            id: selectedImage.id,
+            src: getMediaUrl(selectedImage.src) || '',
+            alt: selectedImage.alt || "Gallery image"
+          }}
+          onClose={() => setSelectedImage(null)}
+        />
+      )}
+
       {/* Edit Mode Instructions */}
-      {isEditMode && (
+      {editMode && (
         <div className="fixed bottom-6 left-6 right-6 bg-white rounded-lg border border-neutral-200 shadow-lg p-4 z-40">
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-neutral-900 font-medium mb-2">Edit Mode Active</p>
+            <p className="text-neutral-900 font-medium mb-2">Gallery Edit Mode Active</p>
             <p className="text-neutral-600 text-sm">
               {selectedForRemoval.size === 0 
-                ? 'Tap photos to select them for removal, or add new photos from the queue.'
-                : `${selectedForRemoval.size} photo${selectedForRemoval.size !== 1 ? 's' : ''} selected for removal. They will be moved to the queue (not permanently deleted).`
+                ? 'Tap photos to select them for removal, or right-click for photo details.'
+                : `${selectedForRemoval.size} photo${selectedForRemoval.size !== 1 ? 's' : ''} selected for removal.`
               }
             </p>
           </div>
         </div>
       )}
+
+      {/* Authentication Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onSuccess={() => {
+          setShowAuthModal(false);
+          setEditMode(true);
+        }}
+      />
+
+      {/* Floating Action Button */}
+      <FloatingActionButton options={fabOptions} />
     </div>
   );
 }

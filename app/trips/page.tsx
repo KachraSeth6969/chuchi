@@ -1,422 +1,128 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, MapPin, Calendar, Heart, Edit3, X, Check, Plus, Trash2, Settings, Camera, Info } from "lucide-react";
+import { ArrowLeft, MapPin, Calendar, Heart, Edit3, X, Check, Plus, Trash2, Settings, Camera, Info, Upload } from "lucide-react";
 import { Lightbox } from "../../components/lightbox";
 import MediaQueue from "../../components/media-queue";
 import TripForm from "../../components/trip-form";
 import PhotoDetailsModal from "../../components/photo-details-modal";
+import AuthModal from "../../components/auth-modal";
+import FloatingActionButton from "../../components/floating-action-button";
 import { getMediaUrl } from "../../lib/media-config";
-
-// Trip data - you can add more trips here
-const trips = [
-  {
-    id: 1,
-    title: "Teacher bramha",
-    location: "Aapke dil mein",
-    date: "11 March",
-    description: "Gaand fat gayi bc padhane ke liye, kabhi nahi padhaega python",
-    media: [
-      { id: 1, type: "image", src: "/images/11.jpg", alt: "Best picture of chuchi till date" },
-      { id: 2, type: "image", src: "/images/12.jpg", alt: "" },
-      { id: 3, type: "image", src: "/images/13.jpg", alt: "U look so hott uff" },
-      { id: 4, type: "image", src: "/images/14.jpg", alt: "" },
-      { id: 5, type: "image", src: "/images/15.jpg", alt: "Super > Nova😤" },
-      { id: 6, type: "video", src: "/videos/16.mp4", alt: "Super > Nova😤" },
-
-      // Add videos like this: { id: 4, type: "video", src: "/videos/first-trip.mp4", alt: "First adventure video" },
-    ]
-  },
-  {
-    id: 2,
-    title: "January",
-    location: "Still aapke dill mai",
-    date: "One week of jan",
-    description: "Kya toh roz milte thhe chup chupke, bc",
-    media: [
-      // Auto-scanned files starting with 2 followed by digits (21, 22, 23, etc.)
-      { id: 21, type: "image", src: "/images/21.jpg", alt: "Tera id kho gaya and tu poora dinn bhagi thhi" },
-      { id: 25, type: "image", src: "/images/25.jpg", alt: "Mai theek se suna nahi thha" },
-      { id: 22, type: "image", src: "/images/22.jpg", alt: "" },
-      { id: 23, type: "image", src: "/images/23.jpg", alt: "Wtf is this" },
-      { id: 24, type: "image", src: "/images/24.jpg", alt: "Sister😍" },
-      { id: 26, type: "image", src: "/images/26.jpg", alt: "" },
-      
-    ]
-  },
-  {
-    id: 3,
-    title: "Recent trip to apna savagaon",
-    location: "Hehehehe still aapke dill mai",
-    date: "Juky mai",
-    description: "Kya bolti deal done karte toh anyways world already believes us to be a thing",
-    media: [
-      // Auto-scanned files starting with 3 followed by digits (31, 32, 33, etc.)
-      { id: 31, type: "image", src: "/images/31.jpg", alt: "u in that kurta(mere jacket ke andhar jo pehenni hai) " },
-      { id: 32, type: "image", src: "/images/32.jpg", alt: "is the second most" },
-      { id: 33, type: "image", src: "/images/33.jpg", alt: "Beautiful thing" },
-      { id: 35, type: "image", src: "/images/35.jpg", alt: "U know whats first😉" },
-      { id: 36, type: "image", src: "/images/36.jpg", alt: "" },
-      { id: 34, type: "image", src: "/images/34.jpg", alt: "Cringiest shit ive ever done" },
-      { id: 37, type: "video", src: "/videos/37.mp4", alt: "" },
-      { id: 38, type: "video", src: "/videos/38.mp4", alt: "" },
-      { id: 39, type: "video", src: "/videos/39.mp4", alt: "" },
-    ]
-  },
-  {
-    id: 4,
-    title: "Sagar Milkshakeeee",
-    location: "Supernova ke beech mai(aapke dill mai)",
-    date: "I dont remember the date😂",
-    description: "BC mere oaas sirf itne hi kyu hai🥲",
-    media: [
-      // Auto-scanned files starting with 4 followed by digits (41, 42, 43, etc.)
-      { id: 41, type: "video", src: "/videos/41.mp4", alt: "😍" },
-      { id: 42, type: "image", src: "/images/42.jpg", alt: "Best phtotgrapher average model" },
-      { id: 43, type: "video", src: "/videos/43.mp4", alt: "" },
-    ]
-  },
-  {
-    id: 5,
-    title: "Adde pe proposal",
-    location: "U guessed it, in ur heart",
-    date: "Feb mai kabhi toh    ",
-    description: "Kya toh thha re ma yo dinn, almost u had fell for me",
-    media: [
-      // Auto-scanned converted files starting with 5 followed by digits (51-59, 510-516)
-      { id: 519 , type: "video", src: "/videos/519.mp4", alt: "Adde pe proposal video" },
-      { id: 516, type: "image", src: "/images/516.jpeg", alt: "🤣🤣🤣🤣" },
-      { id: 51, type: "image", src: "/images/51.jpeg", alt: "" },
-      { id: 52, type: "image", src: "/images/52.jpeg", alt: "" },
-      { id: 53, type: "image", src: "/images/53.jpeg", alt: "" },
-      { id: 54, type: "image", src: "/images/54.jpeg", alt: "" },
-      { id: 55, type: "image", src: "/images/55.jpeg", alt: "" },
-      { id: 56, type: "image", src: "/images/56.jpeg", alt: "" },
-      { id: 57, type: "image", src: "/images/57.jpeg", alt: "" },
-      { id: 58, type: "image", src: "/images/58.jpeg", alt: "" },
-      { id: 59, type: "image", src: "/images/59.jpeg", alt: "" },
-      { id: 510, type: "image", src: "/images/510.jpeg", alt: "" },
-      { id: 511, type: "image", src: "/images/511.jpeg", alt: "" },
-      { id: 512, type: "image", src: "/images/512.jpeg", alt: "" },
-      { id: 514, type: "image", src: "/images/514.jpeg", alt: "" },
-      { id: 515, type: "image", src: "/images/515.jpeg", alt: "" }
-    ]
-  },
-    {
-    id: 6,
-    title: "10 days",
-    location: "Permanently dil mai",
-    date: "September is the month",
-    description: "Do u have the balls to be my gf???????????????",
-    media: [
-      { id: 80, type: "video", src: "/videos/81.mp4", alt: "Nikaala baadme" },
-      { id: 83, type: "image", src: "/images/84.jpeg", alt: "No deed performed " },
-      { id: 81, type: "image", src: "/images/82.jpeg", alt: "Manifestation manifesting" },
-      { id: 82, type: "image", src: "/images/83.jpeg", alt: "She has no clue whats gon happen" },
-      { id: 818, type: "image", src: "/images/818.jpeg", alt: "Wanna drown in these eyes forever" },
-      { id: 84, type: "image", src: "/images/85.jpeg", alt: "So happy after jiggle sesh" },
-      { id: 85, type: "image", src: "/images/86.jpeg", alt: "" },
-      { id: 86, type: "image", src: "/images/87.jpeg", alt: "" },
-      { id: 87, type: "image", src: "/images/88.jpeg", alt: "" },
-      { id: 88, type: "image", src: "/images/89.jpeg", alt: "" },
-      { id: 811, type: "image", src: "/images/811.jpeg", alt: "" },
-      { id: 812, type: "image", src: "/images/812.jpeg", alt: "" },
-      { id: 813, type: "image", src: "/images/813.jpeg", alt: "" },
-      { id: 814, type: "image", src: "/images/814.jpeg", alt: "" },
-      { id: 815, type: "image", src: "/images/815.jpeg", alt: "" },
-      { id: 816, type: "image", src: "/images/816.jpeg", alt: "" },
-      { id: 817, type: "image", src: "/images/817.jpeg", alt: "" },
-      { id: 819, type: "image", src: "/images/819.jpeg", alt: "" },
-      { id: 820, type: "image", src: "/images/820.jpeg", alt: "" },
-      { id: 821, type: "image", src: "/images/821.jpeg", alt: "" },
-      { id: 822, type: "image", src: "/images/822.jpeg", alt: "" },
-
-    ]
-  },
-      {
-    id: 7,
-    title: "First bike trip",
-    location: "chipak chipak ke dil mai",
-    date: "CIE ke baad",
-    description: "Maangi hui bike leke chal pade do gareeb",
-    media: [
-      { id: 90, type: "image", src: "/images/924.jpeg", alt: "" },
-      { id: 91, type: "image", src: "/images/925.jpeg", alt: "" },
-      { id: 92, type: "image", src: "/images/926.jpeg", alt: "" },
-      { id: 93, type: "image", src: "/images/927.jpeg", alt: "" },
-      { id: 94, type: "image", src: "/images/928.jpeg", alt: "" },
-      { id: 95, type: "image", src: "/images/929.jpeg", alt: "" },
-      { id: 96, type: "image", src: "/images/930.jpeg", alt: "Mana kar rahi thhi" },
-      { id: 97, type: "image", src: "/images/931.jpeg", alt: "" },
-      { id: 98, type: "image", src: "/images/932.jpeg", alt: "" },
-      { id: 99, type: "image", src: "/images/933.jpeg", alt: "" },
-      { id: 901, type: "image", src: "/images/934.jpeg", alt: "" },
-      { id: 902, type: "image", src: "/images/935.jpeg", alt: "" },
-      { id: 903, type: "image", src: "/images/936.jpeg", alt: "" },
-
-      { id: 905, type: "image", src: "/images/938.jpeg", alt: "" },
-      { id: 906, type: "image", src: "/images/939.jpeg", alt: "" },
-      { id: 907, type: "video", src: "/videos/921.mp4", alt: "" },
-      { id: 908, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759248594/116_vd8djo.jpg",alt:""},
-      { id: 909, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759248596/115_rtme6h.jpg",alt:""},
-      { id: 910, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759248857/113_qzx1if.mp4",alt:""},
-      { id: 911, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759248887/112_fycjln.mp4",alt:""},
-      { id: 912, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759248894/111_aaefef.mp4",alt:""},
-      { id: 913, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759248983/114_kcli30.mp4",alt:""},
-      { id: 914, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759318177/119_uq2b6h.jpg",alt:""},
-      { id: 915, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759318175/120_ptxwyh.jpg",alt:""},
-      { id: 916, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759318173/118_hmftcv.jpg",alt:""},
-      { id: 917, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759318111/117_gq1vkd.mp4",alt:""},
-    ]
-  },
-
-    {
-    id: 8,
-    title: "Stay Together",
-    location: "Special Place in Heart",
-    date: "October 2025",
-    description: "Poora hafta saath mai rahe , kutte jaisa paisa udaye",
-    media: [
-      // Images
-      { id: 1001, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942166/chuchi/images/IMG_0316.jpg", alt: "" },
-      { id: 1002, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942173/chuchi/images/IMG_0317.jpg", alt: "" },
-      { id: 1003, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942178/chuchi/images/IMG_0323.jpg", alt: "" },
-      { id: 1004, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942183/chuchi/images/IMG_0324.jpg", alt: "" },
-      { id: 1005, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942188/chuchi/images/IMG_0385.jpg", alt: "" },
-      { id: 1006, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942192/chuchi/images/IMG_0386.jpg", alt: "" },
-      { id: 1007, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942197/chuchi/images/IMG_0387.jpg", alt: "" },
-      { id: 1008, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942201/chuchi/images/IMG_0390.jpg", alt: "" },
-      { id: 1009, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942204/chuchi/images/IMG_0391.jpg", alt: "" },
-      { id: 1010, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942207/chuchi/images/IMG_0392.jpg", alt: "" },
-      { id: 1011, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942210/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.28%E2%80%AFAM%20%281%29.jpg", alt: "" },
-      { id: 1012, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942212/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.28%E2%80%AFAM.jpg", alt: "" },
-      { id: 1013, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942214/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.36%E2%80%AFAM.jpg", alt: "" },
-      { id: 1014, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942215/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.37%E2%80%AFAM.jpg", alt: "" },
-      { id: 1016, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942218/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.52%E2%80%AFAM%20%281%29.jpg", alt: "" },
-      { id: 1017, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942220/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.53%E2%80%AFAM%20%281%29.jpg", alt: "" },
-      { id: 1018, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942222/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.53%E2%80%AFAM.jpg", alt: "" },
-      { id: 1019, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942223/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.40.54%E2%80%AFAM.jpg", alt: "" },
-      { id: 1020, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1759942225/chuchi/images/WhatsApp%20Image%202025-10-08%20at%201.41.08%E2%80%AFAM.jpg", alt: "" },
-      // Videos
-      { id: 1021, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942242/chuchi/videos/IMG_0315.mp4", alt: "" },
-      { id: 1022, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942265/chuchi/videos/IMG_0364.mp4", alt: "" },
-      { id: 1023, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942283/chuchi/videos/IMG_0366.mp4", alt: "" },
-      { id: 1024, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942298/chuchi/videos/IMG_0367.mp4", alt: "" },
-      { id: 1025, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942360/chuchi/videos/WhatsApp%20Video%202025-10-08%20at%201.40.55%E2%80%AFAM%20%281%29.mp4", alt: "" },
-      { id: 1026, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1759942368/chuchi/videos/WhatsApp%20Video%202025-10-08%20at%201.40.55%E2%80%AFAM.mp4", alt: "" }
-    ]
-  },
-
-  {
-    id: 9,
-    title: "First Date💋",
-    location: "Sozo bolke ekla hai kidhar toh bc",
-    date: "10 October",
-    description: "Kya toh crazy jhagda kiye thhe ek dinn pehle",
-    media: [
-      // 15 actual images from your Cloudinary collection
-      { id: 1101, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695569/IMG_0442_rws509.jpg", alt: "" },
-      { id: 1102, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695570/IMG_0445_poz2nx.jpg", alt: "" },
-      { id: 1103, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695570/IMG_0446_kr71b2.jpg", alt: "" },
-      { id: 1104, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695571/IMG_0454_taufvw.jpg", alt: "" },
-      { id: 1105, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695571/IMG_0448_regmni.jpg", alt: "" },
-      { id: 1106, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695571/IMG_0465_weybsx.jpg", alt: "" },
-      { id: 1107, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695572/IMG_0455_uhjlld.jpg", alt: "" },
-      { id: 1108, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695572/IMG_0485_przbm1.jpg", alt: "" },
-      { id: 1109, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695573/IMG_0479_zr9zez.jpg", alt: "" },
-      { id: 1110, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695573/IMG_0490_ycqbo0.jpg", alt: "" },
-      { id: 1111, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695573/IMG_0449_aimmrc.jpg", alt: "" },
-      { id: 1112, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695574/IMG_0495_bdobvf.jpg", alt: "" },
-      { id: 1113, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695574/IMG_0492_gnhvzl.jpg", alt: "" },
-      { id: 1114, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695574/IMG_0497_vil3ua.jpg", alt: "" },
-      { id: 1115, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695575/IMG_0500_sgch5a.jpg", alt: "" }
-    ]
-  },
-  {
-    id: 10,
-    title: "Random Shite",
-    location: "Hmm tough question I think aapke dill mai🧐",
-    date: "All the best finding dates",
-    description: "Inn sab ke liye seperate banane ko kya nai mila still dalneka thha so daal diya",
-    media: [
-      // Auto-scanned files starting with 6 followed by digits
-      { id: 61, type: "video", src: "/videos/61.mp4", alt: "" },
-      { id: 62, type: "image", src: "/images/62.JPG", alt: "" },
-      { id: 63, type: "image", src: "/images/63.JPG", alt: "" },
-      { id: 64, type: "image", src: "/images/64.JPG", alt: "" },
-      { id: 65, type: "image", src: "/images/65.jpeg", alt: "" },
-      { id: 66, type: "image", src: "/images/66.jpeg", alt: "" },
-      { id: 67, type: "image", src: "/images/67.jpeg", alt: "" },
-      { id: 68, type: "image", src: "/images/68.jpeg", alt: "" },
-      { id: 69, type: "image", src: "/images/69.jpeg", alt: "" },
-      { id: 610, type: "image", src: "/images/610.jpeg", alt: "" },
-      { id: 611, type: "image", src: "/images/611.jpeg", alt: "" },
-      { id: 612, type: "image", src: "/images/612.jpeg", alt: "" },
-      { id: 613, type: "image", src: "/images/613.jpeg", alt: "" },
-      { id: 614, type: "image", src: "/images/614.JPG", alt: "" },
-      { id: 615, type: "image", src: "/images/615.jpeg", alt: "" },
-      { id: 616, type: "image", src: "/images/616.jpeg", alt: "" },
-      { id: 617, type: "image", src: "/images/617.jpeg", alt: "" },
-      { id: 618, type: "image", src: "/images/618.JPG", alt: "" },
-      { id: 619, type: "image", src: "/images/619.jpeg", alt: "" },
-      { id: 620, type: "image", src: "/images/620.JPG", alt: "" },
-      { id: 621, type: "image", src: "/images/621.jpg", alt: "" },
-      { id: 622, type: "image", src: "/images/622.jpeg", alt: "" },
-      { id: 623, type: "image", src: "/images/623.jpeg", alt: "" },
-      { id: 624, type: "image", src: "/images/624.JPG", alt: "" },
-      { id: 625, type: "image", src: "/images/625.JPG", alt: "" },
-      { id: 626, type: "video", src: "/videos/626.mp4", alt: "" },
-      { id: 627, type: "video", src: "/videos/627.mp4", alt: "" },
-      { id: 71, type: "video", src: "/videos/71.mp4", alt: "" },
-      { id: 72, type: "image", src: "/images/72.jpeg", alt: "" },
-      { id: 73, type: "image", src: "/images/73.jpeg", alt: "" },
-      { id: 74, type: "image", src: "/images/74.jpeg", alt: "" },
-      { id: 75, type: "image", src: "/images/75.jpg", alt: "" },
-      { id: 76, type: "image", src: "/images/76.jpg", alt: "" },
-      { id: 77, type: "image", src: "/images/77.jpg", alt: "" },
-      { id: 78, type: "image", src: "/images/78.jpg", alt: "" },
-      { id: 79, type: "image", src: "/images/79.jpg", alt: "" },
-      { id: 710, type: "image", src: "/images/710.jpg", alt: "" },  
-    ]
-  }
-];
+import { getTrips, type Trip, type MediaItem } from "../../lib/data-fetchers";
+import { useAuth } from "../../lib/auth-context";
 
 export default function TripsPage() {
+  // Authentication
+  const { isAuthenticated } = useAuth();
+  
+  // Dynamic data state
+  const [trips, setTrips] = useState<Trip[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Original functionality state
   const [selectedImage, setSelectedImage] = useState<any>(null);
   const [selectedVideo, setSelectedVideo] = useState<any>(null);
-  const [isEditMode, setIsEditMode] = useState(false);
+
+  // Edit mode state (keeping existing functionality)
+  const [editMode, setEditMode] = useState(false);
+  const [showQueue, setShowQueue] = useState(false);
+  const [showTripForm, setShowTripForm] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [editingTrip, setEditingTrip] = useState<Trip | null>(null);
+  const [selectedPhotoForDetails, setSelectedPhotoForDetails] = useState<{
+    media: MediaItem;
+    context: 'trip';
+    tripId: number;
+  } | null>(null);
   const [selectedForRemoval, setSelectedForRemoval] = useState<Set<number>>(new Set());
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showCreateTripModal, setShowCreateTripModal] = useState(false);
-  const [selectedTripForEdit, setSelectedTripForEdit] = useState<number | null>(null);
   const [isRemoving, setIsRemoving] = useState(false);
-  const [showPhotoDetails, setShowPhotoDetails] = useState(false);
-  const [selectedPhotoForDetails, setSelectedPhotoForDetails] = useState<any>(null);
-  const [selectedPhotoTripId, setSelectedPhotoTripId] = useState<number | null>(null);
 
-  // Toggle edit mode
-  const toggleEditMode = () => {
-    setIsEditMode(!isEditMode);
-    setSelectedForRemoval(new Set());
-    setSelectedTripForEdit(null);
-  };
+  // Load trips data on component mount
+  useEffect(() => {
+    const loadTrips = async () => {
+      try {
+        const tripsData = await getTrips();
+        setTrips(tripsData);
+      } catch (error) {
+        console.error('Error loading trips:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // Handle photo selection for removal within a trip
-  const togglePhotoSelection = (mediaId: number, tripId: number) => {
-    if (!isEditMode) return;
-    
-    const key = `${tripId}-${mediaId}`;
-    const newSelection = new Set(selectedForRemoval);
-    if (newSelection.has(key as any)) {
-      newSelection.delete(key as any);
+    loadTrips();
+  }, []);
+
+  // Handle media click for original lightbox functionality
+  const handleMediaClick = (media: any) => {
+    if (editMode) {
+      // In edit mode, handle selection for removal
+      const newSelected = new Set(selectedForRemoval);
+      if (newSelected.has(media.id)) {
+        newSelected.delete(media.id);
+      } else {
+        newSelected.add(media.id);
+      }
+      setSelectedForRemoval(newSelected);
     } else {
-      newSelection.add(key as any);
+      // Normal mode - open lightbox/video
+      if (media.type === "video") {
+        setSelectedVideo(media);
+      } else {
+        setSelectedImage(media);
+      }
     }
-    setSelectedForRemoval(newSelection as any);
   };
 
-  // Remove selected photos from trips
-  const removeSelectedPhotos = async () => {
+  // Edit mode handlers
+  const handleEditClick = () => {
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+      return;
+    }
+    setEditMode(!editMode);
+    setSelectedForRemoval(new Set());
+  };
+
+  const handleConfirmRemoval = async () => {
     if (selectedForRemoval.size === 0) return;
-    
+
     setIsRemoving(true);
     try {
-      // Parse selection keys to get trip and media IDs
-      const removalData = Array.from(selectedForRemoval).map(key => {
-        const [tripId, mediaId] = String(key).split('-');
-        return { tripId: parseInt(tripId), mediaId: parseInt(mediaId) };
-      });
+      const updates = Array.from(selectedForRemoval).map(mediaId => ({
+        mediaId,
+        action: 'remove',
+        source: 'trip',
+        sourceDescription: 'Removed from trip'
+      }));
 
-      // Call API to remove photos from trips (move to queue)
       const response = await fetch('/api/media', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          assignments: removalData,
-          action: 'remove-from-trip'
-        })
+        body: JSON.stringify({ updates })
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to remove photos from trips');
+      if (response.ok) {
+        // Reload trips to reflect changes
+        const tripsData = await getTrips();
+        setTrips(tripsData);
+        setSelectedForRemoval(new Set());
+        setEditMode(false);
       }
-
-      const result = await response.json();
-      console.log('Photos removed from trips:', result);
-      
-      setSelectedForRemoval(new Set());
-      setIsEditMode(false);
-      // TODO: Refresh trips data from database
     } catch (error) {
-      console.error('Failed to remove photos:', error);
-      alert('Failed to remove photos. Please try again.');
+      console.error('Error removing photos:', error);
     } finally {
       setIsRemoving(false);
     }
   };
 
-  // Handle adding photos from queue to a trip
-  const handleAddPhotosToTrip = async (queueItems: any[], tripId: number) => {
-    try {
-      // Call API to assign queue items to specific trip
-      const response = await fetch('/api/media', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          queueItemIds: queueItems.map(item => item.id),
-          assignTo: 'trip',
-          tripId: tripId
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to add photos to trip');
-      }
-
-      const result = await response.json();
-      console.log(`Photos added to trip ${tripId}:`, result);
-      
-      setShowAddModal(false);
-      setSelectedTripForEdit(null);
-      // TODO: Refresh trips data from database
-    } catch (error) {
-      console.error('Failed to add photos:', error);
-      alert('Failed to add photos. Please try again.');
-    }
+  const handleCancelRemoval = () => {
+    setSelectedForRemoval(new Set());
   };
 
-  // Delete entire trip
-  const deleteTrip = async (tripId: number) => {
-    if (!confirm('Are you sure you want to delete this trip? All photos will be moved to the queue.')) {
-      return;
-    }
-    
-    try {
-      // Call API to delete trip (soft delete - moves all photos to queue)
-      const response = await fetch(`/api/trips/${tripId}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'soft-delete' })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete trip');
-      }
-
-      const result = await response.json();
-      console.log('Trip deleted:', result);
-      
-      // TODO: Refresh trips data from database
-      // This would remove the trip from the UI and show photos moved to queue
-    } catch (error) {
-      console.error('Failed to delete trip:', error);
-      alert('Failed to delete trip. Please try again.');
-    }
-  };
-
-  // Create new trip
   const handleCreateTrip = async (tripData: any) => {
     try {
       const response = await fetch('/api/trips', {
@@ -425,99 +131,159 @@ export default function TripsPage() {
         body: JSON.stringify(tripData)
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to create trip');
+      if (response.ok) {
+        // Reload trips
+        const tripsData = await getTrips();
+        setTrips(tripsData);
+        setShowTripForm(false);
       }
-
-      const result = await response.json();
-      console.log('Trip created:', result);
-      
-      // TODO: Refresh trips data from database
     } catch (error) {
-      console.error('Failed to create trip:', error);
-      throw error; // Re-throw to let form handle the error
+      console.error('Error creating trip:', error);
     }
   };
 
-  // Handle photo details operations in trips
-  const handleUpdateDescriptionInTrip = async (itemId: string | number, description: string) => {
+  const handleUpdateTrip = async (tripData: any) => {
+    if (!editingTrip) return;
+
     try {
-      const response = await fetch('/api/media', {
-        method: 'PATCH',
+      const response = await fetch(`/api/trips/${editingTrip.id}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          mediaId: itemId,
-          description: description,
-          context: 'trip',
-          tripId: selectedPhotoTripId
-        })
+        body: JSON.stringify(tripData)
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to update description');
+      if (response.ok) {
+        // Reload trips
+        const tripsData = await getTrips();
+        setTrips(tripsData);
+        setEditingTrip(null);
+        setShowTripForm(false);
       }
-
-      console.log('Description updated in trip:', { itemId, description, tripId: selectedPhotoTripId });
     } catch (error) {
-      console.error('Failed to update description:', error);
-      throw error;
+      console.error('Error updating trip:', error);
+    }
+  };
+
+  const handlePhotoRightClick = (e: React.MouseEvent, media: MediaItem, tripId: number) => {
+    e.preventDefault();
+    setSelectedPhotoForDetails({
+      media,
+      context: 'trip',
+      tripId
+    });
+  };
+
+  const handlePhotoInfoClick = (media: MediaItem, tripId: number) => {
+    setSelectedPhotoForDetails({
+      media,
+      context: 'trip',
+      tripId
+    });
+  };
+
+  const handleUpdateDescriptionInTrip = async (itemId: string | number, description: string) => {
+    const mediaId = typeof itemId === 'string' ? parseInt(itemId) : itemId;
+    try {
+      const response = await fetch(`/api/media/${mediaId}/description`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ description })
+      });
+
+      if (response.ok) {
+        // Reload trips
+        const tripsData = await getTrips();
+        setTrips(tripsData);
+      }
+    } catch (error) {
+      console.error('Error updating description:', error);
     }
   };
 
   const handleUpdateOrderInTrip = async (itemId: string | number, direction: 'up' | 'down') => {
+    const mediaId = typeof itemId === 'string' ? parseInt(itemId) : itemId;
+    if (!selectedPhotoForDetails) return;
+
     try {
-      const response = await fetch('/api/media/order', {
-        method: 'PATCH',
+      const response = await fetch(`/api/media/${mediaId}/order`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          mediaId: itemId,
-          tripId: selectedPhotoTripId,
-          direction: direction
+        body: JSON.stringify({ 
+          direction,
+          tripId: selectedPhotoForDetails.tripId
         })
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to update order');
+      if (response.ok) {
+        // Reload trips
+        const tripsData = await getTrips();
+        setTrips(tripsData);
       }
-
-      console.log('Order updated in trip:', { itemId, direction, tripId: selectedPhotoTripId });
     } catch (error) {
-      console.error('Failed to update order:', error);
-      throw error;
+      console.error('Error updating order:', error);
     }
   };
 
   const handleRemoveFromTripDetails = async (itemId: string | number) => {
+    const mediaId = typeof itemId === 'string' ? parseInt(itemId) : itemId;
     try {
+      const updates = [{
+        mediaId,
+        action: 'remove',
+        source: 'trip',
+        sourceDescription: 'Removed from trip'
+      }];
+
       const response = await fetch('/api/media', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          assignments: [{ tripId: selectedPhotoTripId, mediaId: itemId }],
-          action: 'remove-from-trip'
-        })
+        body: JSON.stringify({ updates })
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to remove photo from trip');
+      if (response.ok) {
+        // Reload trips
+        const tripsData = await getTrips();
+        setTrips(tripsData);
+        setSelectedPhotoForDetails(null);
       }
-
-      console.log('Photo removed from trip:', { itemId, tripId: selectedPhotoTripId });
     } catch (error) {
-      console.error('Failed to remove photo:', error);
-      throw error;
+      console.error('Error removing from trip:', error);
     }
   };
 
-  // Handle right-click or long press for photo details in trips
-  const handlePhotoContextMenuInTrip = (e: React.MouseEvent, item: any, tripId: number) => {
-    e.preventDefault();
-    if (!isEditMode) {
-      setSelectedPhotoForDetails(item);
-      setSelectedPhotoTripId(tripId);
-      setShowPhotoDetails(true);
+  // FAB options for trips
+  const fabOptions = [
+    {
+      icon: <Plus className="w-5 h-5" />,
+      label: "New Trip",
+      onClick: () => isAuthenticated ? setShowTripForm(true) : setShowAuthModal(true),
+      color: "text-blue-600"
+    },
+    {
+      icon: <Edit3 className="w-5 h-5" />,
+      label: editMode ? "Exit Edit" : "Edit",
+      onClick: () => {
+        if (!isAuthenticated) {
+          setShowAuthModal(true);
+          return;
+        }
+        setEditMode(!editMode);
+        setSelectedForRemoval(new Set());
+      },
+      color: editMode ? "text-red-600" : "text-green-600"
     }
-  };
+  ];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-neutral-900 mx-auto mb-4"></div>
+          <p className="text-neutral-600">Loading trips...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -531,53 +297,35 @@ export default function TripsPage() {
             </button>
           </Link>
           
-          {/* Edit Mode Controls */}
-          <div className="flex items-center gap-3">
-            {isEditMode && (
-              <>
-                {selectedForRemoval.size > 0 && (
-                  <button
-                    onClick={removeSelectedPhotos}
-                    disabled={isRemoving}
-                    className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                    {isRemoving ? 'Removing...' : `Remove ${selectedForRemoval.size}`}
-                  </button>
-                )}
-                
+          {/* Edit Mode Actions - only show during edit mode */}
+          {editMode && (
+            <div className="flex items-center gap-2">
+              {selectedForRemoval.size > 0 && (
                 <button
-                  onClick={() => setShowCreateTripModal(true)}
-                  className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                  onClick={handleConfirmRemoval}
+                  disabled={isRemoving}
+                  className="flex items-center gap-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50"
                 >
-                  <Plus className="w-4 h-4" />
-                  New Trip
+                  <Trash2 className="w-4 h-4" />
+                  {isRemoving ? 'Removing...' : `Remove (${selectedForRemoval.size})`}
                 </button>
-              </>
-            )}
-            
-            <button
-              onClick={toggleEditMode}
-              className={`flex items-center gap-2 font-medium py-2 px-4 rounded-lg transition-colors ${
-                isEditMode
-                  ? 'bg-neutral-200 hover:bg-neutral-300 text-neutral-900'
-                  : 'text-neutral-800 border border-neutral-300 hover:border-neutral-400'
-              }`}
-              style={!isEditMode ? { backgroundColor: '#D8BFF8' } : undefined}
-            >
-              {isEditMode ? (
-                <>
-                  <X className="w-4 h-4" />
-                  Cancel
-                </>
-              ) : (
-                <>
-                  <Edit3 className="w-4 h-4" />
-                  Edit
-                </>
               )}
-            </button>
-          </div>
+              <button
+                onClick={handleCancelRemoval}
+                className="flex items-center gap-2 px-3 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+              >
+                <X className="w-4 h-4" />
+                Cancel
+              </button>
+              <button
+                onClick={handleEditClick}
+                className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+              >
+                <Check className="w-4 h-4" />
+                Done
+              </button>
+            </div>
+          )}
         </div>
       </header>
 
@@ -595,86 +343,85 @@ export default function TripsPage() {
           </div>
 
           {/* Trips List */}
-          <div className="space-y-20">
-            {trips.map((trip, index) => (
-              <div key={trip.id} className="relative">
-                {/* Trip Header */}
-                <div className="text-center mb-12">
-                  <div className="flex items-center justify-center gap-2 text-neutral-500 text-sm mb-3">
-                    <Calendar className="w-4 h-4" />
-                    <span>{trip.date}</span>
-                    <span className="mx-2">•</span>
-                    <MapPin className="w-4 h-4" />
-                    <span>{trip.location}</span>
+          {trips.length === 0 ? (
+            <div className="text-center py-16">
+              <div className="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Camera className="w-8 h-8 text-neutral-600" />
+              </div>
+              <p className="text-neutral-600 mb-4">No trips yet</p>
+              <button
+                onClick={() => setShowTripForm(true)}
+                className="px-6 py-3 bg-neutral-900 text-white rounded-lg hover:bg-neutral-800"
+              >
+                Create First Trip
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-20">
+              {trips.map((trip, index) => (
+                <div key={trip.id} className="relative">
+                  {/* Trip Header */}
+                  <div className="text-center mb-12">
+                    <div className="flex items-center justify-center gap-2 text-neutral-500 text-sm mb-3">
+                      <Calendar className="w-4 h-4" />
+                      <span>{trip.date}</span>
+                      <span className="mx-2">•</span>
+                      <MapPin className="w-4 h-4" />
+                      <span>{trip.location}</span>
+                    </div>
+                    <div className="flex items-center justify-center gap-4 mb-4">
+                      <h2 className="font-playfair text-2xl md:text-3xl font-light text-neutral-900">
+                        {trip.title}
+                      </h2>
+                      {editMode && (
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => {
+                              setEditingTrip(trip);
+                              setShowTripForm(true);
+                            }}
+                            className="p-1 text-blue-600 hover:bg-blue-50 rounded"
+                            title="Edit trip"
+                          >
+                            <Edit3 className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={async () => {
+                              if (confirm('Delete this trip?')) {
+                                try {
+                                  await fetch(`/api/trips/${trip.id}`, { method: 'DELETE' });
+                                  const tripsData = await getTrips();
+                                  setTrips(tripsData);
+                                } catch (error) {
+                                  console.error('Error deleting trip:', error);
+                                }
+                              }
+                            }}
+                            className="p-1 text-red-600 hover:bg-red-50 rounded"
+                            title="Delete trip"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-neutral-600 max-w-3xl mx-auto leading-relaxed">
+                      {trip.description}
+                    </p>
                   </div>
-                  
-                  <div className="flex items-center justify-center gap-4 mb-4">
-                    <h2 className="font-playfair text-2xl md:text-3xl font-light text-neutral-900">
-                      {trip.title}
-                    </h2>
-                    
-                    {/* Trip Edit Controls */}
-                    {isEditMode && (
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => {
-                            setSelectedTripForEdit(trip.id);
-                            setShowAddModal(true);
-                          }}
-                          className="p-2 bg-fuchsia-200 hover:bg-fuchsia-300 text-neutral-900 rounded-lg border border-rose-200 hover:border-rose-300 transition-colors"
-                          title="Add photos to this trip"
-                        >
-                          <Plus className="w-4 h-4" />
-                        </button>
-                        
-                        <button
-                          onClick={() => console.log('Edit trip:', trip.id)}
-                          className="p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
-                          title="Edit trip details"
-                        >
-                          <Settings className="w-4 h-4" />
-                        </button>
-                        
-                        <button
-                          onClick={() => deleteTrip(trip.id)}
-                          className="p-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
-                          title="Delete trip"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                  
-                  <p className="text-neutral-600 max-w-3xl mx-auto leading-relaxed">
-                    {trip.description}
-                  </p>
-                </div>
 
-                {/* Trip Media (Photos & Videos) */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
-                  {trip.media.map((item) => {
-                    const selectionKey = `${trip.id}-${item.id}`;
-                    const isSelected = selectedForRemoval.has(selectionKey as any);
-                    
-                    return (
+                  {/* Trip Media (Photos & Videos) */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+                    {trip.media.map((item) => (
                       <div
                         key={item.id}
-                        className={`group cursor-pointer transition-all duration-200 ${
-                          !isEditMode ? 'hover:-translate-y-1' : ''
-                        } ${isSelected ? 'ring-4 ring-red-400' : ''}`}
-                        onClick={() => 
-                          isEditMode 
-                            ? togglePhotoSelection(item.id, trip.id)
-                            : item.type === 'image' 
-                              ? setSelectedImage(item) 
-                              : setSelectedVideo(item)
-                        }
-                        onContextMenu={(e) => handlePhotoContextMenuInTrip(e, item, trip.id)}
+                        className={`group cursor-pointer transition-all duration-200 hover:-translate-y-1 relative ${
+                          editMode && selectedForRemoval.has(item.id) ? 'ring-4 ring-red-500' : ''
+                        }`}
+                        onClick={() => handleMediaClick(item)}
+                        onContextMenu={(e) => !editMode && handlePhotoRightClick(e, item, trip.id)}
                       >
-                        <div className={`relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-lg border border-neutral-100 ${
-                          isSelected ? 'opacity-75' : ''
-                        }`}>
+                        <div className="relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-lg border border-neutral-100">
                           {item.type === 'image' ? (
                             <>
                               <Image
@@ -682,22 +429,32 @@ export default function TripsPage() {
                                 alt={item.alt}
                                 width={400}
                                 height={300}
-                                className={`w-full h-48 object-cover transition-transform duration-300 ${
-                                  !isEditMode ? 'group-hover:scale-105' : ''
-                                }`}
+                                className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                               />
-                              {!isEditMode && (
-                                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
+                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
+                                {!editMode && (
                                   <Heart className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                </div>
+                                )}
+                              </div>
+                              
+                              {/* Info button overlay */}
+                              {!editMode && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handlePhotoInfoClick(item, trip.id);
+                                  }}
+                                  className="absolute top-2 right-2 p-1.5 bg-black/60 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/80"
+                                  title="Photo details"
+                                >
+                                  <Info className="w-3 h-3" />
+                                </button>
                               )}
                             </>
                           ) : (
                             <>
                               <video
-                                className={`w-full h-48 object-cover transition-transform duration-300 ${
-                                  !isEditMode ? 'group-hover:scale-105' : ''
-                                }`}
+                                className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                                 preload="metadata"
                                 muted
                                 playsInline
@@ -705,67 +462,53 @@ export default function TripsPage() {
                                 <source src={getMediaUrl(item.src)} type="video/mp4" />
                                 Your browser does not support the video tag.
                               </video>
-                              {!isEditMode && (
-                                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                                {!editMode && (
                                   <div className="w-12 h-12 bg-white bg-opacity-90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                     <div className="w-0 h-0 border-l-[6px] border-l-neutral-800 border-t-[4px] border-t-transparent border-b-[4px] border-b-transparent ml-1"></div>
                                   </div>
-                                </div>
-                              )}
+                                )}
+                              </div>
                               <div className="absolute top-2 right-2 bg-black bg-opacity-60 text-white text-xs px-2 py-1 rounded">
                                 VIDEO
                               </div>
                             </>
                           )}
-                          
-                          {/* Edit Mode Overlay */}
-                          {isEditMode && (
-                            <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
-                              <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${
-                                isSelected 
-                                  ? 'bg-red-500 border-red-500' 
-                                  : 'bg-white bg-opacity-80 border-neutral-300 hover:border-neutral-400'
-                              }`}>
-                                {isSelected && <Check className="w-5 h-5 text-white" />}
-                              </div>
-                            </div>
-                          )}
-                          
-                          {/* Info Button */}
-                          {!isEditMode && (
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedPhotoForDetails(item);
-                                setSelectedPhotoTripId(trip.id);
-                                setShowPhotoDetails(true);
-                              }}
-                              className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-opacity-80"
-                              title="Photo details"
-                            >
-                              <Info className="w-4 h-4" />
-                            </button>
-                          )}
                         </div>
-                        
-                        {/* Caption for both images and videos */}
-                        {!isEditMode && (
-                          <p className="text-sm text-neutral-600 mt-2 text-center">{item.alt}</p>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
 
-                {/* Divider (except for last trip) */}
-                {index < trips.length - 1 && (
-                  <div className="flex justify-center mt-16">
-                    <div className="w-48 h-px bg-neutral-300"></div>
+                        {/* Selection overlay for edit mode */}
+                        {editMode && (
+                          <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                            <div
+                              className={`w-8 h-8 rounded-full border-4 ${
+                                selectedForRemoval.has(item.id)
+                                  ? 'bg-red-500 border-white'
+                                  : 'border-white/60'
+                              }`}
+                            >
+                              {selectedForRemoval.has(item.id) && (
+                                <Check className="w-4 h-4 text-white m-0.5" />
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Caption for both images and videos */}
+                        <p className="text-sm text-neutral-600 mt-2 text-center">{item.alt}</p>
+                      </div>
+                    ))}
                   </div>
-                )}
-              </div>
-            ))}
-          </div>
+
+                  {/* Divider (except for last trip) */}
+                  {index < trips.length - 1 && (
+                    <div className="flex justify-center mt-16">
+                      <div className="w-48 h-px bg-neutral-300"></div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Call to action */}
           <div className="text-center mt-20 pt-16 border-t border-neutral-200">
@@ -774,23 +517,77 @@ export default function TripsPage() {
             </p>
             <Link href="/gallery">
               <button className="bg-neutral-900 hover:bg-neutral-800 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200">
-                View All Photos
+                Open Gallery
               </button>
             </Link>
           </div>
         </div>
       </main>
 
+      {/* Add Photos Modal */}
+      {showQueue && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <h2 className="text-xl font-bold">Add Photos to Trips</h2>
+              <button
+                onClick={() => setShowQueue(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="overflow-y-auto max-h-[calc(90vh-120px)]">
+              <MediaQueue />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Trip Form Modal */}
+      <TripForm
+        isOpen={showTripForm}
+        onClose={() => {
+          setShowTripForm(false);
+          setEditingTrip(null);
+        }}
+        onSubmit={editingTrip ? handleUpdateTrip : handleCreateTrip}
+        mode={editingTrip ? "edit" : "create"}
+        initialData={editingTrip || undefined}
+      />
+
+      {/* Photo Details Modal */}
+      <PhotoDetailsModal
+        isOpen={!!selectedPhotoForDetails}
+        onClose={() => setSelectedPhotoForDetails(null)}
+        mediaItem={selectedPhotoForDetails ? {
+          id: selectedPhotoForDetails.media.id,
+          src: getMediaUrl(selectedPhotoForDetails.media.src) || '',
+          alt: selectedPhotoForDetails.media.alt,
+          type: selectedPhotoForDetails.media.type,
+          description: selectedPhotoForDetails.media.description || selectedPhotoForDetails.media.alt
+        } : null}
+        onUpdateDescription={handleUpdateDescriptionInTrip}
+        onUpdateOrder={handleUpdateOrderInTrip}
+        onRemove={handleRemoveFromTripDetails}
+        context="trip"
+        contextName={selectedPhotoForDetails ? trips.find(t => t.id === selectedPhotoForDetails.tripId)?.title : undefined}
+      />
+
       {/* Lightbox for Images */}
-      {selectedImage && !isEditMode && (
+      {selectedImage && (
         <Lightbox
-          image={selectedImage}
+          image={{
+            id: selectedImage.id,
+            src: getMediaUrl(selectedImage.src) || '',
+            alt: selectedImage.alt
+          }}
           onClose={() => setSelectedImage(null)}
         />
       )}
 
       {/* Video Modal */}
-      {selectedVideo && !isEditMode && (
+      {selectedVideo && (
         <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
           <div className="relative max-w-4xl w-full">
             <button
@@ -813,71 +610,8 @@ export default function TripsPage() {
         </div>
       )}
 
-      {/* Add Photos Modal */}
-      {showAddModal && selectedTripForEdit && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[80vh] overflow-hidden">
-            <div className="p-6 border-b border-neutral-200">
-              <div className="flex items-center justify-between">
-                <h3 className="font-playfair text-xl text-neutral-900">
-                  Add Photos to {trips.find(t => t.id === selectedTripForEdit)?.title}
-                </h3>
-                <button
-                  onClick={() => {
-                    setShowAddModal(false);
-                    setSelectedTripForEdit(null);
-                  }}
-                  className="text-neutral-500 hover:text-neutral-700"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
-            </div>
-            
-            <div className="overflow-y-auto max-h-[calc(80vh-80px)]">
-              <MediaQueue
-                selectionMode={true}
-                onSelectMedia={(items) => handleAddPhotosToTrip(items, selectedTripForEdit)}
-                maxSelection={20}
-                className="border-0"
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Create Trip Modal */}
-      <TripForm
-        isOpen={showCreateTripModal}
-        onClose={() => setShowCreateTripModal(false)}
-        onSubmit={handleCreateTrip}
-        mode="create"
-      />
-
-      {/* Photo Details Modal */}
-      <PhotoDetailsModal
-        isOpen={showPhotoDetails}
-        onClose={() => {
-          setShowPhotoDetails(false);
-          setSelectedPhotoForDetails(null);
-          setSelectedPhotoTripId(null);
-        }}
-        mediaItem={selectedPhotoForDetails ? {
-          id: selectedPhotoForDetails.id,
-          src: getMediaUrl(selectedPhotoForDetails.src) || '',
-          alt: selectedPhotoForDetails.alt,
-          type: selectedPhotoForDetails.type,
-          description: selectedPhotoForDetails.alt
-        } : null}
-        onUpdateDescription={handleUpdateDescriptionInTrip}
-        onUpdateOrder={handleUpdateOrderInTrip}
-        onRemove={handleRemoveFromTripDetails}
-        context="trip"
-        contextName={selectedPhotoTripId ? trips.find(t => t.id === selectedPhotoTripId)?.title : undefined}
-      />
-
       {/* Edit Mode Instructions */}
-      {isEditMode && (
+      {editMode && (
         <div className="fixed bottom-6 left-6 right-6 bg-white rounded-lg border border-neutral-200 shadow-lg p-4 z-40">
           <div className="max-w-4xl mx-auto text-center">
             <p className="text-neutral-900 font-medium mb-2">Trip Edit Mode Active</p>
@@ -890,6 +624,19 @@ export default function TripsPage() {
           </div>
         </div>
       )}
+
+      {/* Authentication Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onSuccess={() => {
+          setShowAuthModal(false);
+          setEditMode(true);
+        }}
+      />
+
+      {/* Floating Action Button */}
+      <FloatingActionButton options={fabOptions} />
     </div>
   );
 }

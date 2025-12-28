@@ -43,8 +43,25 @@ export default function MediaQueue({
       if (!response.ok) throw new Error('Failed to fetch queue items');
       
       const data = await response.json();
-      setQueueItems(data.items || []);
+      console.log('Queue API response:', data); // Debug logging
+      
+      // Map API response to component format
+      const mappedItems = (data.queue || []).map((item: any) => ({
+        id: item.id.toString(),
+        cloudinaryUrl: item.cloudinaryUrl,
+        originalFilename: item.filename,
+        fileType: item.type,
+        fileSize: 0, // Not provided by API, using default
+        uploadedBy: 'user',
+        uploadedAt: new Date(item.addedToQueueAt),
+        status: item.queueCategory === 'upload' ? 'new' : 
+                item.queueCategory === 'removed' ? 'removed' : 'orphaned',
+        removedFrom: item.sourceContext
+      }));
+      
+      setQueueItems(mappedItems);
     } catch (err) {
+      console.error('Queue fetch error:', err);
       setError(err instanceof Error ? err.message : 'Failed to load queue');
     } finally {
       setLoading(false);
