@@ -44,8 +44,6 @@ const galleryImages = [
   { id: 33, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322079/IMG_1308_noh0tp.jpg" },
   { id: 34, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322081/IMG_1261_igalue.jpg" },
   { id: 35, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322083/IMG_1375_tffgre.jpg" },
-  { id: 36, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766484132/IMG_1633_wvmafc.jpg" },
-  { id: 37, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766484132/IMG_1632_eruvzj.jpg" },
 ];
 
 export default function GalleryPage() {
