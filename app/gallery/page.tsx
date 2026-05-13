@@ -44,6 +44,22 @@ const galleryImages = [
   { id: 33, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322079/IMG_1308_noh0tp.jpg" },
   { id: 34, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322081/IMG_1261_igalue.jpg" },
   { id: 35, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1766322083/IMG_1375_tffgre.jpg" },
+  { id: 36, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778681112/IMG_0710_n2zgcl.jpg" },
+  { id: 37, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778681108/IMG_0641_iivlwx.jpg" },
+  { id: 38, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778684334/947c85b1-2f2a-4b34-918d-a192d48a6beb_vr6kuk.jpg" },
+  { id: 38, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778684336/5C03B6B3-8838-4E5A-970A-3484E61CD8D0_ov7rdt.jpg" },
+  { id: 40, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778684347/IMG_3144_atwrtr.jpg" },
+  { id: 41, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778684348/IMG_3183_fee7mu.jpg" },
+  { id: 42, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778684354/IMG_2839_t0zddj.jpg" },
+  { id: 43, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778684358/IMG_2637_ajhd1g.jpg" },
+  { id: 44, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778684358/IMG_2666_lyagsz.jpg" },
+  { id: 45, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778684364/IMG_2793_uxcgld.jpg" },
+  { id: 46, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778685028/IMG_3209_s8zh4g.jpg" },
+  { id: 47, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778685040/IMG_3222_zez6qj.jpg" },
+  { id: 48, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778685041/IMG_3325_nfjqtu.jpg" },
+  { id: 49, src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778685042/IMG_3309_xh4lyi.jpg" },
+
+
 ];
 
 export default function GalleryPage() {
@@ -80,7 +96,7 @@ export default function GalleryPage() {
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {galleryImages.map((image) => (
               <div
-                key={image.id}
+                key={image.src}
                 className="group cursor-pointer transition-all duration-200 hover:-translate-y-1"
                 onClick={() => setSelectedImage(image)}
               >

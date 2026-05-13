@@ -231,8 +231,67 @@ const trips = [
       { id: 1115, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1760695575/IMG_0500_sgch5a.jpg", alt: "" }
     ]
   },
+
+
   {
     id: 10,
+    title: "Nandi Hills",
+    location: "Duhh in the title",
+    date: "18 January",
+    description: "Shivam ki bike leke gaye thhe ,vele thhe were going to goa in some days",
+    media: [
+      // 15 actual images from your Cloudinary collection
+      { id: 1101, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778681868/IMG_1942_r2f4ec.jpg", alt: "" },
+      { id: 1102, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778681869/IMG_1986_efwdrt.jpg", alt: "" },
+      { id: 1103, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778681872/IMG_1987_krnlf0.jpg", alt: "" },
+      { id: 1104, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778681875/IMG_1960_fvcqze.jpg", alt: "" },
+      { id: 1105, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778681876/IMG_1996_q2wa0u.jpg", alt: "" },
+      { id: 1106, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778681878/IMG_1985_qijaud.jpg", alt: "" },
+      { id: 1107, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778681880/IMG_2001_c0ou0a.jpg", alt: "" },
+      { id: 1108, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778681884/IMG_1972_dfkhma.jpg", alt: "" },
+      { id: 1109, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778681885/IMG_1940_batukk.jpg", alt: "" },
+      { id: 1110, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778681885/IMG_1951_rynwec.jpg", alt: "" },
+      { id: 1111, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778682070/IMG_1979_cnkkif.mp4", alt: "" },
+      { id: 1112, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778682093/IMG_2003_fgtqm9.mp4", alt: "" },
+    ]
+  },
+
+
+  {
+    id: 11,
+    title: "GOAAAaAAAAAAA",
+    location: "MKC OBVIOUS",
+    date: "JAN 2026",
+    description: "INSANE TRIP WITH CRAZY EXPERIENCES AND ALL ,YKWIM",
+    media: [
+      // 15 actual images from your Cloudinary collection
+      { id: 1101, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778682863/IMG_2116_irtk2l.jpg", alt: "" },
+      { id: 1102, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778682863/IMG_2065_xqvghf.jpg", alt: "" },
+      { id: 1103, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778682864/IMG_2124_rii0lz.jpg", alt: "" },
+      { id: 1104, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778682865/IMG_2072_rwvwpx.jpg", alt: "" },
+      { id: 1105, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778682561/IMG_2210_vpz6gq.mp4", alt: "" },
+      { id: 1106, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778682867/IMG_2042_p9zqnk.jpg", alt: "" },
+      { id: 1107, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778682574/IMG_2060_itzxns.mp4", alt: "" },
+      { id: 1108, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778682869/IMG_2047_srr1a0.jpg", alt: "" },
+      { id: 1109, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778682620/IMG_2178_aspbew.mp4", alt: "" },
+      { id: 1110, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778682869/IMG_2103_fwivky.jpg", alt: "" },
+      { id: 1111, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778682620/IMG_2189_ssplw7.mp4", alt: "" },
+      { id: 1112, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778682626/IMG_2062_oq0k3t.mp4", alt: "" },
+      { id: 1113, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778682627/IMG_2027_x83frv.mp4", alt: "" },
+      { id: 1114, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778682874/IMG_2152_ooohzd.jpg", alt: "" },
+      { id: 1115, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778682633/IMG_2077_xu68z7.mp4", alt: "" },
+      { id: 1117, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778682875/IMG_2158_fkidjr.jpg", alt: "" },
+      { id: 1118, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778682876/IMG_2183_cqsc8n.jpg", alt: "" },
+      { id: 1119, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778682877/IMG_2115_kcogoj.jpg", alt: "" },
+      { id: 1120, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778682879/IMG_2014_x7faof.jpg", alt: "" },
+      { id: 1121, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778682883/IMG_2024_yqja74.jpg", alt: "" },
+
+    ]
+  },
+
+
+  {
+    id: 12,
     title: "Random Shite",
     location: "Hmm tough question I think aapke dill mai🧐",
     date: "All the best finding dates",
@@ -279,6 +338,14 @@ const trips = [
       { id: 711, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1766322146/IMG_0922_gwqt1j.mp4", alt: "" },
       { id: 712, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1766322360/IMG_0923_beyqxf.mp4", alt: "" },
       { id: 713, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1766322385/IMG_0708_z9yale.mp4", alt: "" },
+      { id: 714, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778685784/IMG_3540_t2dtix.jpg", alt: "" },
+      { id: 715, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778685784/IMG_3627_t5p1ee.jpg", alt: "" },
+      { id: 716, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778685788/IMG_3594_y9z3qe.jpg", alt: "" },
+      { id: 717, type: "image", src: "https://res.cloudinary.com/dm1qjbqpx/image/upload/v1778685792/IMG_3598_pxsrzg.jpg", alt: "" },
+      { id: 718, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778685894/IMG_3497_t8teuq.mp4", alt: "" },
+      { id: 719, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778686252/IMG_3498_wmlhbm.mp4", alt: "" },
+      { id: 720, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778686369/IMG_3541_b0xtsi.mp4", alt: "" },
+
     ]
   }
 ];
