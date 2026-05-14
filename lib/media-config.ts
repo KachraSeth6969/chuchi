@@ -215,3 +215,15 @@ export const getMigrationProgress = (): { migrated: number; total: number; perce
     percentage: Math.round((migratedFiles / totalFiles) * 100)
   };
 };
+
+// Generate video poster URL from Cloudinary video
+export const getVideoPoster = (videoUrl: string): string => {
+  // For Cloudinary videos: transform to get first frame as image
+  if (videoUrl.includes('res.cloudinary.com') && videoUrl.includes('/video/upload/')) {
+    // Insert poster transformation: so_0,f_jpg gets first frame as JPEG
+    return videoUrl.replace('/video/upload/', '/video/upload/so_0,f_jpg/');
+  }
+  
+  // For local videos: return empty string (browser will show blank)
+  return '';
+};

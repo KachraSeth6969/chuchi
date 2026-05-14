@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Lightbox } from "../../components/lightbox";
 import { getMediaUrl } from "../../lib/media-config";
+import { shuffleArray } from "../../lib/utils";
 
 // Your gallery images
 const galleryImages = [
@@ -66,6 +67,11 @@ export default function GalleryPage() {
   const [selectedImage, setSelectedImage] = useState<
     (typeof galleryImages)[0] | null
   >(null);
+  const [shuffledImages, setShuffledImages] = useState(galleryImages);
+
+  useEffect(() => {
+    setShuffledImages(shuffleArray(galleryImages));
+  }, []);
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -94,7 +100,7 @@ export default function GalleryPage() {
 
           {/* Gallery Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {galleryImages.map((image) => (
+            {shuffledImages.map((image) => (
               <div
                 key={image.src}
                 className="group cursor-pointer transition-all duration-200 hover:-translate-y-1"

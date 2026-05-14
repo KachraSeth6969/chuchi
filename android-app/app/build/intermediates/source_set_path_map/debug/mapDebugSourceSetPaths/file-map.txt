@@ -26,10 +26,10 @@ com.chuchi.loveapp-core-1.12.0-24 /Users/bramhabajannavar/.gradle/caches/8.9/tra
 com.chuchi.loveapp-emoji2-1.2.0-25 /Users/bramhabajannavar/.gradle/caches/8.9/transforms/ddf0084621dcf1a3bb1a2eb44a1207d6/transformed/emoji2-1.2.0/res
 com.chuchi.loveapp-emoji2-views-helper-1.2.0-26 /Users/bramhabajannavar/.gradle/caches/8.9/transforms/df3e778ff70ca9f5cce66a9dc8c7c165/transformed/emoji2-views-helper-1.2.0/res
 com.chuchi.loveapp-coordinatorlayout-1.1.0-27 /Users/bramhabajannavar/.gradle/caches/8.9/transforms/f7eb2ef373890fdb9c4331335d388d23/transformed/coordinatorlayout-1.1.0/res
-com.chuchi.loveapp-pngs-28 /Users/bramhabajannavar/Downloads/chuchi/android-app/app/build/generated/res/pngs/debug
-com.chuchi.loveapp-resValues-29 /Users/bramhabajannavar/Downloads/chuchi/android-app/app/build/generated/res/resValues/debug
-com.chuchi.loveapp-packageDebugResources-30 /Users/bramhabajannavar/Downloads/chuchi/android-app/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
-com.chuchi.loveapp-packageDebugResources-31 /Users/bramhabajannavar/Downloads/chuchi/android-app/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
-com.chuchi.loveapp-debug-32 /Users/bramhabajannavar/Downloads/chuchi/android-app/app/build/intermediates/merged_res/debug/mergeDebugResources
-com.chuchi.loveapp-debug-33 /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/debug/res
-com.chuchi.loveapp-main-34 /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/res
+com.chuchi.loveapp-pngs-28 /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/build/generated/res/pngs/debug
+com.chuchi.loveapp-resValues-29 /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/build/generated/res/resValues/debug
+com.chuchi.loveapp-packageDebugResources-30 /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.chuchi.loveapp-packageDebugResources-31 /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.chuchi.loveapp-debug-32 /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.chuchi.loveapp-debug-33 /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/debug/res
+com.chuchi.loveapp-main-34 /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/res

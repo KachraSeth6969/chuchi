@@ -1,7 +1,7 @@
-#Mon Oct 27 12:32:03 IST 2025
-base.0=/Users/bramhabajannavar/Downloads/chuchi/android-app/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
-base.1=/Users/bramhabajannavar/Downloads/chuchi/android-app/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
-base.2=/Users/bramhabajannavar/Downloads/chuchi/android-app/app/build/intermediates/dex/debug/mergeProjectDexDebug/7/classes.dex
+#Wed May 13 21:46:45 IST 2026
+base.0=/Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
+base.1=/Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
+base.2=/Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/build/intermediates/dex/debug/mergeProjectDexDebug/7/classes.dex
 path.0=classes.dex
 path.1=0/classes.dex
 path.2=7/classes.dex

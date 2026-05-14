@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, MapPin, Calendar, Heart } from "lucide-react";
 import { Lightbox } from "../../components/lightbox";
-import { getMediaUrl } from "../../lib/media-config";
+import { getMediaUrl, getVideoPoster } from "../../lib/media-config";
+import { shuffleArray } from "../../lib/utils";
 
 // Trip data - you can add more trips here
 const trips = [
@@ -345,7 +346,6 @@ const trips = [
       { id: 718, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778685894/IMG_3497_t8teuq.mp4", alt: "" },
       { id: 719, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778686252/IMG_3498_wmlhbm.mp4", alt: "" },
       { id: 720, type: "video", src: "https://res.cloudinary.com/dm1qjbqpx/video/upload/v1778686369/IMG_3541_b0xtsi.mp4", alt: "" },
-
     ]
   }
 ];
@@ -353,6 +353,16 @@ const trips = [
 export default function TripsPage() {
   const [selectedImage, setSelectedImage] = useState<any>(null);
   const [selectedVideo, setSelectedVideo] = useState<any>(null);
+  const [shuffledTrips, setShuffledTrips] = useState(trips);
+
+  useEffect(() => {
+    // Shuffle media within each trip individually
+    const tripsWithShuffledMedia = trips.map(trip => ({
+      ...trip,
+      media: shuffleArray(trip.media)
+    }));
+    setShuffledTrips(tripsWithShuffledMedia);
+  }, []);
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -381,7 +391,7 @@ export default function TripsPage() {
 
           {/* Trips List */}
           <div className="space-y-20">
-            {trips.map((trip, index) => (
+            {shuffledTrips.map((trip, index) => (
               <div key={trip.id} className="relative">
                 {/* Trip Header */}
                 <div className="text-center mb-12">
@@ -426,6 +436,7 @@ export default function TripsPage() {
                           <>
                             <video
                               className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                              poster={getVideoPoster(getMediaUrl(item.src))}
                               preload="metadata"
                               muted
                               playsInline
@@ -451,7 +462,7 @@ export default function TripsPage() {
                 </div>
 
                 {/* Divider (except for last trip) */}
-                {index < trips.length - 1 && (
+                {index < shuffledTrips.length - 1 && (
                   <div className="flex justify-center mt-16">
                     <div className="w-48 h-px bg-neutral-300"></div>
                   </div>
@@ -494,6 +505,7 @@ export default function TripsPage() {
             </button>
             <video
               className="w-full h-auto max-h-[80vh] rounded-lg"
+              poster={getVideoPoster(getMediaUrl(selectedVideo.src))}
               controls
               autoPlay
               preload="metadata"

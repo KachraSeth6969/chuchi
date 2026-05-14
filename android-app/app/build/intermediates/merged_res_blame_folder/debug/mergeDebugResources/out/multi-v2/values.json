@@ -21,6 +21,23 @@
                     }
                 },
                 {
+                    "source": "/Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/res/values/colors.xml",
+                    "from": {
+                        "startLines": "24,21,22,19,20,15,16,14,13,4,5,6,3,7,8,9,10,23",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "1025,882,930,785,831,637,685,589,538,167,213,259,122,305,351,397,443,983",
+                        "endColumns": "41,47,52,45,50,47,49,47,50,45,45,45,44,45,45,45,45,41",
+                        "endOffsets": "1062,925,978,826,877,680,730,632,584,208,254,300,162,346,392,438,484,1020"
+                    },
+                    "to": {
+                        "startLines": "640,655,656,657,658,702,703,706,707,945,946,947,948,949,950,951,952,975",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "32798,33861,33909,33962,34008,37028,37076,37261,37309,55331,55377,55423,55469,55514,55560,55606,55652,57236",
+                        "endColumns": "41,47,52,45,50,47,49,47,50,45,45,45,44,45,45,45,45,41",
+                        "endOffsets": "32835,33904,33957,34003,34054,37071,37121,37304,37355,55372,55418,55464,55509,55555,55601,55647,55693,57273"
+                    }
+                },
+                {
                     "source": "/Users/bramhabajannavar/.gradle/caches/8.9/transforms/c306537b1a5e3aed0b8d8c065fbe575e/transformed/transition-1.2.0/res/values/values.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11",
@@ -114,23 +131,6 @@
                     }
                 },
                 {
-                    "source": "/Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/res/values/colors.xml",
-                    "from": {
-                        "startLines": "24,21,22,19,20,15,16,14,13,4,5,6,3,7,8,9,10,23",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "1025,882,930,785,831,637,685,589,538,167,213,259,122,305,351,397,443,983",
-                        "endColumns": "41,47,52,45,50,47,49,47,50,45,45,45,44,45,45,45,45,41",
-                        "endOffsets": "1062,925,978,826,877,680,730,632,584,208,254,300,162,346,392,438,484,1020"
-                    },
-                    "to": {
-                        "startLines": "640,655,656,657,658,702,703,706,707,945,946,947,948,949,950,951,952,975",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "32798,33861,33909,33962,34008,37028,37076,37261,37309,55331,55377,55423,55469,55514,55560,55606,55652,57236",
-                        "endColumns": "41,47,52,45,50,47,49,47,50,45,45,45,44,45,45,45,45,41",
-                        "endOffsets": "32835,33904,33957,34003,34054,37071,37121,37304,37355,55372,55418,55464,55509,55555,55601,55647,55693,57273"
-                    }
-                },
-                {
                     "source": "/Users/bramhabajannavar/.gradle/caches/8.9/transforms/f7eb2ef373890fdb9c4331335d388d23/transformed/coordinatorlayout-1.1.0/res/values/values.xml",
                     "from": {
                         "startLines": "2,3,6,16",
@@ -150,7 +150,7 @@
                     }
                 },
                 {
-                    "source": "/Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/res/values/strings.xml",
+                    "source": "/Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/res/values/strings.xml",
                     "from": {
                         "startLines": "1",
                         "startColumns": "4",
@@ -164,6 +164,25 @@
                         "startOffsets": "131142",
                         "endColumns": "43",
                         "endOffsets": "131181"
+                    }
+                },
+                {
+                    "source": "/Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/res/values/themes.xml",
+                    "from": {
+                        "startLines": "2,16",
+                        "startColumns": "4,4",
+                        "startOffsets": "100,804",
+                        "endLines": "14,20",
+                        "endColumns": "12,12",
+                        "endOffsets": "794,1019"
+                    },
+                    "to": {
+                        "startLines": "6371,6384",
+                        "startColumns": "4,4",
+                        "startOffsets": "445867,446445",
+                        "endLines": "6383,6388",
+                        "endColumns": "12,12",
+                        "endOffsets": "446440,446660"
                     }
                 },
                 {
@@ -238,25 +257,6 @@
                         "endLines": "506,1120,1121,1122,1130,1131,1132,1817,12628",
                         "endColumns": "55,58,47,55,74,75,71,65,24",
                         "endOffsets": "25672,66884,66932,66988,67674,67750,67822,120930,764685"
-                    }
-                },
-                {
-                    "source": "/Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/res/values/themes.xml",
-                    "from": {
-                        "startLines": "2,16",
-                        "startColumns": "4,4",
-                        "startOffsets": "100,804",
-                        "endLines": "14,20",
-                        "endColumns": "12,12",
-                        "endOffsets": "794,1019"
-                    },
-                    "to": {
-                        "startLines": "6371,6384",
-                        "startColumns": "4,4",
-                        "startOffsets": "445867,446445",
-                        "endLines": "6383,6388",
-                        "endColumns": "12,12",
-                        "endOffsets": "446440,446660"
                     }
                 },
                 {

@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:2:1-41:12
-INJECTED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:2:1-41:12
-INJECTED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:2:1-41:12
-INJECTED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:2:1-41:12
+ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:2:1-41:12
+INJECTED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:2:1-41:12
+INJECTED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:2:1-41:12
+INJECTED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:2:1-41:12
 MERGED from [com.google.android.material:material:1.11.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/bb31b1399de9f411a2bd0a66dae8bf7a/transformed/material-1.11.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/1da54838bad10fcd2945a27acad7de3b/transformed/constraintlayout-2.1.4/AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/c4267c5939bccc6667adc6c00b4d14b0/transformed/appcompat-resources-1.6.1/AndroidManifest.xml:17:1-22:12
@@ -47,40 +47,40 @@ MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/bramhabajannavar/.
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/d1b587d958d65f3a2adf0b88cadb16f0/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/78972eb96b2f86fafaab3d7df146c7bf/transformed/print-1.0.0/AndroidManifest.xml:17:1-22:12
 	package
-		INJECTED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml
 	android:versionName
-		INJECTED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml
 	xmlns:tools
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:3:5-51
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:3:5-51
 	android:versionCode
-		INJECTED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:2:11-69
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:2:11-69
 uses-permission#android.permission.INTERNET
-ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:6:5-67
+ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:6:5-67
 	android:name
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:6:22-64
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:6:22-64
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:7:5-79
+ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:7:5-79
 	android:name
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:7:22-76
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:7:22-76
 uses-permission#android.permission.ACCESS_WIFI_STATE
-ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:8:5-76
+ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:8:5-76
 	android:name
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:8:22-73
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:8:22-73
 uses-permission#android.permission.CHANGE_NETWORK_STATE
-ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:9:5-79
+ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:9:5-79
 	android:name
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:9:22-76
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:9:22-76
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:12:5-13:38
+ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:12:5-13:38
 	android:maxSdkVersion
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:13:9-35
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:13:9-35
 	android:name
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:12:22-78
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:12:22-78
 application
-ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:15:5-39:19
-INJECTED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:15:5-39:19
+ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:15:5-39:19
+INJECTED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:15:5-39:19
 MERGED from [com.google.android.material:material:1.11.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/bb31b1399de9f411a2bd0a66dae8bf7a/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/bb31b1399de9f411a2bd0a66dae8bf7a/transformed/material-1.11.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/1da54838bad10fcd2945a27acad7de3b/transformed/constraintlayout-2.1.4/AndroidManifest.xml:9:5-20
@@ -98,57 +98,57 @@ MERGED from [androidx.profileinstaller:profileinstaller:1.3.0] /Users/bramhabaja
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/5a9b92443ec8dc91dad80825dc1447be/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/5a9b92443ec8dc91dad80825dc1447be/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
 	android:extractNativeLibs
-		INJECTED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.12.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/d194422c8056954806f4726bd9ecd232/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:22:9-35
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:22:9-35
 	android:label
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:20:9-41
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:20:9-41
 	android:fullBackupContent
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:18:9-54
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:18:9-54
 	android:roundIcon
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:21:9-50
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:21:9-50
 	tools:targetApi
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:26:9-29
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:26:9-29
 	android:icon
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:19:9-45
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:19:9-45
 	android:allowBackup
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:16:9-35
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:16:9-35
 	android:theme
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:23:9-51
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:23:9-51
 	android:networkSecurityConfig
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:25:9-69
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:25:9-69
 	android:dataExtractionRules
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:17:9-65
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:17:9-65
 	android:usesCleartextTraffic
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:24:9-44
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:24:9-44
 activity#com.chuchi.loveapp.MainActivity
-ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:28:9-38:20
+ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:28:9-38:20
 	android:screenOrientation
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:32:13-49
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:32:13-49
 	android:exported
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:30:13-36
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:30:13-36
 	android:configChanges
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:33:13-74
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:33:13-74
 	android:theme
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:31:13-67
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:31:13-67
 	android:name
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:29:13-41
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:29:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:34:13-37:29
+ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:34:13-37:29
 action#android.intent.action.MAIN
-ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:35:17-69
+ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:35:17-69
 	android:name
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:35:25-66
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:35:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:36:17-77
+ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:36:17-77
 	android:name
-		ADDED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml:36:27-74
+		ADDED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml:36:27-74
 uses-sdk
-INJECTED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml
-INJECTED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml
+INJECTED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml
+INJECTED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml
 MERGED from [com.google.android.material:material:1.11.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/bb31b1399de9f411a2bd0a66dae8bf7a/transformed/material-1.11.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.material:material:1.11.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/bb31b1399de9f411a2bd0a66dae8bf7a/transformed/material-1.11.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/1da54838bad10fcd2945a27acad7de3b/transformed/constraintlayout-2.1.4/AndroidManifest.xml:5:5-7:41
@@ -234,9 +234,9 @@ MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/
 MERGED from [androidx.print:print:1.0.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/78972eb96b2f86fafaab3d7df146c7bf/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.print:print:1.0.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/78972eb96b2f86fafaab3d7df146c7bf/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
 	android:targetSdkVersion
-		INJECTED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/bramhabajannavar/Downloads/chuchi/android-app/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/bramhabajannavar/Developer/kachra/chuchi/android-app/app/src/main/AndroidManifest.xml
 provider#androidx.startup.InitializationProvider
 ADDED from [androidx.emoji2:emoji2:1.2.0] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/ddf0084621dcf1a3bb1a2eb44a1207d6/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
 MERGED from [androidx.lifecycle:lifecycle-process:2.6.1] /Users/bramhabajannavar/.gradle/caches/8.9/transforms/3dd016cf06bfd54186103aef34500a07/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:24:9-32:20
